@@ -1,0 +1,11 @@
+{
+    "files.autoSave": "afterDelay",
+    "python.languageServer": "Pylance",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.pylintEnabled": false,
+    "python.createEnvironment.contentButton": "hide",
+    "pylint.args": [
+        "{   \"python.linting.pylintEnabled\": true,   \"python.linting.enabled\": true,   \"python.linting.pylintArgs\": [     \"--extension-pkg-whitelist=cv2\"   ] }"
+    ]
+}
