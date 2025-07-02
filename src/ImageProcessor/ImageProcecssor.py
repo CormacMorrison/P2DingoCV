@@ -7,6 +7,7 @@ class ImageProcessor:
     def __init__(self, height: int, width: int) -> None:
         self.height: int = height
         self.width: int = width
+        self.frameCount: int = 0
 
         #Parmaters dependant on resolution
         params = self.normalize_params(height, width)
@@ -29,7 +30,7 @@ class ImageProcessor:
         diag: float = (height**2 + width**2) ** 0.5
         kernelSize: int = max(3, int(min(height, width) * 0.005) // 2 * 2 + 1)  # odd
         sigma: float = diag * 0.010
-        edgeSlideFactor: float = 99
+        edgeSlideFactor: float = 99 # auto adjusts until it finds lineCount number of lines
         edgeWindowSize: float = 0.44
         clipLimit: float = 2.0
         tileGridSize: tuple[int, int] = (max(1, width // 64), max(1, height // 64))
@@ -75,8 +76,6 @@ class ImageProcessor:
         lower: int = int(max(0, (1.0 - sigma) * v))
         upper = int(min(255, (1.0 + sigma) * v))
 
-        print(upper, lower)
-
         edges = cv.Canny(frame, lower, upper)
 
         cv.imshow("edges", edges)
@@ -105,14 +104,19 @@ class ImageProcessor:
         elif (len(lines) <= self.lineCount + self.lineBuffer):
             self.edgeSlideFactor -= 0.05
         
+        
         return lines
+    
+    def determineAngles(self, lines: np.ndarray) -> tuple[float, float, float]:
+        
+        return 0, 0 ,0
     
     def drawLines(self, frame, lines: np.ndarray | None) -> np.ndarray:
         if (lines is None):
             return frame
                 # Prepare BGR output from binary input
         output: np.ndarray = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
-
+        print(len(lines))
         # Draw detected lines in green
         for x1, y1, x2, y2 in lines.reshape(-1, 4):
             cv.line(output, (x1, y1), (x2, y2), (0, 255, 0), 2)
@@ -125,6 +129,8 @@ class ImageProcessor:
         """
         Process the frame by applying preprocessing then edge detection.
         """
+        self.frameCount+=1
+        # print(self.frameCount)
         blurred = self.preProcess(frame)
         edges = self.edgeDetection(blurred)
         lines = self.lineDetection(edges)
