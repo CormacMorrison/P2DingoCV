@@ -1,3 +1,4 @@
 #lock dependancies for production
 opencv-contrib-python
 numpy
+scikit-learn
