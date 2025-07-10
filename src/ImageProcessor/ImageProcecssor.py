@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from typing import Final
+from typing import Final, Tuple
 from sklearn.cluster import DBSCAN
 
 
@@ -71,7 +71,6 @@ class ImageProcessor:
 
     def edgeDetection(self, frame: np.ndarray) -> np.ndarray:
         # Normalising the paramaters for median light level 
-        cv.imshow("preedge", frame)
         sigma: float = 0.33
         v: float = self.edgeSlideFactor * float(np.median(frame))
         lower: int = int(max(0, (1.0 - sigma) * v))
@@ -79,7 +78,6 @@ class ImageProcessor:
 
         edges = cv.Canny(frame, lower, upper)
 
-        cv.imshow("edges", edges)
         return edges
     
     def lineDetection(self, frame: np.ndarray) -> np.ndarray | None:
@@ -115,8 +113,6 @@ class ImageProcessor:
         # print("||||end||||")
         
         return lines
-    import numpy as np
-
 
     def splitByAngle(self, lines, threshold_deg=10):
         """
@@ -131,10 +127,10 @@ class ImageProcessor:
                 horizontal_lines: lines close to 0° (horizontal)
                 vertical_lines: lines close to 90° (vertical)
         """
-        if lines is None or len(lines) == 0:
-            return np.empty((0, 4)), np.empty((0, 4))
+        if (lines is None or len(lines) < 30 or len(lines) > 70):
+            return None
 
-        # Reshape if needed
+        # Reshape if needed (HoughLinesP returns with double wrapped arrays)
         lines = lines.reshape(-1, 4)
         x1, y1, x2, y2 = lines[:, 0], lines[:, 1], lines[:, 2], lines[:, 3]
 
@@ -157,70 +153,6 @@ class ImageProcessor:
 
         return horizontal_lines, vertical_lines
 
-   
-    
-    def vanishingLineGrouping(self, lines: np.ndarray | None):
-        
-        # Extract endpoints
-        angleThrehold = 10
-        
-        if (lines is None):
-            return None
-        elif (len(lines) < 30 or len(lines) > 70):
-            return None
-        
-        x1, y1, x2, y2 = lines[:, 0, 0], lines[:, 0, 1], lines[:, 0, 2], lines[:, 0, 3]
-        
-        # convert to homogenous equation
-        a = y2 - y1
-        b = x1 - x2
-        c = x2 * y1 - x1 * y2
-        homoLines = np.stack([a, b, c], axis=1)
-        
-        #compute intersections 
-        n = len(homoLines)
-        i, j = np.triu_indices(n, k=1)
-        L1, L2 = homoLines[i], homoLines[j]
-        intersections = np.cross(L1, L2)
-        valid = np.abs(intersections[:, 2]) > 1e-6
-        points = intersections[valid]
-        points = points[:, :2] / points[:, 2:3]
-        
-        #Find the two vanishing points
-        db = DBSCAN(eps=100, min_samples=2).fit(points)
-        labels = db.labels_
-    
-        unique, counts = np.unique(labels[labels != -1], return_counts=True)
-        top2 = unique[np.argsort(-counts)[:2]]
-        if (len(top2) == 0):
-            print("You Should Never end up here")
-            return None
-        vp1 = points[labels == top2[0]].mean(axis=0)
-        vp2 = points[labels == top2[1]].mean(axis=0)
-        vanishing_points = np.stack([vp1, vp2])
-        
-        midpoints = np.stack([(x1 + x2) / 2, (y1 + y2) / 2], axis=1)
-        directions = np.stack([x2 - x1, y2 - y1], axis=1)
-        directions /= (np.linalg.norm(directions, axis=1, keepdims=True) + 1e-6)
-
-        vpVecs = vanishing_points[None, :, :] - midpoints[:, None, :]
-        vpVecs /= np.linalg.norm(vpVecs, axis=2, keepdims=True) + 1e-6
-
-        cosTheta = np.einsum('nd,ndk->nk', directions, vpVecs)
-        angles = np.degrees(np.arccos(np.clip(cosTheta, -1.0, 1.0)))
-        
-        min_angle = np.min(angles, axis=1)
-        valid_lines = min_angle < angleThrehold 
-        bestVp = np.argmin(angles, axis=1)
-
-        group1 = lines[(bestVp == 0) & valid_lines]
-        group2 = lines[(bestVp == 1) & valid_lines]
-        
-        return group1, group2
-
-        
-
-
     def determineAngles(self, lines: np.ndarray) -> tuple[float, float, float]:
         
         return 0, 0 ,0
@@ -235,6 +167,20 @@ class ImageProcessor:
             cv.line(output, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
         return output
+
+    def draw_vanishing_points(self, image, vp1, vp2, color1=(0, 0, 255), color2=(255, 0, 0), radius=100):
+        img_vis = image.copy()
+
+        vp1_int = tuple(np.round(vp1).astype(int))
+        vp2_int = tuple(np.round(vp2).astype(int))
+
+        # Draw circles for vanishing points
+        cv.circle(img_vis, vp1_int, radius, color1, -1)
+        cv.circle(img_vis, vp2_int, radius, color2, -1)
+
+        cv.imshow("Vanish", img_vis)
+
+        return img_vis
 
 
 
