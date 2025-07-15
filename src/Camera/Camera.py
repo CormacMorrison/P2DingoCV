@@ -17,7 +17,7 @@ class Camera:
 
     _HEIGHT: Final[int] = 1080
     _WIDTH: Final[int] = 1920
-    _DESIREDFPS: Final[int] = 60
+    _DESIREDFPS: Final[int] = 120
 
     def __init__(self, source: int | str = 0) -> None:
         """

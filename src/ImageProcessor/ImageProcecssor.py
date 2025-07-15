@@ -1,7 +1,11 @@
 import cv2 as cv
 import numpy as np
 from typing import Final, Tuple
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
+
+_NO_PANEL_DETECTED = -1
 
 
 class ImageProcessor:
@@ -10,7 +14,7 @@ class ImageProcessor:
         self.width: int = width
         self.frameCount: int = 0
 
-        #Parmaters dependant on resolution
+        # Parmaters dependant on resolution
         params = self.normalize_params(height, width)
         self.kernelSize: int = params["kernelSize"]
         self.sigma: float = params["sigma"]
@@ -23,7 +27,7 @@ class ImageProcessor:
         self.threshold: int = params["threshold"]
         self.minLineLength: int = params["minLineLength"]
         self.maxLineGap: int = params["maxLineGap"]
-        self.lineCount: int = params["lineCount"] 
+        self.lineCount: int = params["lineCount"]
         self.lineBuffer: int = params["lineBuffer"]
 
     def normalize_params(self, height: int, width: int) -> dict:
@@ -31,7 +35,9 @@ class ImageProcessor:
         diag: float = (height**2 + width**2) ** 0.5
         kernelSize: int = max(3, int(min(height, width) * 0.005) // 2 * 2 + 1)  # odd
         sigma: float = diag * 0.010
-        edgeSlideFactor: float = 99 # auto adjusts until it finds lineCount number of lines
+        edgeSlideFactor: float = (
+            3  # auto adjusts until it finds lineCount number of lines
+        )
         edgeWindowSize: float = 0.44
         clipLimit: float = 2.0
         tileGridSize: tuple[int, int] = (max(1, width // 64), max(1, height // 64))
@@ -56,21 +62,15 @@ class ImageProcessor:
             "minLineLength": minLineLength,
             "maxLineGap": maxLineGap,
             "lineCount": lineCount,
-            "lineBuffer": lineBuffer
+            "lineBuffer": lineBuffer,
         }
 
-
     def preProcess(self, frame: np.ndarray) -> np.ndarray:
-        # kernelSize: int = 5
-        # sigma: int = 10
         grey = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        #increase contrast -> doesn't help
-        # clahe = cv.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-        # enhanced = clahe.apply(grey)
         return cv.GaussianBlur(grey, (self.kernelSize, self.kernelSize), self.sigma)
 
     def edgeDetection(self, frame: np.ndarray) -> np.ndarray:
-        # Normalising the paramaters for median light level 
+        # Normalising the paramaters for median light level
         sigma: float = 0.33
         v: float = self.edgeSlideFactor * float(np.median(frame))
         lower: int = int(max(0, (1.0 - sigma) * v))
@@ -79,121 +79,172 @@ class ImageProcessor:
         edges = cv.Canny(frame, lower, upper)
 
         return edges
-    
+
     def lineDetection(self, frame: np.ndarray) -> np.ndarray | None:
-        # rho: float = 1
-        # theta: float = np.pi / 180
-        # threshold: int = 160
-        # minLineLength: float = 50
-        # maxLineGap: float = 50
-        lines: np.ndarray | None =  cv.HoughLinesP(
+        lines: np.ndarray | None = cv.HoughLinesP(
             frame,
             rho=self.rho,
             theta=self.theta,
             threshold=self.threshold,
             minLineLength=self.minLineLength,
-            maxLineGap=self.maxLineGap
+            maxLineGap=self.maxLineGap,
         )
-        if (lines is None):
-            self.edgeSlideFactor -= 1
-
-        elif (len(lines) > self.lineCount + self.lineBuffer):
-            self.edgeSlideFactor += 0.05
+        # Infinite l
+        changeFactor = 1
+        if lines is None:
+            self.edgeSlideFactor -= changeFactor
+            return lines
         
-        elif (len(lines) <= self.lineCount + self.lineBuffer):
+        #prevent falling into negatives
+        elif self.edgeSlideFactor < 0:
+            self.edgeSlideFactor = 0
+
+        elif len(lines) > self.lineCount + self.lineBuffer:
+            self.edgeSlideFactor += 0.05
+
+        elif len(lines) <= self.lineCount + self.lineBuffer:
             self.edgeSlideFactor -= 0.05
         
-        if (lines is not None):
-            lens = len(lines)
-        else:
-            lens = 0
-        # print(f"||||len ={lens}||||")
-        # print("||||start||||") 
-        # print(lines) 
-        # print("||||end||||")
-        
+        print(self.edgeSlideFactor)
+
         return lines
 
-    def splitByAngle(self, lines, threshold_deg=10):
-        """
-        Splits Hough lines into horizontal and vertical groups based on angle.
-
-        Args:
-            lines (np.ndarray): Array of shape (N, 1, 4) or (N, 4), format [x1, y1, x2, y2]
-            threshold_deg (float): Degrees within 0° or 90° to consider "horizontal" or "vertical"
-
-        Returns:
-            tuple:
-                horizontal_lines: lines close to 0° (horizontal)
-                vertical_lines: lines close to 90° (vertical)
-        """
-        if (lines is None or len(lines) < 30 or len(lines) > 70):
+    def angleClusters(self, lines: np.ndarray | None):
+        if lines is None or len(lines) < 30 or len(lines) > 70:
             return None
 
         # Reshape if needed (HoughLinesP returns with double wrapped arrays)
         lines = lines.reshape(-1, 4)
         x1, y1, x2, y2 = lines[:, 0], lines[:, 1], lines[:, 2], lines[:, 3]
 
-        # Calculate deltas
+        # calculate deltas
         dx = x2 - x1
         dy = y2 - y1
 
-        # Compute angles in degrees
-        angles_deg = np.degrees(np.arctan2(dy, dx))
-        angles_deg = np.abs(angles_deg)
-        angles_deg = np.where(angles_deg > 90, 180 - angles_deg, angles_deg)
+        anglesDeg = np.degrees(np.arctan2(dy, dx)) % 180
 
-        # Create masks
-        horizontal_mask = angles_deg <= threshold_deg
-        vertical_mask = np.abs(angles_deg - 90) <= threshold_deg
-
-        # Filter
-        horizontal_lines = lines[horizontal_mask]
-        vertical_lines = lines[vertical_mask]
-
-        return horizontal_lines, vertical_lines
-
-    def determineAngles(self, lines: np.ndarray) -> tuple[float, float, float]:
-        
-        return 0, 0 ,0
-    
-    def drawLines(self, frame, lines: np.ndarray | None) -> np.ndarray:
-        if (lines is None):
-            return frame
-                # Prepare BGR output from binary input
-        output: np.ndarray = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
-        # Draw detected lines in green
-        for x1, y1, x2, y2 in lines.reshape(-1, 4):
-            cv.line(output, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        output = self.KmeansCluster(anglesDeg)
 
         return output
 
-    def draw_vanishing_points(self, image, vp1, vp2, color1=(0, 0, 255), color2=(255, 0, 0), radius=100):
-        img_vis = image.copy()
+    def KmeansCluster(self, angles: np.ndarray, maxIter=300, randomState=None):
+        angles = np.asarray(angles, dtype=float)
+        if np.any((angles < 0) | (angles > 180)):
+            raise ValueError("All angles must be in the range [0, 180].")
 
-        vp1_int = tuple(np.round(vp1).astype(int))
-        vp2_int = tuple(np.round(vp2).astype(int))
+        theta = np.deg2rad(angles)
 
-        # Draw circles for vanishing points
-        cv.circle(img_vis, vp1_int, radius, color1, -1)
-        cv.circle(img_vis, vp2_int, radius, color2, -1)
+        pts = np.column_stack([np.cos(theta), np.sin(theta)])
 
-        cv.imshow("Vanish", img_vis)
+        km = KMeans(n_clusters=2, max_iter=maxIter, random_state=randomState)
+        km.fit(pts)
+        labels = km.labels_
 
-        return img_vis
+        # Convert cluster centres back into angles:
+        cx, cy = km.cluster_centers_[:, 0], km.cluster_centers_[:, 1]
+        center_theta = np.arctan2(cy, cx)
+        # atan2 returns in (–π, π]; map to [0, 2π):
+        center_theta = np.mod(center_theta, 2 * np.pi)
+        # Map back to [0, 180) degrees:
+        centersDeg = center_theta * (180.0 / np.pi)
 
+        return pts, labels, km.cluster_centers_, centersDeg
 
-
-    def process(self, frame: np.ndarray) -> np.ndarray:
-        """
-        Process the frame by applying preprocessing then edge detection.
-        """
-        self.frameCount+=1
-        # print(self.frameCount)
+    def process(self, frame: np.ndarray) -> Tuple[float, float]:
         blurred = self.preProcess(frame)
         edges = self.edgeDetection(blurred)
         lines = self.lineDetection(edges)
-        output = self.drawLines(edges, lines)
-        return output 
-    
-    
+        kmeans = self.angleClusters(lines)
+        if kmeans is not None:
+            # 4th return is the centre of clusters in degrees from the positve x axis
+            return kmeans[3][0], kmeans[3][1]
+        return _NO_PANEL_DETECTED, _NO_PANEL_DETECTED
+
+    ############### Visualisation Functions ###########################
+    def processFrame(self, frame: np.ndarray) -> np.ndarray:
+        """
+        Process the frame by applying preprocessing then edge detection.
+        """
+        blurred = self.preProcess(frame)
+        edges = self.edgeDetection(blurred)
+        lines = self.lineDetection(edges)
+        output = self.showAngleBins(edges, lines)
+        if output is not None:
+            return output
+        return edges
+
+    def showAngleBins(self, frame, lines: np.ndarray | None):
+        if lines is None:
+            return frame
+        kmeans = self.angleClusters(lines)
+        if kmeans is None:
+            return frame
+        _, labels, _, centers_deg = kmeans
+
+        bin1 = []
+        bin2 = []
+
+        # stops the visualiser from pulsing
+        binSwapVal = 1
+        if centers_deg[0] > centers_deg[1]:
+            binSwapVal = 0
+
+        for i, line in enumerate(lines):
+            if labels[i] == binSwapVal:
+                bin1.append(line)
+            else:
+                bin2.append(line)
+        frame = self.drawLines(frame, np.array(bin1), "g")
+        return self.drawLines(frame, np.array(bin2), "r")
+
+    def drawLines(
+        self, frame: np.ndarray, lines: np.ndarray | None, colour: str
+    ) -> np.ndarray:
+        if lines is None:
+            return frame
+            # Prepare BGR output from binary input
+        b = 0
+        g = 0
+        r = 0
+        if colour == "g":
+            g = 255
+        elif colour == "r":
+            r = 255
+        elif colour == "b":
+            b = 255
+        if len(frame.shape) == 2:
+            output = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
+        else:
+            output = frame.copy()
+        # Draw detected lines in green
+        for x1, y1, x2, y2 in lines.reshape(-1, 4):
+            cv.line(output, (x1, y1), (x2, y2), (b, g, r), 2)
+
+        return output
+
+    def visualize(self, angles: np.ndarray):
+        pts, labels, centers, centers_deg = self.KmeansCluster(angles)
+
+        # Ensure pts and centers are 2D arrays with shape (N, 2)
+        pts = np.asarray(pts).reshape(-1, 2)
+        centers = np.asarray(centers).reshape(-1, 2)
+
+        plt.figure(figsize=(6, 6))
+        plt.scatter(pts[:, 0], pts[:, 1], c=labels, cmap="viridis", edgecolor="k")
+        plt.scatter(
+            centers[:, 0], centers[:, 1], marker="x", s=100, linewidths=2, color="red"
+        )
+
+        # Add circular guide
+        ax = plt.gca()
+        ax.add_patch(Circle((0, 0), 1.0, fill=False, linestyle="--", color="gray"))
+
+        plt.axis("equal")
+        plt.title("Circular K‑Means Clustering on Angles")
+        plt.xlabel("Cos(theta)")
+        plt.ylabel("Sin(theta)")
+        plt.grid(True)
+        plt.show()
+        plt.savefig("angle_clusters.png")
+
+        print("Cluster centers (deg):", centers_deg)
