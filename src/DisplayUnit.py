@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 from typing import Final, Tuple
-from ImageProcessor.ImageProcecssor import ImageProcessor
+from ImageProcessor.ImageProcessor import ImageProcessor
 from Camera.Camera import Camera
 
 class DisplayUnit:
@@ -11,8 +11,8 @@ class DisplayUnit:
 
     def run(self) -> None:
         while True:
-            success, frame = self.camera.read_frame()
-            if not success or frame is None:
+            frame = self.camera.read()
+            if frame is None:
                 print("Failed to grab frame.")
                 break
 
@@ -26,8 +26,8 @@ class DisplayUnit:
     
     def runVisuals(self) -> None:
         while True:
-            success, frame = self.camera.read_frame()
-            if not success or frame is None:
+            frame = self.camera.read()
+            if frame is None:
                 print("Failed to grab frame.")
                 break
 
@@ -45,8 +45,8 @@ class DisplayUnit:
      
     def mock_visuals(self) -> None:
         while True:
-            success, frame = self.camera.mock_read_frame()
-            if not success or frame is None:
+            frame = self.camera.testRead()
+            if frame is None:
                 print("Failed to grab frame.")
                 break
 
@@ -64,8 +64,8 @@ class DisplayUnit:
     def mockRun(self):
         frameCount = 0
         while True:
-            success, frame = self.camera.mock_read_frame()
-            if not success or frame is None:
+            frame = self.camera.testRead()
+            if frame is None:
                 print("Failed to grab frame.")
                 break
                 
