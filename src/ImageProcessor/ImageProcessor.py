@@ -248,3 +248,6 @@ class ImageProcessor:
         plt.savefig("angle_clusters.png")
 
         print("Cluster centers (deg):", centers_deg)
+    
+
+

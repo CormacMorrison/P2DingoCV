@@ -5,7 +5,7 @@ from DisplayUnit import DisplayUnit
 from ImageProcessor.HotspotDetector import HotspotDetector
 
 if __name__ == "__main__":
-    cam: Camera = CameraFactory.create("/home/cormac/P2Dingo/P2DingoCV/testImages/hotspot.png")
+    cam: Camera = CameraFactory.create("/home/cormac/P2Dingo/P2DingoCV/testImages/test3.png")
     processor: ImageProcessor = ImageProcessor(cam._HEIGHT, cam._WIDTH)
     hotspot: HotspotDetector = HotspotDetector(cam, processor)
     hotspot.execute()
