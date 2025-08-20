@@ -20,6 +20,8 @@ class HotspotDetector:
     def __init__(self, cam: Camera, processor: ImageProcessor) -> None:
         self.cam: Camera = cam
         self.proccessor = processor 
+       
+        #Per Image Paramaters
         self.maxTemp: float | None = 50 # to update
         self.minTemp: float | None = 10 # to update
         self.coldestPixel: float | None = 10 # hardware dependant
@@ -29,15 +31,14 @@ class HotspotDetector:
         self.labFrame: np.ndarray
         self.frame: np.ndarray
         self.frameArea: int
+            # Data Points based on k
+        self.clusterTemps: np.ndarray = np.zeros(self.k)
+        self.pixelCounts: np.ndarray = np.zeros(self.k)
 
         # Paramaters To Tune
         self.k: int = 10
         # Temparature Contrast 
-        self.dilationSize = 10
-
-        # Data Points based on k
-        self.clusterTemps: np.ndarray = np.zeros(self.k)
-        self.pixelCounts: np.ndarray = np.zeros(self.k)
+        self.dilationSize = 5
 
 
         self.colours = [
@@ -51,7 +52,9 @@ class HotspotDetector:
             
     
     def execute(self):
+        results = []
         while True:
+            self.resetFrameData()
             frame = self.cam.read()
             # if frame is None:
             #     # break  # Stop if no frame was captured
@@ -61,13 +64,15 @@ class HotspotDetector:
                 self.labFrame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
                 frame = self.perFrameSetup(frame)
                 mask = self.kMeansThermalGrouping(frame)
-                annotated, results = self.tempContrast(frame, mask)
-                print(results)
-                self.saveFrame(annotated)
+                result = self.classifyHotspot(frame, mask)
+                results.append(result)
+                # annotated, results = self.tempContrast(frame, mask)
+                # print(results)
+                # self.saveFrame(annotated)
                 self.saveFrame(mask)
                 # self.plotFreqArray(self.clusterTemps, "CLusterTemp")
                 # self.plotFreqArray(self.pixelCounts, "Pixel Counts")
-            
+
             if cv.waitKey(1) & 0xFF == ord('q'):
                 break
             
@@ -132,71 +137,158 @@ class HotspotDetector:
         return mask
 
     def findConnectedComponents(self, mask: np.ndarray):
-        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(mask, connectivity=8)
-        print("Number of labels:", n_labels)
-        print("Stats:\n", stats)
-        print("Centroids:\n", centroids)
-        label_viz = cv.applyColorMap((labels * 50).astype(np.uint8), cv.COLORMAP_JET)
-        # self.saveFrame(label_viz)
-        cv.waitKey(0)
-    
-    def tempContrast(self, frame: np.ndarray, mask: np.ndarray):
-        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(mask, connectivity=8)
+        componentsTuple = cv.connectedComponentsWithStats(mask, connectivity=8)
+        return componentsTuple
+
+    # Filters out Noise
+    def classifyHotspot(self, frame: np.ndarray, mask: np.ndarray):
+        filterMask = self.filterMask(mask)
+        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(filterMask, connectivity=8)
         LABFrame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
-        # I want to go over every component, dilate them 100% and calculate the median in the dilated region
-        # (from LAB pixel intensity) the mean of the hot area and the IQR of the dilated region
-        # \Delta T_{\text{robust}} = \frac{\mu_{\text{hot}} - \text{median}(\text{local})}{\text{IQR}(\text{local}) + \epsilon}
-        # I then want a list of the T robusts of each unit and to highlight them on the image
-        L = LABFrame[:, :, 0]
-        # lbl, robustT, sigma, centroid
+        LChannel = LABFrame[:, :, 0]
         results = []
 
-        for lbl in range(1, n_labels): # skip background label 0
-            # Get component mask
-            componentMask = (labels == lbl).astype(np.uint8)
+        for lbl in range(1, n_labels):
+            componentMask: np.ndarray = (labels == lbl).astype(np.uint8)
+            otherHotspotsMask = (labels != lbl) & (labels != 0) 
+            componentArea = stats[lbl, cv.CC_STAT_AREA]
+            deltaTRobust, zScore = self.temparatureContrast(LChannel, componentMask, otherHotspotsMask, componentArea)
+            compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(componentMask, componentArea)
+            hotspotScore = self.hotSpotScore(deltaTRobust=deltaTRobust, 
+                                             zScore=zScore, compactness=compactness, 
+                                             aspectRatio=aspectRatioNorm, 
+                                             eccentricity=eccentricity)
 
-            # Dilate mask
+            results.append((lbl, hotspotScore, centroids[lbl], deltaTRobust, zScore, compactness, aspectRatioNorm, eccentricity))
+        
+        return results
+
+    def filterMask(self, mask: np.ndarray):
+        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(mask, connectivity=8)
+        filteredMask = np.zeros_like(mask)
+
+        for lbl in range(1, n_labels):
             compArea = stats[lbl, cv.CC_STAT_AREA]
             if (compArea < self.frameArea / 10000):
                 continue
-            # choose dilation size ~ sqrt(area) // 2
-            ksize = int(max(3, self.dilationSize * np.sqrt(compArea)))
-            kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
-            dilated = cv.dilate(componentMask, kernel, iterations=1)
-            otherHotspotsMask = (labels != lbl) & (labels != 0) 
 
-            hotMask = componentMask.astype(bool)
+            filteredMask[labels == lbl] = 255
+        
+        return filteredMask
+    
+    def shapeAndCompactness(self, componentMask: np.ndarray, area: float):
+        contours, _ = cv.findContours(componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        # Should only be one contour 
+        perimeter = cv.arcLength(contours[0], True)
+        # Elipse Required 5 pixels already been filtered for size
+        ellipse = cv.fitEllipse(contours[0])
+        (_, _), (major_axis, minor_axis), _ = ellipse
+
+        # square has 0.785 compactness normalised by definition
+        compactness = (4 * np.pi * area) / (perimeter ** 2)
+        aspect_ratio_norm = min(major_axis, minor_axis) / max(major_axis, minor_axis)
+        # normalised by definition
+        eccentricity = np.sqrt(1 - (min(major_axis, minor_axis) / max(major_axis, minor_axis))**2)
+
+        return compactness, aspect_ratio_norm, eccentricity 
+    
+    def temparatureContrast(self, LChannel: np.ndarray, componentMask: np.ndarray, otherHotspotsMask: np.ndarray, area: float):
+        ksize = int(max(3, self.dilationSize * np.sqrt(area)))
+        kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
+        dilated = cv.dilate(componentMask, kernel, iterations=1)
+
+        hotMask = componentMask.astype(bool)
+        localMask = (dilated.astype(bool)) & (~hotMask) & (~otherHotspotsMask)
+
+        hotVals = LChannel[hotMask]
+        localVals = LChannel[localMask]
+
+        if len(hotVals) == 0:
+            return 0, 0
+        # should not be possible but if so it max temp diff
+        elif len(localVals) == 0:
+            return 10, 10
+
+        muHot: float = hotVals.mean()
+        mu: float = LChannel.mean()
+        sigma: float = LChannel.std()
+        medianLocal: float = np.median(localVals).astype(float)
+        iqrLocal: float = (np.percentile(localVals, 75) - np.percentile(localVals, 25)).astype(float)
+
+        #Robust Contrast
+        deltaTRobust = (muHot - medianLocal) / (iqrLocal + 1e-6)
+
+        #Global Z score
+        z = (muHot - mu) / sigma
+
+        return deltaTRobust, z
+
+    def hotSpotScore(self, deltaTRobust, zScore, compactness, aspectRatio, eccentricity):
+        return 0
+
+
+    # def tempContrast(self, frame: np.ndarray, componentsTuple: Tuple):
+    #     n_labels, labels, stats, centroids = componentsTuple
+    #     LABFrame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
+    #     # I want to go over every component, dilate them 100% and calculate the median in the dilated region
+    #     # (from LAB pixel intensity) the mean of the hot area and the IQR of the dilated region
+    #     # \Delta T_{\text{robust}} = \frac{\mu_{\text{hot}} - \text{median}(\text{local})}{\text{IQR}(\text{local}) + \epsilon}
+    #     # I then want a list of the T robusts of each unit and to highlight them on the image
+    #     L = LABFrame[:, :, 0]
+    #     # lbl, robustT, sigma, centroid
+    #     results = []
+
+    #     for lbl in range(1, n_labels): # skip background label 0
+    #         # Get component mask
+    #         componentMask: np.ndarray = (labels == lbl).astype(np.uint8)
+
+    #         compArea = stats[lbl, cv.CC_STAT_AREA]
+    #         if (compArea < self.frameArea / 10000):
+    #             # If too small set z score to zero and T robust
+    #             results.append((lbl, 0, 0, (cx, cy)))
+    #             continue
+
+    #         # Dilate mask
+    #         # choose dilation size ~ sqrt(area) // 2
+    #         ksize = int(max(3, self.dilationSize * np.sqrt(compArea)))
+    #         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
+    #         dilated = cv.dilate(componentMask, kernel, iterations=1)
+    #         otherHotspotsMask = (labels != lbl) & (labels != 0) 
+
+    #         hotMask = componentMask.astype(bool)
             
-            # Calculat the area of this and do checks
-            localMask = (dilated.astype(bool)) & (~hotMask) & (~otherHotspotsMask)
+    #         # Calculat the area of this and do checks
+    #         localMask = (dilated.astype(bool)) & (~hotMask) & (~otherHotspotsMask)
 
-            hotVals = L[hotMask]
-            localVals = L[localMask]
+    #         hotVals = L[hotMask]
+    #         localVals = L[localMask]
 
-            if len(hotVals) == 0 or len(localVals) == 0:
-                continue
+    #         if len(hotVals) == 0 or len(localVals) == 0:
+    #             continue
 
-            muHot: float = hotVals.mean()
-            mu: float = L.mean()
-            sigma: float = L.std()
-            medianLocal: float = np.median(localVals).astype(float)
-            iqrLocal: float = (np.percentile(localVals, 75) - np.percentile(localVals, 25)).astype(float)
+    #         muHot: float = hotVals.mean()
+    #         mu: float = L.mean()
+    #         sigma: float = L.std()
+    #         medianLocal: float = np.median(localVals).astype(float)
+    #         iqrLocal: float = (np.percentile(localVals, 75) - np.percentile(localVals, 25)).astype(float)
 
-            #Robust Contrast
-            deltaTRobust = (muHot - medianLocal) / (iqrLocal + 1e-6)
+    #         #Robust Contrast
+    #         deltaTRobust = (muHot - medianLocal) / (iqrLocal + 1e-6)
 
-            #Global Z score
-            z = (muHot - mu) / sigma
+    #         #Global Z score
+    #         z = (muHot - mu) / sigma
 
-            cx, cy = map(int, centroids[lbl])
-            results.append((lbl, deltaTRobust, z, (cx, cy)))
+    #         cx, cy = map(int, centroids[lbl])
+    #         results.append((lbl, deltaTRobust, z, (cx, cy)))
 
-            cv.putText(frame, f"{deltaTRobust:.2f}", (cx, cy),
-            cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv.LINE_AA)
-            cv.drawContours(frame, [cv.findContours(componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[0][0]],
-                        -1, (0, 255, 0), 1)
+    #         cv.putText(frame, f"{deltaTRobust:.2f}", (cx, cy),
+    #         cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv.LINE_AA)
+    #         cv.drawContours(frame, [cv.findContours(componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[0][0]],
+    #                     -1, (0, 255, 0), 1)
+    #         cv.drawContours(frame, [cv.findContours(localMask.astype(np.uint8), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[0][0]],
+    #                     -1, (0, 0, 255), 1)
             
-        return frame, results
+    #     return frame, results
 
 
 
@@ -278,6 +370,21 @@ class HotspotDetector:
         self.gradient = None
         self.intercept = None
         self.clusterTemps = np.zeros(self.k)
+    
+    def resetFrameData(self) -> None:
+        self.maxTemp = None
+        self.minTemp = None
+        self.coldestPixel = None
+        self.hottestPixel = None
+        self.gradient = None
+        self.intercept = None
+        self.labFrame = np.zeros(0)
+        self.frame = np.zeros(0)
+        self.frameArea = 0
+            # Data Points based on k
+        self.clusterTemps: np.ndarray = np.zeros(self.k)
+        self.pixelCounts: np.ndarray = np.zeros(self.k)
+
     # ---------------------------------------------------------------- 
     # ---------------------------------------------------------------- 
     # ---------------------------------------------------------------- 
