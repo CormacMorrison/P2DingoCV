@@ -32,6 +32,8 @@ class HotspotDetector:
 
         # Paramaters To Tune
         self.k: int = 10
+        # Temparature Contrast 
+        self.dilationSize = 10
 
         # Data Points based on k
         self.clusterTemps: np.ndarray = np.zeros(self.k)
@@ -158,12 +160,14 @@ class HotspotDetector:
             if (compArea < self.frameArea / 10000):
                 continue
             # choose dilation size ~ sqrt(area) // 2
-            ksize = int(max(3, 5 * np.sqrt(compArea)))
+            ksize = int(max(3, self.dilationSize * np.sqrt(compArea)))
             kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
             dilated = cv.dilate(componentMask, kernel, iterations=1)
             otherHotspotsMask = (labels != lbl) & (labels != 0) 
 
             hotMask = componentMask.astype(bool)
+            
+            # Calculat the area of this and do checks
             localMask = (dilated.astype(bool)) & (~hotMask) & (~otherHotspotsMask)
 
             hotVals = L[hotMask]
