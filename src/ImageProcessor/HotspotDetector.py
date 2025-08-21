@@ -24,6 +24,7 @@ class HotspotDetector:
         #Per Image Paramaters
         self.maxTemp: float | None = 50 # to update
         self.minTemp: float | None = 10 # to update
+        self.tempDetected: bool = False
         self.coldestPixel: float | None = 10 # hardware dependant
         self.hottestPixel: float | None = 255 # hardware dependant
         self.gradient: float | None
@@ -31,15 +32,25 @@ class HotspotDetector:
         self.labFrame: np.ndarray
         self.frame: np.ndarray
         self.frameArea: int
-            # Data Points based on k
-        self.clusterTemps: np.ndarray = np.zeros(self.k)
-        self.pixelCounts: np.ndarray = np.zeros(self.k)
-
         # Paramaters To Tune
         self.k: int = 10
+        self.clusterJoinKernel: int = 3
+        self.hotSpotThreshold: float = 0.7
+        self.sigmoidSteepnessDeltaP: float = 0.25
+        self.sigmoidSteepnessZ: float = 0.23
         # Temparature Contrast 
         self.dilationSize = 5
+        
+        # HotspotScore Weightings
+        self.wDeltaP: float = 0.3
+        self.wZscore: float = 0.3
+        self.wCompactness: float = 0.4
+        self.wAspectRatio: float = 0
+        self.wEccentricity: float = 0
 
+        #Extra Data 
+        self.clusterTemps: np.ndarray = np.zeros(self.k)
+        self.pixelCounts: np.ndarray = np.zeros(self.k)
 
         self.colours = [
             (255, 0, 0),   # Blue
@@ -64,25 +75,42 @@ class HotspotDetector:
                 self.labFrame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
                 frame = self.perFrameSetup(frame)
                 mask = self.kMeansThermalGrouping(frame)
-                result = self.classifyHotspot(frame, mask)
-                results.append(result)
+                result, hotSpotScore = self.classifyHotspot(frame, mask)
+                headers = [
+                    "lbl", 
+                    "hotspotScore", 
+                    "componentTemp", 
+                    "centroid", 
+                    "deltaPScore", 
+                    "deltaPRobust", 
+                    "zScore", 
+                    "zScoreNorm",
+                    "compactness", 
+                    "aspectRatioNorm", 
+                    "eccentricity",
+                    "area"
+                ]
+                print_print_list(result, headers)
                 # annotated, results = self.tempContrast(frame, mask)
                 # print(results)
                 # self.saveFrame(annotated)
-                self.saveFrame(mask)
+                # self.saveFrame(mask)
                 # self.plotFreqArray(self.clusterTemps, "CLusterTemp")
                 # self.plotFreqArray(self.pixelCounts, "Pixel Counts")
 
+            break
             if cv.waitKey(1) & 0xFF == ord('q'):
                 break
             
     def perFrameSetup(self, frame: np.ndarray) -> np.ndarray:
         # Calcualte frameArea -> hardware dependant
+        self.tempDetected = True
         self.frameArea = frame.shape[:2][1] * frame.shape[:2][0]
         try:
             self.updateTemps(frame)
         except TempDetectionFailed:
             self.resetTempData()
+            self.tempDetected = False
         return frame 
     
     def kMeansThermalGrouping(self, frame: np.ndarray) -> np.ndarray:
@@ -130,46 +158,62 @@ class HotspotDetector:
             contours, _ = cv.findContours(mask2, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
             cv.drawContours(outlined, contours, -1, self.colours[i % len(self.colours)], 2)
 
-        self.saveFrame(outlined) 
+        # self.saveFrame(outlined) 
         #self.saveFrame(outlined)
         # self.saveFrame(segmentedBGR)
             
         return mask
 
     def findConnectedComponents(self, mask: np.ndarray):
+        
         componentsTuple = cv.connectedComponentsWithStats(mask, connectivity=8)
         return componentsTuple
 
-    # Filters out Noise
     def classifyHotspot(self, frame: np.ndarray, mask: np.ndarray):
         filterMask = self.filterMask(mask)
-        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(filterMask, connectivity=8)
+        
+        #Join Clusters
+        kernel = cv.getStructuringElement(cv.MORPH_RECT, (self.clusterJoinKernel, self.clusterJoinKernel))
+        closedMask = cv.morphologyEx(filterMask, cv.MORPH_CLOSE, kernel)
+        n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(closedMask, connectivity=8)
         LABFrame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
         LChannel = LABFrame[:, :, 0]
         results = []
 
         for lbl in range(1, n_labels):
-            componentMask: np.ndarray = (labels == lbl).astype(np.uint8)
+            componentMask: np.ndarray = ((labels == lbl) * 255).astype(np.uint8)
             otherHotspotsMask = (labels != lbl) & (labels != 0) 
             componentArea = stats[lbl, cv.CC_STAT_AREA]
-            deltaTRobust, zScore = self.temparatureContrast(LChannel, componentMask, otherHotspotsMask, componentArea)
+            try:
+                componentTemp = self.componentTemp(LChannel, componentMask)
+            except TempDetectionFailed:
+                self.resetTempData()
+                componentTemp = None
+            deltaPRobust, zScore, deltaPScore, zScoreNorm = self.pixelContrast(LChannel, componentMask, otherHotspotsMask, componentArea)
             compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(componentMask, componentArea)
-            hotspotScore = self.hotSpotScore(deltaTRobust=deltaTRobust, 
-                                             zScore=zScore, compactness=compactness, 
+            hotspotScore = self.hotSpotScore(deltaPScore=deltaPScore,
+                                             zScoreNorm=zScoreNorm, compactness=compactness, 
                                              aspectRatio=aspectRatioNorm, 
                                              eccentricity=eccentricity)
-
-            results.append((lbl, hotspotScore, centroids[lbl], deltaTRobust, zScore, compactness, aspectRatioNorm, eccentricity))
+            
+            # if (hotspotScore > self.hotSpotThreshold):
+            cv.drawContours(frame, [cv.findContours(componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[0][0]],               
+                                -1, self.colours[0], 1)
+            cx, cy = map(int, centroids[lbl])
+            cv.putText(frame, f"{lbl:.2f}", (cx, cy), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv.LINE_AA)
+            results.append((lbl, hotspotScore, componentTemp, centroids[lbl], deltaPScore, deltaPRobust, zScore, zScoreNorm, compactness, aspectRatioNorm, eccentricity, componentArea))
+        self.saveFrame(frame)
         
-        return results
+        return results, hotspotScore
 
+    # Filters out Noise
     def filterMask(self, mask: np.ndarray):
         n_labels, labels, stats, centroids = cv.connectedComponentsWithStats(mask, connectivity=8)
         filteredMask = np.zeros_like(mask)
 
         for lbl in range(1, n_labels):
             compArea = stats[lbl, cv.CC_STAT_AREA]
-            if (compArea < self.frameArea / 10000):
+            if (compArea < self.frameArea / 5000):
                 continue
 
             filteredMask[labels == lbl] = 255
@@ -181,18 +225,26 @@ class HotspotDetector:
         # Should only be one contour 
         perimeter = cv.arcLength(contours[0], True)
         # Elipse Required 5 pixels already been filtered for size
-        ellipse = cv.fitEllipse(contours[0])
-        (_, _), (major_axis, minor_axis), _ = ellipse
+        
+        eccentricity = None
+        if (len(contours[0]) > 5):
+            ellipse = cv.fitEllipse(contours[0])
+            (_, _), (major_axis, minor_axis), _ = ellipse
+            eccentricity = np.sqrt(1 - (min(major_axis, minor_axis) / max(major_axis, minor_axis))**2)
+        x, y, w, h = cv.boundingRect(contours[0])
 
         # square has 0.785 compactness normalised by definition
         compactness = (4 * np.pi * area) / (perimeter ** 2)
-        aspect_ratio_norm = min(major_axis, minor_axis) / max(major_axis, minor_axis)
+        aspectRatioNorm = min(w, h)/max(w, h)
+        compactness = np.clip(compactness / 0.6,0,1)
+        
+        if (eccentricity == None):
+            eccentricity = aspectRatioNorm
         # normalised by definition
-        eccentricity = np.sqrt(1 - (min(major_axis, minor_axis) / max(major_axis, minor_axis))**2)
 
-        return compactness, aspect_ratio_norm, eccentricity 
+        return compactness, aspectRatioNorm, eccentricity 
     
-    def temparatureContrast(self, LChannel: np.ndarray, componentMask: np.ndarray, otherHotspotsMask: np.ndarray, area: float):
+    def pixelContrast(self, LChannel: np.ndarray, componentMask: np.ndarray, otherHotspotsMask: np.ndarray, area: float) -> tuple:
         ksize = int(max(3, self.dilationSize * np.sqrt(area)))
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
         dilated = cv.dilate(componentMask, kernel, iterations=1)
@@ -204,10 +256,10 @@ class HotspotDetector:
         localVals = LChannel[localMask]
 
         if len(hotVals) == 0:
-            return 0, 0
+            return 0, 0, 0
         # should not be possible but if so it max temp diff
         elif len(localVals) == 0:
-            return 10, 10
+            return 10, 10, 1
 
         muHot: float = hotVals.mean()
         mu: float = LChannel.mean()
@@ -216,15 +268,29 @@ class HotspotDetector:
         iqrLocal: float = (np.percentile(localVals, 75) - np.percentile(localVals, 25)).astype(float)
 
         #Robust Contrast
-        deltaTRobust = (muHot - medianLocal) / (iqrLocal + 1e-6)
+        deltaPRobust: float = (muHot - medianLocal) / (iqrLocal + 1e-6)
+        
+        #Robust Constrast Probability  
+        
+        deltaPProbabilityScore: float = np.clip(np.exp(self.sigmoidSteepnessDeltaP * deltaPRobust) - 1, 0, 1)
 
         #Global Z score
         z = (muHot - mu) / sigma
+        zScoreNorm = np.clip(np.exp(self.sigmoidSteepnessZ * z) - 1, 0, 1)
 
-        return deltaTRobust, z
+        return deltaPRobust, z, deltaPProbabilityScore, zScoreNorm
+    
 
-    def hotSpotScore(self, deltaTRobust, zScore, compactness, aspectRatio, eccentricity):
-        return 0
+    def componentTemp(self, LChannel: np.ndarray, componentMask: np.ndarray) -> float | None:
+        if (self.tempDetected is False):
+            return None
+        componentTemp = cv.mean(LChannel, componentMask.astype(np.uint8))[0]
+        return self.pixelToTemp(componentTemp)
+
+    def hotSpotScore(self, deltaPScore: float, zScoreNorm: float, compactness: float, aspectRatio: float, eccentricity: float):
+        # Normalise Z score
+        return deltaPScore * self.wDeltaP + zScoreNorm * self.wZscore + compactness * self.wCompactness + aspectRatio * self.wAspectRatio + (eccentricity) * self.wEccentricity
+    
 
 
     # def tempContrast(self, frame: np.ndarray, componentsTuple: Tuple):
@@ -374,8 +440,8 @@ class HotspotDetector:
     def resetFrameData(self) -> None:
         self.maxTemp = None
         self.minTemp = None
-        self.coldestPixel = None
-        self.hottestPixel = None
+        self.coldestPixel = 10 # TEMP
+        self.hottestPixel = 255 #TEMP
         self.gradient = None
         self.intercept = None
         self.labFrame = np.zeros(0)
@@ -480,6 +546,59 @@ class HotspotDetector:
         
         print(f"Frame saved to {filename}")
 
-                
+def print_print_list(data, headers=None, precision=2):
+    """
+    Pretty-print a list of lists (or tuples) as a table with borders.
+    
+    Parameters:
+    - data: list of lists or tuples
+    - headers: optional list of column headers
+    - precision: decimal places for numbers
+    """
+    # Convert all values to strings and measure column widths
+    str_data = []
+    col_widths = []
+
+    for row in data:
+        str_row = []
+        for val in row:
+            if isinstance(val, (tuple, list)):
+                val_str = "(" + ", ".join(f"{v:.{precision}f}" if isinstance(v, (int, float)) else str(v) for v in val) + ")"
+            elif isinstance(val, (int, float)):
+                val_str = f"{val:.{precision}f}"
+            else:
+                val_str = str(val)
+            str_row.append(val_str)
+        str_data.append(str_row)
+
+    # Determine max width for each column
+    num_cols = len(str_data[0])
+    if headers:
+        for i in range(num_cols):
+            max_data_len = max(len(str_data[r][i]) for r in range(len(str_data)))
+            col_widths.append(max(max_data_len, len(headers[i])))
+    else:
+        for i in range(num_cols):
+            max_data_len = max(len(str_data[r][i]) for r in range(len(str_data)))
+            col_widths.append(max_data_len)
+
+    # Function to print a row with borders
+    def print_row(row):
+        line = "| " + " | ".join(f"{val:{col_widths[i]}}" for i, val in enumerate(row)) + " |"
+        print(line)
+
+    # Print header
+    if headers:
+        sep = "+-" + "-+-".join("-" * w for w in col_widths) + "-+"
+        print(sep)
+        print_row(headers)
+        print(sep)
+
+    # Print rows
+    for row in str_data:
+        print_row(row)
+        if headers:
+            print(sep)
+      
                 
         
