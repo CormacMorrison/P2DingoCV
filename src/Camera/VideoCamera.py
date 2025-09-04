@@ -7,9 +7,7 @@ class VideoCamera(Camera):
     """
     Camera subclass that reads frames from a webcam, camera device, or video file.
     """
-    
-
-    _DESIREDFPS: Final[int] = 120
+    _DESIREDFPS: Final[int] = 24
 
     def __init__(self, source: int | str = 0) -> None:
         self.cap = cv.VideoCapture(source)
@@ -41,15 +39,7 @@ class VideoCamera(Camera):
         else:
             return None
         if frame is None:
-            # Try to loop only if source is a file (not int)
-            if isinstance(self.source, str):
-                total_frames = int(self.cap.get(cv.CAP_PROP_FRAME_COUNT))
-                if total_frames > 0:
-                    self.cap.set(cv.CAP_PROP_POS_FRAMES, 0)
-                    _, frame = self.cap.read()
-                    return frame
-            else:
-                return None
+            return None
 
         return frame
 
