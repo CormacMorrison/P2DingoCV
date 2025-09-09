@@ -31,4 +31,4 @@ jobs:
         run: poetry install  # installs your package and dependencies
 
       - name: Build docs
-        run: poetry run docs/make html
+        run: poetry run make -C docs html
