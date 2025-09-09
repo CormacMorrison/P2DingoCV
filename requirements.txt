@@ -1,8 +1,0 @@
-#lock dependancies for production
-opencv-contrib-python
-numpy
-scikit-learn
-matplotlib
-#pytesseract
-click
-nuitka
