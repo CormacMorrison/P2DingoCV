@@ -39,5 +39,5 @@ jobs:
         with:
           publish_branch: gh-pages        # branch to deploy to
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ github.workspace }}/docs/_build/html  # output folder from `make html`
+          publish_dir: ${{ github.workspace }}/docs/build/html  # output folder from `make html`
           force_orphan: true     
