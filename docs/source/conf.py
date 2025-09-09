@@ -28,6 +28,8 @@ extensions = [
     'sphinx.ext.githubpages',
 ]
 
+autosummary_generate = True
+
 # Napoleon settings for Google style docstrings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
