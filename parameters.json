@@ -1,0 +1,14 @@
+{
+    "k": 10,
+    "clusterJoinKernel": 3,
+    "hotSpotThreshold": 0.7,
+    "sigmoidSteepnessDeltaP": 0.25,
+    "sigmoidSteepnessZ": 0.23,
+    "compactnessCutoff": 0.6,
+    "dilationSize": 5,
+    "wDeltaP": 0.3,
+    "wZscore": 0.3,
+    "wCompactness": 0.4,
+    "wAspectRatio": 0.0,
+    "wEccentricity": 0.0
+}

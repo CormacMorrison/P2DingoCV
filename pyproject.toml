@@ -1,0 +1,35 @@
+[project]
+name = "P2DingoCV"
+version = "0.1.0"
+description = "Hotspot Detection Computer Vision Model for Solar Panels as Part of the P2Dingo project for P2AgentX"
+authors = [
+    {name = "Cormac Morrison",email = "cormac.morrison@student.unsw.edu.au"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy (>=2,<3.0.0)",
+    "opencv-contrib-python (>=4.12.0.88,<5.0.0.0)",
+    "scikit-learn (>=1.7.2,<2.0.0)",
+    "matplotlib (>=3.10.6,<4.0.0)",
+    "click (>=8.2.1,<9.0.0)",
+    "nuitka (>=2.7.14,<3.0.0)"
+    # add tesseract if doing temparatures
+]
+[tool.poetry]
+packages = [
+    { include = "P2DingoCV", from = "src" }
+]
+
+[tool.poetry.scripts]
+hotspot-cli = "P2DingoCV.cli:main"
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
+sphinx-autodoc-typehints = "^3.2.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

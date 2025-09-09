@@ -3,5 +3,6 @@ opencv-contrib-python
 numpy
 scikit-learn
 matplotlib
-pytesseract
+#pytesseract
 click
+nuitka
