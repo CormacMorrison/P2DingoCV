@@ -308,7 +308,7 @@ Combining Multiple Modes
 .. code-block:: bash
 
    # Run verbose AND visual modes simultaneously
-   python -m P2DingoCV.cli run -v -vi input/data.mp4 output/combined/
+   poetry run hotspot-cli run -v -vi input/data.mp4 output/combined/
 
 
 Troubleshooting
@@ -335,7 +335,7 @@ Common Issues
       ls -la /dev/video*
       
       # Test camera access
-      python -c "import cv2; print(cv2.VideoCapture(0).isOpened())"
+      python3 -c "import cv2; print(cv2.VideoCapture(0).isOpened())"
 
 3. **Output Directory Permissions**
 
@@ -350,7 +350,7 @@ Common Issues
    .. code-block:: bash
 
       # Validate JSON configuration
-      python -m json.tool config/detection_config.json
+      python3 -m json.tool config/detection_config.json
 
 
 Getting Help
@@ -365,7 +365,7 @@ CLI Help
    poetry run hotspot-cli --help
 
    # Command-specific help
-   python run hotspot-cli run --help
+   poetry run hotspot-cli run --help
 
 Version Information
 ~~~~~~~~~~~~~~~~~~
