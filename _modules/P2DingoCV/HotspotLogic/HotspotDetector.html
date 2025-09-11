@@ -1,0 +1,898 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P2DingoCV.HotspotLogic.HotspotDetector &mdash; P2DingoCV 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            P2DingoCV
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/P2DingoCV.html">P2DingoCV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.html">P2DingoCV.Camera</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.Camera.html">P2DingoCV.Camera.Camera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.CameraFactory.html">P2DingoCV.Camera.CameraFactory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.CameraFactory.html#P2DingoCV.Camera.CameraFactory.CameraFactory"><code class="docutils literal notranslate"><span class="pre">CameraFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.ImageCamera.html">P2DingoCV.Camera.ImageCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.ImageCamera.html#P2DingoCV.Camera.ImageCamera.ImageCamera"><code class="docutils literal notranslate"><span class="pre">ImageCamera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.VideoCamera.html">P2DingoCV.Camera.VideoCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.VideoCamera.html#P2DingoCV.Camera.VideoCamera.VideoCamera"><code class="docutils literal notranslate"><span class="pre">VideoCamera</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.html">P2DingoCV.HotspotLogic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html">P2DingoCV.HotspotLogic.DiagonsticsUtil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils"><code class="docutils literal notranslate"><span class="pre">VisualUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.Exceptions.html">P2DingoCV.HotspotLogic.Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.html">P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html">P2DingoCV.HotspotLogic.HotspotDetector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector"><code class="docutils literal notranslate"><span class="pre">HotspotDetector</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Types.html">P2DingoCV.Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Types.Types.html">P2DingoCV.Types.Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html">P2DingoCV.cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runAll"><code class="docutils literal notranslate"><span class="pre">runAll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runMinimal"><code class="docutils literal notranslate"><span class="pre">runMinimal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runVerbose"><code class="docutils literal notranslate"><span class="pre">runVerbose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.showVisual"><code class="docutils literal notranslate"><span class="pre">showVisual()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">P2DingoCV</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">P2DingoCV.HotspotLogic.HotspotDetector</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for P2DingoCV.HotspotLogic.HotspotDetector</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+
+<span class="c1"># import pytesseract</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">P2DingoCV.Camera.Camera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.Exceptions.TempDetectionFail</span><span class="w"> </span><span class="kn">import</span> <span class="n">TempDetectionFailed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..Types.Types</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.DiagonsticsUtil</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualUtils</span>
+
+
+<span class="c1"># DEV</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HotspotDetector">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HotspotDetector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for hotspot detection in thermal or visual frames.</span>
+
+<span class="sd">    This class provides core utilities for detecting hotspots using clustering,</span>
+<span class="sd">    contrast analysis, and shape metrics. Specific hotspot detection strategies</span>
+<span class="sd">    should be implemented in subclasses by overriding :meth:`execute`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        cam (Camera): The camera object used to read in frames.</span>
+<span class="sd">        outputPath (str): Directory where results and diagnostics will be saved.</span>
+<span class="sd">        utility (VisualUtils): Utility object for saving and plotting diagnostics.</span>
+<span class="sd">        labFrame (Frame): Current frame converted to CIELAB color space.</span>
+<span class="sd">        frame (np.ndarray): Current raw frame in BGR format.</span>
+<span class="sd">        frameArea (int): Total number of pixels in the frame.</span>
+<span class="sd">        frameCount (int): Number of frames processed.</span>
+<span class="sd">        k (int): Number of clusters for k-means segmentation.</span>
+<span class="sd">        clusterJoinKernel (int): Kernel size for morphological joining of clusters.</span>
+<span class="sd">        hotSpotThreshold (float): Score threshold for hotspot classification.</span>
+<span class="sd">        sigmoidSteepnessDeltaP (float): Steepness parameter for ΔP sigmoid scaling.</span>
+<span class="sd">        sigmoidSteepnessZ (float): Steepness parameter for Z-score sigmoid scaling.</span>
+<span class="sd">        compactnessCutoff (float): Normalization cutoff for compactness.</span>
+<span class="sd">        dilationSize (int): Kernel dilation factor for contrast calculation.</span>
+<span class="sd">        wDeltaP (float): Weight for ΔP score in final hotspot scoring.</span>
+<span class="sd">        wZscore (float): Weight for Z-score in final hotspot scoring.</span>
+<span class="sd">        wCompactness (float): Weight for compactness in final hotspot scoring.</span>
+<span class="sd">        wAspectRatio (float): Weight for aspect ratio in final hotspot scoring.</span>
+<span class="sd">        wEccentricity (float): Weight for eccentricity in final hotspot scoring.</span>
+<span class="sd">        pixelCounts (np.ndarray): Pixel counts per cluster from k-means.</span>
+<span class="sd">        colours (list[tuple[int, int, int]]): List of BGR colours for visualization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="HotspotDetector.__init__">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">:</span> <span class="n">Camera</span><span class="p">,</span> <span class="n">exitPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="p">:</span> <span class="n">Camera</span> <span class="o">=</span> <span class="n">cam</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="n">exitPath</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y|%m|</span><span class="si">%d</span><span class="s2">|%H:%M:%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">utility</span> <span class="o">=</span> <span class="n">VisualUtils</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">labFrame</span><span class="p">:</span> <span class="n">Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameArea</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameCount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Paramaters To Tune set to defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusterJoinKernel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hotSpotThreshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmoidSteepnessDeltaP</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmoidSteepnessZ</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.23</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compactnessCutoff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.6</span>
+        <span class="c1"># Temparature Contrast</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dilationSize</span> <span class="o">=</span> <span class="mi">5</span>
+
+        <span class="c1"># HotspotScore Weightings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wDeltaP</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wZscore</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wCompactness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wAspectRatio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wEccentricity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Diagnostics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixelCounts</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># Blue</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># Green</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>  <span class="c1"># Red</span>
+            <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># Cyan</span>
+            <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>  <span class="c1"># Magenta</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>  <span class="c1"># Yellow</span>
+        <span class="p">]</span>
+        
+        <span class="c1"># Load Paramaters from JSON config file</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">loadConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+         
+        <span class="c1"># ------------Temparature Hardware Dependant------------------</span>
+        <span class="c1"># Uncomment if You Wish to Implement OCR Temparature Detection</span>
+        <span class="c1"># ------------------------------------------------------------</span>
+        <span class="c1"># self.clusterTemps: np.ndarray = np.zeros(self.k)</span>
+        <span class="c1"># self.maxTemp: float | None = 50 # starter values</span>
+        <span class="c1"># self.minTemp: float | None = 10 # starter values</span>
+        <span class="c1"># self.tempDetected: bool = False</span>
+        <span class="c1"># self.coldestPixel: float | None = 10 # hardware dependant</span>
+        <span class="c1"># self.hottestPixel: float | None = 255 # hardware dependant</span>
+        <span class="c1"># self.gradient: float | None</span>
+        <span class="c1"># self.intercept: float | None</span>
+        <span class="c1"># ------------------------------------------------------------</span>
+        
+<div class="viewcode-block" id="HotspotDetector.execute">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.execute">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the main hotspot detection process.</span>
+
+<span class="sd">        This method must be implemented in subclasses to define</span>
+<span class="sd">        the specific detection strategy.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NotImplementedError: If called on the base class directly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    
+<div class="viewcode-block" id="HotspotDetector.loadConfig">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.loadConfig">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loadConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configPath</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load hotspot detector parameters from a JSON configuration file.</span>
+
+<span class="sd">        This will overwrite the default tunable parameters set in `__init__`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config_path (str): Path to the JSON configuration file.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: If the config file does not exist.</span>
+<span class="sd">            json.JSONDecodeError: If the config file is not valid JSON.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configPath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="c1"># Update only known attributes</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+                
+<div class="viewcode-block" id="HotspotDetector.perFrameProcessing">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameProcessing">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">perFrameProcessing</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">saveFrames</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">diagonstics</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single frame through the hotspot detection pipeline.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (Frame): Input image frame in BGR format.</span>
+<span class="sd">            saveFrames (bool): Whether to save visual outputs.</span>
+<span class="sd">            diagonstics (bool): Whether to save intermediate diagnostic results.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[list, bool]:</span>
+<span class="sd">                - List of hotspot detection results for this frame.</span>
+<span class="sd">                - Boolean indicating whether a hotspot was detected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labFrame</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2Lab</span><span class="p">)</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perFrameSetup</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kMeansThermalGrouping</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">diagonstics</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifyHotspot</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">saveFrames</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.perFrameSetup">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameSetup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">perFrameSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize state for a new frame.</span>
+
+<span class="sd">        Resets internal counters, computes frame area, and sets up</span>
+<span class="sd">        per-frame parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (Frame): Input frame in BGR format.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Frame: The original frame after setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetFrameData</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameArea</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+         
+        <span class="c1"># ------------Temparature Hardware Dependant------------------</span>
+        <span class="c1"># Uncomment if You Wish to Implement OCR Temparature Detection</span>
+        <span class="c1"># ------------------------------------------------------------</span>
+        
+        <span class="c1"># self.resetTempData()</span>
+        <span class="c1"># self.tempDetected = True</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#     self.updateTemps(frame)</span>
+        <span class="c1"># except TempDetectionFailed:</span>
+        <span class="c1">#     self.resetTempData()</span>
+        <span class="c1">#     self.tempDetected = False</span>
+        
+        <span class="c1"># ------------------------------------------------------------</span>
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.kMeansThermalGrouping">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.kMeansThermalGrouping">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kMeansThermalGrouping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">saveDiagonstics</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cluster pixels into thermal groups using k-means.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (Frame): Input frame in BGR format.</span>
+<span class="sd">            saveDiagonstics (bool): Whether to save segmented outputs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Frame: Binary mask for the most intense cluster.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">original</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2Lab</span><span class="p">)</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="c1"># Define criteria and number of clusters (k)</span>
+        <span class="n">criteria</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">TERM_CRITERIA_EPS</span> <span class="o">+</span> <span class="n">cv</span><span class="o">.</span><span class="n">TERM_CRITERIA_MAX_ITER</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="n">bestLabels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">pixels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">kmeans</span><span class="p">(</span>
+            <span class="n">pixels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">bestLabels</span><span class="p">,</span> <span class="n">criteria</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">KMEANS_RANDOM_CENTERS</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Determine Pixel Counts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixelCounts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">minlength</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="c1"># ------------Temparature Hardware Dependant------------------</span>
+        <span class="c1"># Uncomment if You Wish to Implement OCR Temparature Detection</span>
+        <span class="c1"># ------------------------------------------------------------</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#     self.determineClusterTemp(centers)</span>
+        <span class="c1"># except TempDetectionFailed:</span>
+        <span class="c1">#     self.resetTempData()</span>
+        <span class="c1"># ------------------------------------------------------------</span>
+
+        <span class="c1"># convert to ints to get a single pixel value</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">centers</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="c1"># make int to satisfy python labels are ints corresponding to their respective centre</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">segmented</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">centers</span><span class="p">[</span><span class="n">labels</span><span class="p">]</span>
+
+        <span class="c1"># Reshape to original image shape</span>
+        <span class="n">segmentedImg</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">segmented</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="c1"># Optional: convert back to BGR for visualization</span>
+        <span class="n">segmentedBGR</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">segmentedImg</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_LAB2BGR</span><span class="p">)</span>
+
+        <span class="n">outlined</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># sort by intensity</span>
+        <span class="n">sortedIndices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">centers</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Mask for Highest Intensity Region</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">sortedIndices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="mi">255</span>
+        <span class="c1"># self.saveFrame(mask)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">mask2</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="n">sortedIndices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+            <span class="p">)</span> <span class="o">*</span> <span class="mi">255</span>
+            <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
+                <span class="n">mask2</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+            <span class="p">)</span>
+            <span class="n">cv</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span>
+                <span class="n">outlined</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colours</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colours</span><span class="p">)],</span> <span class="mi">2</span>
+            <span class="p">)</span>
+        <span class="c1"># Outlines of top 2 k regions and BGR Segments</span>
+        <span class="k">if</span> <span class="n">saveDiagonstics</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">saveFrame</span><span class="p">(</span>
+                <span class="n">outlined</span><span class="p">,</span> <span class="s2">&quot;kMeansOutlines&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameCount</span><span class="p">,</span> <span class="s2">&quot;diagonstics&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">saveFrame</span><span class="p">(</span>
+                <span class="n">segmentedBGR</span><span class="p">,</span> <span class="s2">&quot;kMeansSegments&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameCount</span><span class="p">,</span> <span class="s2">&quot;diagonstics&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mask</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.classifyHotspot">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.classifyHotspot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">classifyHotspot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">saveVisuals</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Classify and score hotspots from a clustered mask.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (np.ndarray): Original BGR frame.</span>
+<span class="sd">            mask (np.ndarray): Binary mask of hotspot candidate regions.</span>
+<span class="sd">            saveVisuals (bool): Whether to save annotated hotspot frames.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[list, bool]:</span>
+<span class="sd">                - Sorted list of hotspot data tuples, containing:</span>
+<span class="sd">                  (label, score, temp, centroid, ΔPscore, ΔP, z, zNorm,</span>
+<span class="sd">                  compactness, aspect ratio, eccentricity, area).</span>
+<span class="sd">                - Boolean indicating whether any hotspot exceeds threshold.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterMask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filterMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">hotspotDetection</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Join Clusters</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span>
+            <span class="n">cv</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusterJoinKernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusterJoinKernel</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">closedMask</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">filterMask</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">MORPH_CLOSE</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+        <span class="n">n_labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">centroids</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">connectedComponentsWithStats</span><span class="p">(</span>
+            <span class="n">closedMask</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">8</span>
+        <span class="p">)</span>
+        <span class="n">LABFrame</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">COLOR_BGR2Lab</span><span class="p">)</span>
+        <span class="n">LChannel</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">LABFrame</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">results</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_labels</span><span class="p">):</span>
+            <span class="n">componentMask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">((</span><span class="n">labels</span> <span class="o">==</span> <span class="n">lbl</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+            <span class="n">otherHotspotsMask</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span> <span class="o">!=</span> <span class="n">lbl</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">labels</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">componentArea</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">lbl</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">CC_STAT_AREA</span><span class="p">]</span>
+            
+            <span class="c1"># ------------Temparature Hardware Dependant------------------</span>
+            <span class="c1"># Uncomment if You Wish to Implement OCR Temparature Detection</span>
+            <span class="c1"># ------------------------------------------------------------</span>
+            <span class="c1"># try:</span>
+            <span class="c1">#     componentTemp = self.componentTemp(LChannel, componentMask)</span>
+            <span class="c1"># except TempDetectionFailed:</span>
+            <span class="c1">#     self.resetTempData()</span>
+            <span class="c1">#     componentTemp = None</span>
+            <span class="c1"># ------------------------------------------------------------</span>
+            
+            <span class="n">deltaPRobust</span><span class="p">,</span> <span class="n">zScore</span><span class="p">,</span> <span class="n">deltaPScore</span><span class="p">,</span> <span class="n">zScoreNorm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixelContrast</span><span class="p">(</span>
+                <span class="n">LChannel</span><span class="p">,</span> <span class="n">componentMask</span><span class="p">,</span> <span class="n">otherHotspotsMask</span><span class="p">,</span> <span class="n">componentArea</span>
+            <span class="p">)</span>
+            <span class="n">compactness</span><span class="p">,</span> <span class="n">aspectRatioNorm</span><span class="p">,</span> <span class="n">eccentricity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapeAndCompactness</span><span class="p">(</span>
+                <span class="n">componentMask</span><span class="p">,</span> <span class="n">componentArea</span>
+            <span class="p">)</span>
+            <span class="n">hotspotScore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hotSpotScore</span><span class="p">(</span>
+                <span class="n">deltaPScore</span><span class="o">=</span><span class="n">deltaPScore</span><span class="p">,</span>
+                <span class="n">zScoreNorm</span><span class="o">=</span><span class="n">zScoreNorm</span><span class="p">,</span>
+                <span class="n">compactness</span><span class="o">=</span><span class="n">compactness</span><span class="p">,</span>
+                <span class="n">aspectRatio</span><span class="o">=</span><span class="n">aspectRatioNorm</span><span class="p">,</span>
+                <span class="n">eccentricity</span><span class="o">=</span><span class="n">eccentricity</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">hotspotScore</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hotSpotThreshold</span><span class="p">:</span>
+                <span class="n">hotspotDetection</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="n">hotspotScore</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">hotSpotThreshold</span><span class="p">:</span>
+                <span class="n">cv</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span>
+                    <span class="n">frame</span><span class="p">,</span>
+                    <span class="p">[</span>
+                        <span class="n">cv</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
+                            <span class="n">componentMask</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+                        <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="p">],</span>
+                    <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">colours</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="mi">1</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">centroids</span><span class="p">[</span><span class="n">lbl</span><span class="p">])</span>
+                <span class="n">cv</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span>
+                    <span class="n">frame</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lbl</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">),</span>
+                    <span class="n">cv</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span>
+                    <span class="mf">0.5</span><span class="p">,</span>
+                    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+                    <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">cv</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="c1"># component temp set to None for now</span>
+            <span class="n">centroidTuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">centroids</span><span class="p">[</span><span class="n">lbl</span><span class="p">])</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">lbl</span><span class="p">,</span>
+                    <span class="n">hotspotScore</span><span class="p">,</span>
+                    <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">centroidTuple</span><span class="p">,</span>
+                    <span class="n">deltaPScore</span><span class="p">,</span>
+                    <span class="n">deltaPRobust</span><span class="p">,</span>
+                    <span class="n">zScore</span><span class="p">,</span>
+                    <span class="n">zScoreNorm</span><span class="p">,</span>
+                    <span class="n">compactness</span><span class="p">,</span>
+                    <span class="n">aspectRatioNorm</span><span class="p">,</span>
+                    <span class="n">eccentricity</span><span class="p">,</span>
+                    <span class="nb">float</span><span class="p">(</span><span class="n">componentArea</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">saveVisuals</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">saveFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;hotspots&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameCount</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">)</span>
+
+        <span class="n">sortedResults</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sortedResults</span><span class="p">,</span> <span class="n">hotspotDetection</span></div>
+
+
+    <span class="c1"># Filters out Noise</span>
+<div class="viewcode-block" id="HotspotDetector.filterMask">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.filterMask">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filterMask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Frame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter out noise regions from a binary mask.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mask (np.ndarray): Input binary mask.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Filtered mask containing only valid regions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">connectedComponentsWithStats</span><span class="p">(</span>
+            <span class="n">mask</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">8</span>
+        <span class="p">)</span>
+        <span class="n">filteredMask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_labels</span><span class="p">):</span>
+            <span class="n">compArea</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">lbl</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">CC_STAT_AREA</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">compArea</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameArea</span> <span class="o">/</span> <span class="mi">5000</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">filteredMask</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">lbl</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
+
+        <span class="k">return</span> <span class="n">filteredMask</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.shapeAndCompactness">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.shapeAndCompactness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shapeAndCompactness</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">componentMask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate shape metrics for a region.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            componentMask (Frame): Binary mask of a connected component.</span>
+<span class="sd">            area (float): Pixel area of the component.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[float, float, float]:</span>
+<span class="sd">                - Normalized compactness.</span>
+<span class="sd">                - Aspect ratio.</span>
+<span class="sd">                - Eccentricity (or aspect ratio if ellipse fitting fails).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
+            <span class="n">componentMask</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+        <span class="p">)</span>
+        <span class="c1"># Should only be one contour</span>
+        <span class="n">perimeter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">arcLength</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Elipse Required 5 pixels already been filtered for size</span>
+
+        <span class="n">eccentricity</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="p">(</span><span class="n">major_axis</span><span class="p">,</span> <span class="n">minor_axis</span><span class="p">),</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">fitEllipse</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">eccentricity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">major_axis</span><span class="p">,</span> <span class="n">minor_axis</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">major_axis</span><span class="p">,</span> <span class="n">minor_axis</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># square has 0.785 compactness normalised by definition</span>
+        <span class="n">compactness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">perimeter</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">aspectRatioNorm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="n">compactness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">compactness</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">compactnessCutoff</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">eccentricity</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">eccentricity</span> <span class="o">=</span> <span class="n">aspectRatioNorm</span>
+        <span class="c1"># normalised by definition</span>
+
+        <span class="k">return</span> <span class="n">compactness</span><span class="p">,</span> <span class="n">aspectRatioNorm</span><span class="p">,</span> <span class="n">eccentricity</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.pixelContrast">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelContrast">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pixelContrast</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">LChannel</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span>
+        <span class="n">componentMask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span>
+        <span class="n">otherHotspotsMask</span><span class="p">:</span> <span class="n">Frame</span><span class="p">,</span>
+        <span class="n">area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute contrast metrics for a hotspot region.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            LChannel (Frame): Luminance channel of LAB frame.</span>
+<span class="sd">            componentMask (Frame): Mask of the region of interest.</span>
+<span class="sd">            otherHotspotsMask (Frame): Mask of other hotspots to exclude.</span>
+<span class="sd">            area (float): Pixel area of the region.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[float, float, float, float]:</span>
+<span class="sd">                - Robust ΔP contrast.</span>
+<span class="sd">                - Global Z-score.</span>
+<span class="sd">                - ΔP probability score.</span>
+<span class="sd">                - Normalized Z-score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ksize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilationSize</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">area</span><span class="p">)))</span>
+        <span class="n">kernel</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">MORPH_ELLIPSE</span><span class="p">,</span> <span class="p">(</span><span class="n">ksize</span><span class="p">,</span> <span class="n">ksize</span><span class="p">))</span>
+        <span class="n">dilated</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">componentMask</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">hotMask</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">componentMask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">localMask</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="p">(</span><span class="n">dilated</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">hotMask</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">otherHotspotsMask</span><span class="p">)</span>
+
+        <span class="n">hotVals</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">LChannel</span><span class="p">[</span><span class="n">hotMask</span><span class="p">]</span>
+        <span class="n">localVals</span><span class="p">:</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">LChannel</span><span class="p">[</span><span class="n">localMask</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hotVals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">localVals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+
+        <span class="n">muHot</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">hotVals</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">LChannel</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">LChannel</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">medianLocal</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">localVals</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">iqrLocal</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">localVals</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">localVals</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1"># Robust Contrast</span>
+        <span class="n">deltaPRobust</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="n">muHot</span> <span class="o">-</span> <span class="n">medianLocal</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">iqrLocal</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+
+        <span class="c1"># Robust Constrast Probability</span>
+
+        <span class="n">deltaPProbabilityScore</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigmoidSteepnessDeltaP</span> <span class="o">*</span> <span class="n">deltaPRobust</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Global Z score</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">muHot</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+        <span class="n">zScoreNorm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigmoidSteepnessZ</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">deltaPRobust</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">deltaPProbabilityScore</span><span class="p">,</span> <span class="n">zScoreNorm</span></div>
+
+
+<div class="viewcode-block" id="HotspotDetector.hotSpotScore">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.hotSpotScore">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hotSpotScore</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">deltaPScore</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">zScoreNorm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">compactness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">aspectRatio</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">eccentricity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute a weighted hotspot score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            deltaPScore (float): Probability score from robust ΔP.</span>
+<span class="sd">            zScoreNorm (float): Normalized Z-score.</span>
+<span class="sd">            compactness (float): Compactness of the hotspot region.</span>
+<span class="sd">            aspectRatio (float): Aspect ratio of the hotspot region.</span>
+<span class="sd">            eccentricity (float): Eccentricity of the hotspot region.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Final weighted hotspot score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Normalise Z score</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">deltaPScore</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wDeltaP</span>
+            <span class="o">+</span> <span class="n">zScoreNorm</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wZscore</span>
+            <span class="o">+</span> <span class="n">compactness</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wCompactness</span>
+            <span class="o">+</span> <span class="n">aspectRatio</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wAspectRatio</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">eccentricity</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wEccentricity</span>
+        <span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="HotspotDetector.processingDiagonstics">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.processingDiagonstics">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">processingDiagonstics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot diagnostic data such as pixel count distributions.</span>
+
+<span class="sd">        Saves plots to the configured output path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># self.utility.plotFreqArray(self.clusterTemps, &quot;Temp of Clusters&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">utility</span><span class="o">.</span><span class="n">plotFreqArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixelCounts</span><span class="p">,</span> <span class="s2">&quot;Pixel Count of Clusters&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># --------------------Hotspot Helpers-----------------------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------To Be Modified Dependant on Hardware ------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+<div class="viewcode-block" id="HotspotDetector.pixelToTemp">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelToTemp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pixelToTemp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixelVal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a pixel value to temperature using calibration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pixelVal (float): Pixel luminance value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Estimated temperature.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TempDetectionFailed: If calibration parameters are missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">intercept</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TempDetectionFailed</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">*</span> <span class="n">pixelVal</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">intercept</span></div>
+
+
+
+
+<div class="viewcode-block" id="HotspotDetector.resetFrameData">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.resetFrameData">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resetFrameData</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset frame-dependent state variables.</span>
+
+<span class="sd">        Resets temperature calibration, frame buffers, and cluster statistics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxTemp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minTemp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coldestPixel</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># TEMP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hottestPixel</span> <span class="o">=</span> <span class="mi">255</span>  <span class="c1"># TEMP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intercept</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labFrame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameArea</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Data Points based on k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusterTemps</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixelCounts</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span></div>
+</div>
+
+
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+    
+    <span class="c1"># def componentTemp(self, LChannel: np.ndarray, componentMask: np.ndarray) -&gt; float | None:</span>
+    <span class="c1">#     &quot;&quot;&quot;Estimate the temperature of a component region.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     This method is **hardware dependent** and must be implemented</span>
+    <span class="c1">#     based on the thermal camera&#39;s pixel-to-temperature calibration.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Args:</span>
+    <span class="c1">#         LChannel (np.ndarray): Luminance channel of the LAB frame.</span>
+    <span class="c1">#         componentMask (np.ndarray): Binary mask of the component region.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Returns:</span>
+    <span class="c1">#         float | None: Estimated temperature of the component, or None if unavailable.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     if (self.tempDetected is False):</span>
+    <span class="c1">#         return None</span>
+    <span class="c1">#     componentTemp: float = cv.mean(LChannel, componentMask.astype(np.uint8))[0]</span>
+    <span class="c1">#     return self.pixelToTemp(componentTemp)</span>
+
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------To Be Modified Dependant on Hardware ------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># def updateTemps(self, frame: np.ndarray) -&gt; None:</span>
+    <span class="c1">#     &quot;&quot;&quot;Update minimum and maximum temperature readings from the frame.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     This method is **hardware dependent**. It may require OCR or</span>
+    <span class="c1">#     camera-specific metadata extraction to obtain temperature values.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Args:</span>
+    <span class="c1">#         frame (np.ndarray): Input frame from the camera.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Raises:</span>
+    <span class="c1">#         TempDetectionFailed: If temperature readings cannot be extracted.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     ...</span>
+    <span class="c1">#     height, width = frame.shape[:2]</span>
+
+    <span class="c1">#     ## Will Need to update based on camera if using frame temps -&gt; These two lines are hardware dependant</span>
+    <span class="c1">#     crop1: Frame = frame[int(height - height * 0.12):int(height - height * 0.061), int(width * 0.888):int(width * 0.96125)]</span>
+    <span class="c1">#     crop2: Frame = frame[int(height * 0.061):int(height * 0.12), int(width * 0.82625):int(width * 0.96125)]</span>
+
+    <span class="c1">#     gray1: Frame = cv.cvtColor(crop1, cv.COLOR_BGR2GRAY)</span>
+    <span class="c1">#     gray2: Frame = cv.cvtColor(crop2, cv.COLOR_BGR2GRAY)</span>
+
+    <span class="c1">#     # basic threshold</span>
+    <span class="c1">#     _, thresh1 = cv.threshold(gray1, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)</span>
+    <span class="c1">#     _, thresh2 = cv.threshold(gray2, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)</span>
+
+    <span class="c1">#     custom_config = r&#39;--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789.°C&#39;</span>
+    <span class="c1">#     min: str = pytesseract.image_to_string(thresh1, config=custom_config)</span>
+    <span class="c1">#     max: str = pytesseract.image_to_string(thresh2, config=custom_config)</span>
+
+    <span class="c1">#     if (len(max) == 0 or len(min) == 0):</span>
+    <span class="c1">#         raise TempDetectionFailed()</span>
+
+    <span class="c1">#     match_max = re.search(r&quot;\d{2}\.\d&quot;, max)</span>
+    <span class="c1">#     match_min = re.search(r&quot;\d{2}\.\d&quot;, min)</span>
+
+    <span class="c1">#     self.maxTemp: float | None = float(match_max.group()) if match_max else None</span>
+    <span class="c1">#     self.minTemp: float | None = float(match_min.group()) if match_min else None</span>
+
+    <span class="c1"># def determineClusterTemp(self, centres: np.ndarray) -&gt; None:</span>
+    <span class="c1">#     &quot;&quot;&quot;Determine the temperature of each k-means cluster.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     This method is **hardware dependent** and requires a valid</span>
+    <span class="c1">#     calibration function from pixel values to temperatures.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Args:</span>
+    <span class="c1">#         centres (np.ndarray): Array of cluster centers from k-means.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Raises:</span>
+    <span class="c1">#         TempDetectionFailed: If calibration parameters are missing.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     if (self.hottestPixel is None or self.coldestPixel is None or self.maxTemp is None or self.minTemp is None):</span>
+    <span class="c1">#         raise TempDetectionFailed()</span>
+    <span class="c1">#     self.gradient =  (self.maxTemp - self.minTemp) / (self.hottestPixel - self.coldestPixel)</span>
+
+    <span class="c1">#     self.intercept = self.maxTemp - self.gradient * self.hottestPixel</span>
+
+    <span class="c1">#     for i in range(len(centres)):</span>
+    <span class="c1">#         # centres looks like [[L ,A ,B], [L, A, B]]</span>
+    <span class="c1">#         pixel_value: np.ndarray = centres[i]</span>
+    <span class="c1">#         self.clusterTemps[i] = self.pixelToTemp(pixel_value[0])</span>
+
+    <span class="c1">#     # sort in reverse order</span>
+    <span class="c1">#     sortId: np.ndarray = np.argsort(self.clusterTemps)[::-1]</span>
+    <span class="c1">#     self.clusterTemps = self.clusterTemps[sortId]</span>
+    <span class="c1">#     self.pixelCounts = self.pixelCounts[sortId]</span>
+    
+    <span class="c1"># def resetTempData(self) -&gt; None:</span>
+    <span class="c1">#     &quot;&quot;&quot;Reset all hardware-dependent temperature data.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     This method is **hardware dependent**. It should reset</span>
+    <span class="c1">#     min/max temperature values and any calibration parameters.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     self.maxTemp = None</span>
+    <span class="c1">#     self.minTemp = None</span>
+    <span class="c1">#     self.coldestPixel = None</span>
+    <span class="c1">#     self.hottestPixel = None</span>
+    <span class="c1">#     self.gradient = None</span>
+    <span class="c1">#     self.intercept = None</span>
+    <span class="c1">#     self.clusterTemps = np.zeros(self.k)</span>
+    
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+    <span class="c1"># ----------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cormac Morrison.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

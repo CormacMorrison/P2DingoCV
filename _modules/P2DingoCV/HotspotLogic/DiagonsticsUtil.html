@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P2DingoCV.HotspotLogic.DiagonsticsUtil &mdash; P2DingoCV 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            P2DingoCV
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/P2DingoCV.html">P2DingoCV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.html">P2DingoCV.Camera</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.Camera.html">P2DingoCV.Camera.Camera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.CameraFactory.html">P2DingoCV.Camera.CameraFactory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.CameraFactory.html#P2DingoCV.Camera.CameraFactory.CameraFactory"><code class="docutils literal notranslate"><span class="pre">CameraFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.ImageCamera.html">P2DingoCV.Camera.ImageCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.ImageCamera.html#P2DingoCV.Camera.ImageCamera.ImageCamera"><code class="docutils literal notranslate"><span class="pre">ImageCamera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.VideoCamera.html">P2DingoCV.Camera.VideoCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Camera.VideoCamera.html#P2DingoCV.Camera.VideoCamera.VideoCamera"><code class="docutils literal notranslate"><span class="pre">VideoCamera</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.html">P2DingoCV.HotspotLogic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html">P2DingoCV.HotspotLogic.DiagonsticsUtil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils"><code class="docutils literal notranslate"><span class="pre">VisualUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.Exceptions.html">P2DingoCV.HotspotLogic.Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.html">P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html">P2DingoCV.HotspotLogic.HotspotDetector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector"><code class="docutils literal notranslate"><span class="pre">HotspotDetector</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Types.html">P2DingoCV.Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.Types.Types.html">P2DingoCV.Types.Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html">P2DingoCV.cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runAll"><code class="docutils literal notranslate"><span class="pre">runAll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runMinimal"><code class="docutils literal notranslate"><span class="pre">runMinimal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.runVerbose"><code class="docutils literal notranslate"><span class="pre">runVerbose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/P2DingoCV.cli.html#P2DingoCV.cli.showVisual"><code class="docutils literal notranslate"><span class="pre">showVisual()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">P2DingoCV</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">P2DingoCV.HotspotLogic.DiagonsticsUtil</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for P2DingoCV.HotspotLogic.DiagonsticsUtil</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="VisualUtils">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VisualUtils</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Utility class for visualizing and saving images, histograms, and tables.</span>
+
+<span class="sd">    Provides methods to plot image histograms, save frames, plot frequency arrays, </span>
+<span class="sd">    and pretty-print tables. All outputs are saved to the specified directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="VisualUtils.__init__">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathToVisuals</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;visuals&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the VisualUtils object and create output directory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pathToVisuals (str): Path to directory where visuals will be saved. Defaults to &quot;visuals&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span> <span class="o">=</span> <span class="n">pathToVisuals</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="VisualUtils.plotHistogram">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils.plotHistogram">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plotHistogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot and save the histogram of an image.</span>
+
+<span class="sd">        Supports grayscale and BGR images. Saves the histogram as a PNG in the output directory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (np.ndarray): Image array (grayscale or BGR).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray | None: The input frame, also displayed using OpenCV.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: If frame is None.</span>
+<span class="sd">            ValueError: If the image format is unsupported.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;file could not be read, check with os.path.exists()&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Grayscale</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Detected grayscale image&quot;</span><span class="p">)</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">frame</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">frame</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">gray_hist</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">gray</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Grayscale Histogram&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gray_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Intensity&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span> <span class="s2">&quot;histogram_gray.png&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="c1"># BGR</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Detected BGR image&quot;</span><span class="p">)</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;BGR Histogram&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
+                <span class="n">hist</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">frame</span><span class="p">],</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Intensity&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span> <span class="s2">&quot;histogram_bgr.png&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported image format&quot;</span><span class="p">)</span>
+
+        <span class="n">cv</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;frame&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+<div class="viewcode-block" id="VisualUtils.plotFreqArray">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils.plotFreqArray">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plotFreqArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot a 1D array as a bar chart and save it as a PNG.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            arr (np.ndarray): 1D array of values to plot.</span>
+<span class="sd">            title (str): Title of the plot, also used as filename.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plots_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span> <span class="s2">&quot;plots&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">plots_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)),</span> <span class="n">arr</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Index&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">)</span>
+
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plots_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="VisualUtils.saveFrame">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils.saveFrame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">saveFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">frameCount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;frames&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save an image frame with a tag and frame count.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (np.ndarray): Image frame to save.</span>
+<span class="sd">            tag (str): Descriptive tag for the frame.</span>
+<span class="sd">            frameCount (int): Frame number to include in the filename.</span>
+<span class="sd">            folder (str): Subfolder under the output path to save frames. Defaults to &quot;frames&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputPath</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">folder_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;frames/frame_</span><span class="si">{</span><span class="n">frameCount</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">.png&quot;</span>
+        <span class="p">)</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frame saved to </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VisualUtils.printTable">
+<a class="viewcode-back" href="../../../_autosummary/P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils.printTable">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">printTable</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pretty-print a list of lists (or tuples) as a table with borders.</span>
+
+<span class="sd">        Numeric values are formatted to the specified precision. Nested tuples/lists are also formatted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (list[list|tuple]): 2D list or list of tuples containing table data.</span>
+<span class="sd">            headers (list[str] | None): Optional list of column headers.</span>
+<span class="sd">            precision (int): Number of decimal places for numeric values. Defaults to 2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">str_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">col_widths</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">str_row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                    <span class="n">val_str</span> <span class="o">=</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                    <span class="n">val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">val_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="n">str_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_str</span><span class="p">)</span>
+            <span class="n">str_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">str_row</span><span class="p">)</span>
+
+        <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">):</span>
+                <span class="n">max_data_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str_data</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str_data</span><span class="p">)))</span>
+                <span class="n">col_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">max_data_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">):</span>
+                <span class="n">max_data_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str_data</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">str_data</span><span class="p">)))</span>
+                <span class="n">col_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_data_len</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">print_row</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;| &quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">:{</span><span class="n">col_widths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; |&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;+-&quot;</span> <span class="o">+</span> <span class="s2">&quot;-+-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">col_widths</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-+&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+            <span class="n">print_row</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">str_data</span><span class="p">:</span>
+            <span class="n">print_row</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">headers</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cormac Morrison.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
