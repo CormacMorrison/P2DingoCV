@@ -53,7 +53,7 @@ Quick Setup
 
 .. code-block:: bash
 
-   git clone <repository-url>
+   git clone git@github.com:CormacMorrison/P2DingoCV.git
    cd P2DingoCV
    ./setup.sh
 
@@ -64,11 +64,11 @@ The setup script will automatically:
 - Install all dependencies
 - Set up the project for development
 
-2. **Activate the Poetry environment:**
+2. **Run the Program:**
 
 .. code-block:: bash
 
-   poetry shell
+   poetry run hotspot-cli
 
 Manual Setup (Alternative)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,6 +85,48 @@ If you prefer to set up manually:
 
    # Run the commands
    poetry run hotspot-cli
+
+Compile to Binary using Nuitka (Optional After poetry install)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you would prefer to have a binary install a compile script using 
+Nuitka has been provided.
+
+.. code-block:: bash
+
+   ./compile.sh
+   # Run if you want the executable to be globally avaliable
+   sudo mv build/hotspot-cli /usr/local/bin/
+
+It will output an single executable to a folder called build which you 
+can relocate to a different location. 
+
+If you wish to make it globally avaliable run 
+
+.. code-block:: bash
+   # Run if you want the executable to be globally avaliable
+   sudo mv build/hotspot-cli /usr/local/bin/
+
+
+If you choose to do this replace every instance of 
+
+.. code-block:: bash
+
+   poetry run hotspot-cli
+
+with 
+
+.. code-block:: bash
+
+   ./path/to/executable/hotspot-cli 
+
+or just
+
+.. code-block:: bash
+
+   hotspot-cli
+
+if you have made it globally avaliable
 
 CLI Overview
 ------------
@@ -105,6 +147,10 @@ Command Structure
 .. code-block:: bash
 
    poetry run hotspot-cli run [OPTIONS] INPUT_PATH OUTPUT_PATH 
+
+   # or if you have compiled and made globally avaliable
+
+   hotspot-cli run [OPTIONS] INPUT_PATH OUTPUT_PATH 
 
 Arguments
 ~~~~~~~~~
@@ -216,6 +262,12 @@ Parameter Descriptions
 
 Input Source Types
 ------------------
+Directory of Images
+~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   poetry run hotspot-cli run input/image_sequence/ output/batch_results/
 
 Video Files
 ~~~~~~~~~~~
@@ -225,20 +277,6 @@ Video Files
    poetry hotspot-cli run input/thermal_video.mp4 output/results/
 
 Supported formats: MP4, AVI, MOV, etc.
-
-Camera Configuration
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   poetry run hotspot-cli run camera_config.json output/live_results/
-
-Directory of Images
-~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   poetry run hotspot-cli run input/image_sequence/ output/batch_results/
 
 Output Structure
 ----------------
@@ -408,13 +446,7 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`P2DingoCV documentation
 =======================
-
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
 
 .. toctree::
    :maxdepth: 2
