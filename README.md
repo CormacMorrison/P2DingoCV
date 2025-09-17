@@ -1,75 +1,76 @@
-# Welcome to P2DingoCV\'s documentation!
+# P2DingoCV Documentation
 
-Find the Full Documentation here on github pages 
+Welcome to P2DingoCV's documentation!
 
-https://cormacmorrison.github.io/P2DingoCV/index.html
+P2DingoCV is a computer vision program designed for the P2Dingo project, an autonomous solar panel inspection quadruped. This program processes images captured by the quadruped to determine if a solar hotspot is present in a given image. The solution combines traditional computer vision techniques and K-means segmentation algorithms to detect hotspots.
 
-P2DingoCV is a computer vision program designed for the P2Dingo project.
-The P2Dingo project is an autonomus solar panel inspection quadraped.
-This program is designed to take images the quadraped captures and
-determine if a solar hotspot is present in a given image. This
-documentation provides comprehensive coverage of all modules and their
-functionality.
+Due to limited data quality for training a neural network, this approach relies on carefully tuned parameters and heuristics for detecting solar hotspots.
 
-This project due to a lack quality data required to develop a neural
-network in the specific orientation P2Dingo captures images in relies on
-a traditional computer vision approach and k means segmentation
-algoritim in combination with heuristics to determine if a panel has a
-hotspot.
+---
 
-The default paramaters were carefully hand tuned by me but I have left
-open a method via a JSON file to update them as you see fit to tune for
-the specifc conditions of P2Dingo which I have not yet been able to see.
+## Table of Contents
+
+- [Overview](#overview)
+- [Installation and Setup](#installation-and-setup)
+  - [Quick Setup](#quick-setup)
+  - [Manual Setup](#manual-setup)
+  - [Compile to Binary using Nuitka (Optional)](#compile-to-binary-using-nuitka-optional)
+- [CLI Usage Guide](#cli-usage-guide)
+  - [Basic Usage](#basic-usage)
+  - [Usage Examples](#usage-examples)
+  - [Advanced Usage](#advanced-usage)
+- [Configuration Files](#configuration-files)
+  - [Detection Parameters](#detection-parameters-configuration)
+  - [Input Source Types](#input-source-types)
+  - [Output Structure](#output-structure)
+  - [Troubleshooting](#troubleshooting)
+- [Getting Help](#getting-help)
+- [API Documentation](#api-documentation)
+
+---
 
 ## Overview
 
 P2DingoCV consists of two main modules:
 
--   **Camera Module**: Handles camera operations and image capture
-    functionality
--   **HotspotLogic Module**: Implements hotspot detection and analysis
-    logic
-
-# CLI Usage Guide
-
-This guide explains how to install, set up, and run the P2DingoCV
-hotspot detection CLI tool.
+- **Camera Module**: Handles camera operations and image capture functionality.
+- **HotspotLogic Module**: Implements hotspot detection and analysis logic.
 
 ## Installation and Setup
 
 ### Prerequisites
 
--   Python 3.11 or higher
--   Poetry (for dependency management)
+- Python 3.11 or higher
+- Poetry (for dependency management)
 
 ### Quick Setup
 
-1.  **Clone the repository and run the setup script:**
+1. **Clone the repository and run the setup script:**
 
-``` bash
-git clone <repository-url>
-cd P2DingoCV
-./setup.sh
-```
+    ```bash
+    git clone git@github.com:CormacMorrison/P2DingoCV.git
+    cd P2DingoCV
+    ./setup.sh
+    ```
 
-The setup script will automatically:
+    The setup script will automatically:
 
--   Install Poetry (if not already installed)
--   Create a virtual environment
--   Install all dependencies
--   Set up the project for development
+    - Install Poetry (if not already installed)
+    - Create a virtual environment
+    - Install all dependencies
+    - Set up the project for development
 
-2.  **Activate the Poetry environment:**
+2. **Run the Program:**
 
-``` bash
-poetry shell
-```
+    ```bash
+    poetry run hotspot-cli
+    ```
 
-### Manual Setup (Alternative)
+### Manual Setup
 
 If you prefer to set up manually:
 
-``` bash
+```bash
 # Install Poetry
 pipx install poetry
 
@@ -78,45 +79,65 @@ poetry install
 
 # Run the commands
 poetry run hotspot-cli
+````
+
+### Compile to Binary using Nuitka (Optional)
+
+After the Poetry setup, if you'd like to compile the program to a binary executable, use the provided `compile.sh` script:
+
+```bash
+./compile.sh
+# Move to a global directory
+sudo mv build/hotspot-cli /usr/local/bin/
 ```
 
-## CLI Overview
+You can now run it globally with:
+
+```bash
+hotspot-cli
+```
+
+---
+
+## CLI Usage Guide
 
 The P2DingoCV CLI provides hotspot detection with multiple output modes:
 
--   **Minimal Mode** (`-m`): JSON results only
--   **Verbose Mode** (`-v`): All component data and metrics
--   **Visual Mode** (`-vi`): Display processed frames with hotspots
-    highlighted
--   **All Mode** (`-a`): Verbose output + visual display
+* **Minimal Mode** (`-m`): JSON results only
+* **Verbose Mode** (`-v`): All component data and metrics
+* **Visual Mode** (`-vi`): Display processed frames with hotspots highlighted
+* **All Mode** (`-a`): Verbose output + visual display
 
-## Basic Usage
+### Basic Usage
 
-Command Structure \~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
+#### Command Structure
 
-``` bash
-poetry run hotspot-cli run [OPTIONS] INPUT_PATH OUTPUT_PATH 
+```bash
+poetry run hotspot-cli run [OPTIONS] INPUT_PATH OUTPUT_PATH
+# Or if globally available
+hotspot-cli run [OPTIONS] INPUT_PATH OUTPUT_PATH
 ```
 
-### Arguments
+#### Arguments
 
--   `INPUT_PATH`: Path to input source (camera config file, video file,
-    or image)
--   `OUTPUT_PATH`: Directory where results will be saved
+* `INPUT_PATH`: Path to the input source (camera config file, video file, or image)
+* `OUTPUT_PATH`: Directory where results will be saved
 
-### Options
+#### Options
 
--   `-m, --minimal`: Run with JSON output only
--   `-v, --verbose`: Run with detailed component data
--   `-vi, --visual`: Show visual output with detected hotspots
--   `-a, --all`: Run with both verbose output and visuals
--   `-c, --config PATH`: Optional JSON configuration file
+* `-m, --minimal`: Run with JSON output only
+* `-v, --verbose`: Run with detailed component data
+* `-vi, --visual`: Show visual output with detected hotspots
+* `-a, --all`: Run with both verbose output and visuals
+* `-c, --config PATH`: Optional JSON configuration file
 
-## Usage Examples
+---
 
-### Basic Hotspot Detection (Minimal Mode)
+### Usage Examples
 
-``` bash
+#### Basic Hotspot Detection (Minimal Mode)
+
+```bash
 # Default minimal mode (no flags needed)
 poetry run hotspot-cli run input/folderOfFrames output/results/
 
@@ -124,120 +145,100 @@ poetry run hotspot-cli run input/folderOfFrames output/results/
 poetry run hotspot-cli run -m input/folderOfFrames output/results/
 ```
 
-**Output:** JSON files with detection results in the output directory.
+#### Verbose Mode with Detailed Metrics
 
-### Verbose Mode with Detailed Metrics
-
-``` bash
+```bash
 poetry run hotspot-cli run -v input/folderOfFrames output/detailed_results/
 ```
 
-**Output:** JSON results plus comprehensive logs and intermediate
-metrics.
+#### Visual Mode for Development/Testing
 
-### Visual Mode for Development/Testing
-
-``` bash
+```bash
 poetry run hotspot-cli run -vi input/FolderOfFrames output/visual_test/
 ```
 
-**Output:** Real-time visual display showing detected hotspots overlaid
-on frames.
+#### Maximum Mode (Verbose + Visual)
 
-### Maximum Mode (Verbose + Visual)
-
-``` bash
+```bash
 poetry run hotspot-cli run -a input/FolderOfFrames output/full_analysis/
 ```
 
-**Output:** Complete analysis with visual display and all component
-data.
+#### Using Custom Configuration
 
-### Using Custom Configuration
-
-``` bash
+```bash
 poetry run python -m P2DingoCV.cli run -v -c config/custom_detection.json input/data/ output/results/
 ```
 
+---
+
 ## Configuration Files
 
-Detection Parameters Configuration
-\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
+### Detection Parameters Configuration
 
 Create a JSON configuration file to customize detection parameters:
 
-``` json
+```json
 {
-    "k": 10,
-    "clusterJoinKernel": 3,
-    "hotSpotThreshold": 0.7,
-    "sigmoidSteepnessDeltaP": 0.25,
-    "sigmoidSteepnessZ": 0.23,
-    "compactnessCutoff": 0.6,
-    "dilationSize": 5,
-    "wDeltaP": 0.3,
-    "wZscore": 0.3,
-    "wCompactness": 0.4,
-    "wAspectRatio": 0.0,
-    "wEccentricity": 0.0
+  "k": 10,
+  "clusterJoinKernel": 3,
+  "hotSpotThreshold": 0.7,
+  "sigmoidSteepnessDeltaP": 0.25,
+  "sigmoidSteepnessZ": 0.23,
+  "compactnessCutoff": 0.6,
+  "dilationSize": 5,
+  "wDeltaP": 0.3,
+  "wZscore": 0.3,
+  "wCompactness": 0.4,
+  "wAspectRatio": 0.0,
+  "wEccentricity": 0.0
 }
 ```
 
-Parameter Descriptions \~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
+### Parameter Descriptions
 
--   `k`: Number of clusters for K-means clustering
--   `clusterJoinKernel`: Kernel size for joining nearby clusters
--   `hotSpotThreshold`: Threshold for hotspot classification (0.0-1.0)
--   `sigmoidSteepnessDeltaP`: Steepness parameter for delta-P sigmoid
-    function
--   `sigmoidSteepnessZ`: Steepness parameter for Z-score sigmoid
-    function
--   `compactnessCutoff`: Minimum compactness score for valid hotspots
--   `dilationSize`: Size of dilation kernel for morphological operations
--   `wDeltaP`: Weight for delta-P in composite scoring
--   `wZscore`: Weight for Z-score in composite scoring
--   `wCompactness`: Weight for compactness in composite scoring
--   `wAspectRatio`: Weight for aspect ratio in composite scoring
--   `wEccentricity`: Weight for eccentricity in composite scoring
+* `k`: Number of clusters for K-means clustering
+* `clusterJoinKernel`: Kernel size for joining nearby clusters
+* `hotSpotThreshold`: Threshold for hotspot classification (0.0-1.0)
+* `sigmoidSteepnessDeltaP`: Steepness parameter for delta-P sigmoid function
+* `sigmoidSteepnessZ`: Steepness parameter for Z-score sigmoid function
+* `compactnessCutoff`: Minimum compactness score for valid hotspots
+* `dilationSize`: Size of dilation kernel for morphological operations
+* `wDeltaP`, `wZscore`, `wCompactness`, `wAspectRatio`, `wEccentricity`: Weights for composite scoring
 
-## Input Source Types
+---
 
-### Video Files
+### Input Source Types
 
-``` bash
-poetry hotspot-cli run input/thermal_video.mp4 output/results/
+#### Directory of Images
+
+```bash
+poetry run hotspot-cli run input/image_sequence/ output/batch_results/
+```
+
+#### Video Files
+
+```bash
+poetry run hotspot-cli run input/thermal_video.mp4 output/results/
 ```
 
 Supported formats: MP4, AVI, MOV, etc.
 
-### Camera Configuration
+---
 
-``` bash
-poetry run hotspot-cli run camera_config.json output/live_results/
+### Output Structure
+
+#### Minimal Mode Output
+
+If a hotspot is detected:
+
 ```
-
-### Directory of Images
-
-``` bash
-poetry run hotspot-cli run input/image_sequence/ output/batch_results/
-```
-
-## Output Structure
-
-### Minimal Mode Output 
-
-Only if a hotspot is detected:
-
-``` text
 output/resultsFolder/
-├── hotspotOutput.json
+└── hotspotOutput.json
 ```
 
-### Maximum Mode Output 
+#### Maximum Mode Output
 
-Everything outputted:
-
-``` text
+```
 output/resultsFolder/
 ├── hotspotOutput.json
 ├── frames/
@@ -250,20 +251,16 @@ output/resultsFolder/
     └── plot1.png
 ```
 
-### Verbose Mode Output 
+#### Verbose Mode Output
 
-Intermediate text diagnostic data:
-
-``` text
+```
 output/resultsFolder/
-├── hotspotOutput.json
+└── hotspotOutput.json
 ```
 
-### Visual Mode Output 
+#### Visual Mode Output
 
-All visual data + basic text data:
-
-``` text
+```
 output/resultsFolder/
 ├── hotspotOutput.json
 ├── frames/
@@ -275,60 +272,66 @@ output/resultsFolder/
 └── plots/
     └── plot1.png
 ```
+
+---
 
 ## Advanced Usage
 
-### Combining Multiple Modes
+#### Combining Multiple Modes
 
-``` bash
+```bash
 # Run verbose AND visual modes simultaneously
 poetry run hotspot-cli run -v -vi input/data.mp4 output/combined/
 ```
 
+---
+
 ## Troubleshooting
 
-### Common Issues 
+### Common Issues
 
-1.  **Import Errors**
+1. **Import Errors**
 
-    ``` bash
-    # Ensure you're in the Poetry environment
-    poetry run python src/P2DingoCV/cli.py
+   ```bash
+   # Ensure you're in the Poetry environment
+   poetry run python src/P2DingoCV/cli.py
 
-    # Verify installation
-    poetry install --no-dev
-    ```
+   # Verify installation
+   poetry install --no-dev
+   ```
 
-2.  **Camera Access Issues**
+2. **Camera Access Issues**
 
-    ``` bash
-    # Check camera permissions (Linux/macOS)
-    ls -la /dev/video*
+   ```bash
+   # Check camera permissions (Linux/macOS)
+   ls -la /dev/video*
 
-    # Test camera access
-    python3 -c "import cv2; print(cv2.VideoCapture(0).isOpened())"
-    ```
+   # Test camera access
+   python3 -c "import cv2; print(cv2.VideoCapture(0).isOpened())"
+   ```
 
-3.  **Output Directory Permissions**
+3. **Output Directory Permissions**
 
-    ``` bash
-    # Create output directory with proper permissions
-    mkdir -p output/results
-    chmod 755 output/results
-    ```
+   ```bash
+   # Create output directory with proper permissions
+   mkdir -p output/results
+   chmod 755 output/results
+   ```
 
-4.  **Configuration File Errors**
+4. **Configuration File Errors**
 
-    ``` bash
-    # Validate JSON configuration
-    python3 -m json.tool config/detection_config.json
-    ```
+   ```bash
+   # Validate JSON configuration
+   python3 -m json.tool config/detection_config.json
+   ```
+
+---
 
 ## Getting Help
 
 ### CLI Help
 
-``` bash
+```bash
 # General help
 poetry run hotspot-cli --help
 
@@ -338,6 +341,12 @@ poetry run hotspot-cli run --help
 
 ### Version Information
 
-``` bash
+```bash
 poetry run hotspot-cli --version
 ```
+
+---
+
+## API Documentation
+
+See the [API Documentation](https://github.com/CormacMorrison/P2DingoCV) for detailed module descriptions.
