@@ -2,6 +2,7 @@ import os
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
+from ..Types.Types import *
 
 
 class VisualUtils:
@@ -20,16 +21,16 @@ class VisualUtils:
         os.makedirs(self.outputPath, exist_ok=True)
     
 
-    def plotHistogram(self, frame: np.ndarray) -> np.ndarray | None:
+    def plotHistogram(self, frame: Frame) -> Frame | None:
         """Plot and save the histogram of an image.
 
         Supports grayscale and BGR images. Saves the histogram as a PNG in the output directory.
 
         Args:
-            frame (np.ndarray): Image array (grayscale or BGR).
+            frame (Frame): Image array (grayscale or BGR).
 
         Returns:
-            np.ndarray | None: The input frame, also displayed using OpenCV.
+            Frame | None: The input frame, also displayed using OpenCV.
         
         Raises:
             AssertionError: If frame is None.
@@ -93,23 +94,69 @@ class VisualUtils:
         plt.savefig(filepath)
         plt.close()
 
-    def saveFrame(self, frame: np.ndarray, tag: str, frameCount: int, folder: str = "frames") -> None:
+    def saveFrame(self, frame, tag: str, frameCount: int, folder: str = "frames") -> None:
         """Save an image frame with a tag and frame count.
 
         Args:
-            frame (np.ndarray): Image frame to save.
+            frame (Frame): Image frame to save.
             tag (str): Descriptive tag for the frame.
             frameCount (int): Frame number to include in the filename.
             folder (str): Subfolder under the output path to save frames. Defaults to "frames".
         """
-        folder_path = os.path.join(self.outputPath, folder)
-        os.makedirs(folder_path, exist_ok=True)
+        folder_path = os.path.join(self.outputPath, folder)  # Create folder path
+        os.makedirs(folder_path, exist_ok=True)  # Ensure folder exists
 
-        filename = os.path.join(
-            folder_path, f"frames/frame_{frameCount}_{tag}.png"
+        # Construct the file path without redundant "frames/" string
+        filename = os.path.join(folder_path, f"frame_{frameCount}_{tag}.png")
+        
+        # Save the frame
+        success = cv.imwrite(filename, frame)
+        if success:
+            print(f"Frame saved to {filename}")
+        else:
+            print(f"Error saving frame to {filename}")
+
+    def drawFrameCountours(self, frame: Frame, componentMask: Frame, cx: int, cy: int, lbl: int) -> None:
+        """
+        Draws the contours of a mask on the given frame and places a label at the specified centroid position.
+
+        Args:
+            frame (numpy.ndarray): The image frame on which to draw the contours and label.
+            componentMask (numpy.ndarray): A binary mask image used to extract contours (non-zero pixels represent the object of interest).
+            cx (int): The x-coordinate of the centroid where the label should be placed.
+            cy (int): The y-coordinate of the centroid where the label should be placed.
+            lbl (float): The label value to be displayed at the centroid position.
+
+        Returns:
+            None: The function modifies the `frame` in place by drawing the contours and adding the label.
+
+        Notes:
+            - The function assumes that the mask contains a single object (only the first contour is drawn).
+            - The contour is drawn in green `(0, 255, 0)` with a thickness of 1 pixel.
+            - The label is drawn in red `(0, 0, 255)` using the font `cv.FONT_HERSHEY_SIMPLEX`.
+            - The label is displayed with 2 decimal points.
+        """
+        cv.drawContours(
+            frame,
+            [
+                cv.findContours(
+                    componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
+                )[0][0]
+            ],
+            -1,
+            (0, 255, 0),
+            1,
         )
-        cv.imwrite(filename, frame)
-        print(f"Frame saved to {filename}")
+        cv.putText(
+            frame,
+            f"{lbl:.2f}",
+            (cx, cy),
+            cv.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (0, 0, 255),
+            1,
+            cv.LINE_AA,
+        )
 
     @staticmethod
     def printTable(data, headers=None, precision=2) -> None:

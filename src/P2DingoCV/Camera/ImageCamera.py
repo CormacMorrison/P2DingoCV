@@ -51,12 +51,12 @@ class ImageCamera(Camera):
         else:
             raise ValueError(f"Invalid path: {path}")
 
-    def read(self) -> np.ndarray | None:
+    def read(self) -> Frame | None:
         """
         Read the next image in the sequence.
 
         Returns:
-            np.ndarray | None: The next image as a NumPy array, or None if at the end.
+            Frame | None: The next image as a NumPy array, or None if at the end.
 
         Raises:
             IOError: If the image cannot be read.
@@ -67,12 +67,13 @@ class ImageCamera(Camera):
         
         imagePath = self.imagePaths[self.index]
         image = cv.imread(imagePath)
+        if image is None:
+            raise IOError(f"Failed to read image: {imagePath}")
         image = cv.resize(image, (self._WIDTH, self._HEIGHT), interpolation=cv.INTER_LINEAR)
         self.frame = image
         self.index += 1
 
-        if image is None:
-            raise IOError(f"Failed to read image: {imagePath}")
+
 
         return image
     
@@ -91,6 +92,8 @@ class ImageCamera(Camera):
 
         imagePath = self.imagePaths[self.index]
         image = cv.imread(imagePath)
+        if image is None:
+            raise IOError(f"Failed to read image: {imagePath}")
         self.frame = image
         self.index += 1
 

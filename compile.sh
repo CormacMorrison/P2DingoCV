@@ -9,6 +9,7 @@
 
 #!/bin/bash
 set -e
+sudo apt install python3-dev
 
 # ---- Config ----
 ENTRY="src/P2DingoCV/cli.py"        # Main entrypoint

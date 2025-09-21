@@ -33,7 +33,7 @@ class HotspotDetector:
         outputPath (str): Directory where results and diagnostics will be saved.
         utility (VisualUtils): Utility object for saving and plotting diagnostics.
         labFrame (Frame): Current frame converted to CIELAB color space.
-        frame (np.ndarray): Current raw frame in BGR format.
+        frame (Frame): Current raw frame in BGR format.
         frameArea (int): Total number of pixels in the frame.
         frameCount (int): Number of frames processed.
         k (int): Number of clusters for k-means segmentation.
@@ -43,7 +43,7 @@ class HotspotDetector:
         sigmoidSteepnessZ (float): Steepness parameter for Z-score sigmoid scaling.
         compactnessCutoff (float): Normalization cutoff for compactness.
         dilationSize (int): Kernel dilation factor for contrast calculation.
-        wDeltaP (float): Weight for ΔP score in final hotspot scoring.
+        wDeltaP (   float): Weight for ΔP score in final hotspot scoring.
         wZscore (float): Weight for Z-score in final hotspot scoring.
         wCompactness (float): Weight for compactness in final hotspot scoring.
         wAspectRatio (float): Weight for aspect ratio in final hotspot scoring.
@@ -286,6 +286,7 @@ class HotspotDetector:
                   compactness, aspect ratio, eccentricity, area).
                 - Boolean indicating whether any hotspot exceeds threshold.
         """
+        diagonsticFrame = frame.copy()
         filterMask = self.filterMask(mask)
         hotspotDetection: bool = False
 
@@ -316,7 +317,7 @@ class HotspotDetector:
             #     componentTemp = None
             # ------------------------------------------------------------
             
-            deltaPRobust, zScore, deltaPScore, zScoreNorm = self.pixelContrast(
+            deltaPRobust, zScore, deltaPScore, zScoreNorm, localMask = self.pixelContrast(
                 LChannel, componentMask, otherHotspotsMask, componentArea
             )
             compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(
@@ -332,29 +333,33 @@ class HotspotDetector:
             if hotspotScore >= self.hotSpotThreshold:
                 hotspotDetection = True
 
-            if hotspotScore > self.hotSpotThreshold:
-                cv.drawContours(
-                    frame,
-                    [
-                        cv.findContours(
-                            componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
-                        )[0][0]
-                    ],
-                    -1,
-                    self.colours[0],
-                    1,
-                )
-                cx, cy = map(int, centroids[lbl])
-                cv.putText(
-                    frame,
-                    f"{lbl:.2f}",
-                    (cx, cy),
-                    cv.FONT_HERSHEY_SIMPLEX,
-                    0.5,
-                    (0, 0, 255),
-                    1,
-                    cv.LINE_AA,
-                )
+            cx, cy = map(int, centroids[lbl])
+            self.utility.drawFrameCountours(frame=diagonsticFrame, componentMask=localMask, cx=cx, cy=cy, lbl=lbl)
+            if hotspotScore > self.hotSpotThreshold and saveVisuals:
+                self.utility.drawFrameCountours(frame=frame, componentMask=componentMask, cx=cx, cy=cy, lbl=lbl)
+                
+                # cv.drawContours(
+                #     frame,
+                #     [
+                #         cv.findContours(
+                #             componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
+                #         )[0][0]
+                #     ],
+                #     -1,
+                #     self.colours[0],
+                #     1,
+                # )
+
+                # cv.putText(
+                #     frame,
+                #     f"{lbl:.2f}",
+                #     (cx, cy),
+                #     cv.FONT_HERSHEY_SIMPLEX,
+                #     0.5,
+                #     self.colours[1],
+                #     1,
+                #     cv.LINE_AA,
+                # )
             # component temp set to None for now
             centroidTuple = tuple(float(x) for x in centroids[lbl])
             results.append(
@@ -374,7 +379,8 @@ class HotspotDetector:
                 )
             )
         if saveVisuals:
-            self.utility.saveFrame(frame, "hotspots", self.frameCount, self.outputPath)
+            self.utility.saveFrame(frame, "hotspots", self.frameCount, "hotspots")
+            self.utility.saveFrame(diagonsticFrame, "localDilations", self.frameCount, "localDilations")
 
         sortedResults = sorted(results, key=lambda row: row[1], reverse=True)
         return sortedResults, hotspotDetection
@@ -451,7 +457,7 @@ class HotspotDetector:
         componentMask: Frame,
         otherHotspotsMask: Frame,
         area: float,
-    ) -> tuple[float, float, float, float]:
+    ) -> tuple[float, float, float, float, Frame]:
         """Compute contrast metrics for a hotspot region.
 
         Args:
@@ -461,26 +467,29 @@ class HotspotDetector:
             area (float): Pixel area of the region.
 
         Returns:
-            tuple[float, float, float, float]:
+            tuple[float, float, float, float, Frame]:
                 - Robust ΔP contrast.
                 - Global Z-score.
                 - ΔP probability score.
                 - Normalized Z-score.
+                - Mask of Inspected Areas
         """
         ksize: int = int(max(3, self.dilationSize * np.sqrt(area)))
         kernel: np.ndarray = cv.getStructuringElement(cv.MORPH_ELLIPSE, (ksize, ksize))
+        # Could potentially add this as a diagonstic showing the dilation region
         dilated = cv.dilate(componentMask, kernel, iterations=1)
 
         hotMask: Frame = componentMask.astype(bool)
         localMask: Frame = (dilated.astype(bool)) & (~hotMask) & (~otherHotspotsMask)
+        localMaskFrame = (localMask.astype(np.uint8)) * 255
 
         hotVals: Frame = LChannel[hotMask]
         localVals: Frame = LChannel[localMask]
 
         if len(hotVals) == 0:
-            return 0, 0, 0, 0
+            return 0, 0, 0, 0, localMask
         elif len(localVals) == 0:
-            return 10, 10, 1, 1
+            return 10, 10, 1, 1, localMask
 
         muHot: float = hotVals.mean()
         mu: float = LChannel.mean()
@@ -503,7 +512,7 @@ class HotspotDetector:
         z = (muHot - mu) / sigma
         zScoreNorm: float = np.clip(np.exp(self.sigmoidSteepnessZ * z) - 1, 0, 1)
 
-        return deltaPRobust, z, deltaPProbabilityScore, zScoreNorm
+        return deltaPRobust, z, deltaPProbabilityScore, zScoreNorm, localMaskFrame
 
     def hotSpotScore(
         self,
