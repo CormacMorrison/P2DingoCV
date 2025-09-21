@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P2DingoCV.HotspotLogic.HotspotDetector &mdash; P2DingoCV 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="P2DingoCV.Types" href="P2DingoCV.Types.html" />
+    <link rel="prev" title="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            P2DingoCV
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="P2DingoCV.html">P2DingoCV</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.Camera.html">P2DingoCV.Camera</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.Camera.html">P2DingoCV.Camera.Camera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.CameraFactory.html">P2DingoCV.Camera.CameraFactory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.CameraFactory.html#P2DingoCV.Camera.CameraFactory.CameraFactory"><code class="docutils literal notranslate"><span class="pre">CameraFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.ImageCamera.html">P2DingoCV.Camera.ImageCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.ImageCamera.html#P2DingoCV.Camera.ImageCamera.ImageCamera"><code class="docutils literal notranslate"><span class="pre">ImageCamera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.VideoCamera.html">P2DingoCV.Camera.VideoCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.VideoCamera.html#P2DingoCV.Camera.VideoCamera.VideoCamera"><code class="docutils literal notranslate"><span class="pre">VideoCamera</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="P2DingoCV.HotspotLogic.html">P2DingoCV.HotspotLogic</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.HotspotLogic.DiagonsticsUtil.html">P2DingoCV.HotspotLogic.DiagonsticsUtil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils"><code class="docutils literal notranslate"><span class="pre">VisualUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.HotspotLogic.Exceptions.html">P2DingoCV.HotspotLogic.Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.html">P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector.html">P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">P2DingoCV.HotspotLogic.HotspotDetector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector"><code class="docutils literal notranslate"><span class="pre">HotspotDetector</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.Types.html">P2DingoCV.Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Types.Types.html">P2DingoCV.Types.Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.cli.html">P2DingoCV.cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runAll"><code class="docutils literal notranslate"><span class="pre">runAll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runMinimal"><code class="docutils literal notranslate"><span class="pre">runMinimal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runVerbose"><code class="docutils literal notranslate"><span class="pre">runVerbose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.showVisual"><code class="docutils literal notranslate"><span class="pre">showVisual()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">P2DingoCV</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="P2DingoCV.html">P2DingoCV</a></li>
+          <li class="breadcrumb-item"><a href="P2DingoCV.HotspotLogic.html">P2DingoCV.HotspotLogic</a></li>
+      <li class="breadcrumb-item active">P2DingoCV.HotspotLogic.HotspotDetector</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/P2DingoCV.HotspotLogic.HotspotDetector.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-P2DingoCV.HotspotLogic.HotspotDetector">
+<span id="p2dingocv-hotspotlogic-hotspotdetector"></span><h1>P2DingoCV.HotspotLogic.HotspotDetector<a class="headerlink" href="#module-P2DingoCV.HotspotLogic.HotspotDetector" title="Link to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector" title="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HotspotDetector</span></code></a>(cam, exitPath[, config])</p></td>
+<td><p>Abstract base class for hotspot detection in thermal or visual frames.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">P2DingoCV.HotspotLogic.HotspotDetector.</span></span><span class="sig-name descname"><span class="pre">HotspotDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exitPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract base class for hotspot detection in thermal or visual frames.</p>
+<p>This class provides core utilities for detecting hotspots using clustering,
+contrast analysis, and shape metrics. Specific hotspot detection strategies
+should be implemented in subclasses by overriding <a class="reference internal" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.execute" title="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">execute()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cam</strong> (<a class="reference internal" href="P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera" title="P2DingoCV.Camera.Camera.Camera"><em>P2DingoCV.Camera.Camera.Camera</em></a>)</p></li>
+<li><p><strong>exitPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.cam">
+<span class="sig-name descname"><span class="pre">cam</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.cam" title="Link to this definition"></a></dt>
+<dd><p>The camera object used to read in frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera" title="P2DingoCV.Camera.Camera.Camera">Camera</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.outputPath">
+<span class="sig-name descname"><span class="pre">outputPath</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.outputPath" title="Link to this definition"></a></dt>
+<dd><p>Directory where results and diagnostics will be saved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.utility" title="Link to this definition"></a></dt>
+<dd><p>Utility object for saving and plotting diagnostics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="P2DingoCV.HotspotLogic.DiagonsticsUtil.html#P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils" title="P2DingoCV.HotspotLogic.DiagonsticsUtil.VisualUtils">VisualUtils</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.labFrame">
+<span class="sig-name descname"><span class="pre">labFrame</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.labFrame" title="Link to this definition"></a></dt>
+<dd><p>Current frame converted to CIELAB color space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frame">
+<span class="sig-name descname"><span class="pre">frame</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frame" title="Link to this definition"></a></dt>
+<dd><p>Current raw frame in BGR format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frameArea">
+<span class="sig-name descname"><span class="pre">frameArea</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frameArea" title="Link to this definition"></a></dt>
+<dd><p>Total number of pixels in the frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frameCount">
+<span class="sig-name descname"><span class="pre">frameCount</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.frameCount" title="Link to this definition"></a></dt>
+<dd><p>Number of frames processed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.k">
+<span class="sig-name descname"><span class="pre">k</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.k" title="Link to this definition"></a></dt>
+<dd><p>Number of clusters for k-means segmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.clusterJoinKernel">
+<span class="sig-name descname"><span class="pre">clusterJoinKernel</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.clusterJoinKernel" title="Link to this definition"></a></dt>
+<dd><p>Kernel size for morphological joining of clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.hotSpotThreshold">
+<span class="sig-name descname"><span class="pre">hotSpotThreshold</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.hotSpotThreshold" title="Link to this definition"></a></dt>
+<dd><p>Score threshold for hotspot classification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.sigmoidSteepnessDeltaP">
+<span class="sig-name descname"><span class="pre">sigmoidSteepnessDeltaP</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.sigmoidSteepnessDeltaP" title="Link to this definition"></a></dt>
+<dd><p>Steepness parameter for ΔP sigmoid scaling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.sigmoidSteepnessZ">
+<span class="sig-name descname"><span class="pre">sigmoidSteepnessZ</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.sigmoidSteepnessZ" title="Link to this definition"></a></dt>
+<dd><p>Steepness parameter for Z-score sigmoid scaling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.compactnessCutoff">
+<span class="sig-name descname"><span class="pre">compactnessCutoff</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.compactnessCutoff" title="Link to this definition"></a></dt>
+<dd><p>Normalization cutoff for compactness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.dilationSize">
+<span class="sig-name descname"><span class="pre">dilationSize</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.dilationSize" title="Link to this definition"></a></dt>
+<dd><p>Kernel dilation factor for contrast calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wDeltaP">
+<span class="sig-name descname"><span class="pre">wDeltaP</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wDeltaP" title="Link to this definition"></a></dt>
+<dd><p>Weight for ΔP score in final hotspot scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wZscore">
+<span class="sig-name descname"><span class="pre">wZscore</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wZscore" title="Link to this definition"></a></dt>
+<dd><p>Weight for Z-score in final hotspot scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wCompactness">
+<span class="sig-name descname"><span class="pre">wCompactness</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wCompactness" title="Link to this definition"></a></dt>
+<dd><p>Weight for compactness in final hotspot scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wAspectRatio">
+<span class="sig-name descname"><span class="pre">wAspectRatio</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wAspectRatio" title="Link to this definition"></a></dt>
+<dd><p>Weight for aspect ratio in final hotspot scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wEccentricity">
+<span class="sig-name descname"><span class="pre">wEccentricity</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.wEccentricity" title="Link to this definition"></a></dt>
+<dd><p>Weight for eccentricity in final hotspot scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelCounts">
+<span class="sig-name descname"><span class="pre">pixelCounts</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelCounts" title="Link to this definition"></a></dt>
+<dd><p>Pixel counts per cluster from k-means.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.colours">
+<span class="sig-name descname"><span class="pre">colours</span></span><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.colours" title="Link to this definition"></a></dt>
+<dd><p>List of BGR colours for visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[int, int, int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exitPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cam</strong> (<a class="reference internal" href="P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera" title="P2DingoCV.Camera.Camera.Camera"><em>P2DingoCV.Camera.Camera.Camera</em></a>)</p></li>
+<li><p><strong>exitPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.classifyHotspot">
+<span class="sig-name descname"><span class="pre">classifyHotspot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveVisuals</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.classifyHotspot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.classifyHotspot" title="Link to this definition"></a></dt>
+<dd><p>Classify and score hotspots from a clustered mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>np.ndarray</em>) – Original BGR frame.</p></li>
+<li><p><strong>mask</strong> (<em>np.ndarray</em>) – Binary mask of hotspot candidate regions.</p></li>
+<li><p><strong>saveVisuals</strong> (<em>bool</em>) – Whether to save annotated hotspot frames.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Sorted list of hotspot data tuples, containing:
+(label, score, temp, centroid, ΔPscore, ΔP, z, zNorm,
+compactness, aspect ratio, eccentricity, area).</p></li>
+<li><p>Boolean indicating whether any hotspot exceeds threshold.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, bool]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.execute">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.execute" title="Link to this definition"></a></dt>
+<dd><p>Run the main hotspot detection process.</p>
+<p>This method must be implemented in subclasses to define
+the specific detection strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If called on the base class directly.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.filterMask">
+<span class="sig-name descname"><span class="pre">filterMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.filterMask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.filterMask" title="Link to this definition"></a></dt>
+<dd><p>Filter out noise regions from a binary mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mask</strong> (<em>np.ndarray</em>) – Input binary mask.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Filtered mask containing only valid regions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.hotSpotScore">
+<span class="sig-name descname"><span class="pre">hotSpotScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deltaPScore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zScoreNorm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compactness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspectRatio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eccentricity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.hotSpotScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.hotSpotScore" title="Link to this definition"></a></dt>
+<dd><p>Compute a weighted hotspot score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deltaPScore</strong> (<em>float</em>) – Probability score from robust ΔP.</p></li>
+<li><p><strong>zScoreNorm</strong> (<em>float</em>) – Normalized Z-score.</p></li>
+<li><p><strong>compactness</strong> (<em>float</em>) – Compactness of the hotspot region.</p></li>
+<li><p><strong>aspectRatio</strong> (<em>float</em>) – Aspect ratio of the hotspot region.</p></li>
+<li><p><strong>eccentricity</strong> (<em>float</em>) – Eccentricity of the hotspot region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Final weighted hotspot score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.kMeansThermalGrouping">
+<span class="sig-name descname"><span class="pre">kMeansThermalGrouping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveDiagonstics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.kMeansThermalGrouping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.kMeansThermalGrouping" title="Link to this definition"></a></dt>
+<dd><p>Cluster pixels into thermal groups using k-means.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>Frame</em>) – Input frame in BGR format.</p></li>
+<li><p><strong>saveDiagonstics</strong> (<em>bool</em>) – Whether to save segmented outputs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary mask for the most intense cluster.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.loadConfig">
+<span class="sig-name descname"><span class="pre">loadConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configPath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.loadConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.loadConfig" title="Link to this definition"></a></dt>
+<dd><p>Load hotspot detector parameters from a JSON configuration file.</p>
+<p>This will overwrite the default tunable parameters set in <cite>__init__</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_path</strong> (<em>str</em>) – Path to the JSON configuration file.</p></li>
+<li><p><strong>configPath</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the config file does not exist.</p></li>
+<li><p><strong>json.JSONDecodeError</strong> – If the config file is not valid JSON.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameProcessing">
+<span class="sig-name descname"><span class="pre">perFrameProcessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveFrames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonstics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.perFrameProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameProcessing" title="Link to this definition"></a></dt>
+<dd><p>Process a single frame through the hotspot detection pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>Frame</em>) – Input image frame in BGR format.</p></li>
+<li><p><strong>saveFrames</strong> (<em>bool</em>) – Whether to save visual outputs.</p></li>
+<li><p><strong>diagonstics</strong> (<em>bool</em>) – Whether to save intermediate diagnostic results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>List of hotspot detection results for this frame.</p></li>
+<li><p>Boolean indicating whether a hotspot was detected.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, bool]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameSetup">
+<span class="sig-name descname"><span class="pre">perFrameSetup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.perFrameSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.perFrameSetup" title="Link to this definition"></a></dt>
+<dd><p>Initialize state for a new frame.</p>
+<p>Resets internal counters, computes frame area, and sets up
+per-frame parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<em>Frame</em>) – Input frame in BGR format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The original frame after setup.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelContrast">
+<span class="sig-name descname"><span class="pre">pixelContrast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">LChannel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">componentMask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">otherHotspotsMask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.pixelContrast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelContrast" title="Link to this definition"></a></dt>
+<dd><p>Compute contrast metrics for a hotspot region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>LChannel</strong> (<em>Frame</em>) – Luminance channel of LAB frame.</p></li>
+<li><p><strong>componentMask</strong> (<em>Frame</em>) – Mask of the region of interest.</p></li>
+<li><p><strong>otherHotspotsMask</strong> (<em>Frame</em>) – Mask of other hotspots to exclude.</p></li>
+<li><p><strong>area</strong> (<em>float</em>) – Pixel area of the region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Robust ΔP contrast.</p></li>
+<li><p>Global Z-score.</p></li>
+<li><p>ΔP probability score.</p></li>
+<li><p>Normalized Z-score.</p></li>
+<li><p>Mask of Inspected Areas</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, float, float, float, Frame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelToTemp">
+<span class="sig-name descname"><span class="pre">pixelToTemp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pixelVal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.pixelToTemp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.pixelToTemp" title="Link to this definition"></a></dt>
+<dd><p>Convert a pixel value to temperature using calibration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pixelVal</strong> (<em>float</em>) – Pixel luminance value.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Estimated temperature.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.html#P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.TempDetectionFailed" title="P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.TempDetectionFailed"><strong>TempDetectionFailed</strong></a> – If calibration parameters are missing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.processingDiagonstics">
+<span class="sig-name descname"><span class="pre">processingDiagonstics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.processingDiagonstics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.processingDiagonstics" title="Link to this definition"></a></dt>
+<dd><p>Plot diagnostic data such as pixel count distributions.</p>
+<p>Saves plots to the configured output path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.resetFrameData">
+<span class="sig-name descname"><span class="pre">resetFrameData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.resetFrameData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.resetFrameData" title="Link to this definition"></a></dt>
+<dd><p>Reset frame-dependent state variables.</p>
+<p>Resets temperature calibration, frame buffers, and cluster statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.shapeAndCompactness">
+<span class="sig-name descname"><span class="pre">shapeAndCompactness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">componentMask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/HotspotLogic/HotspotDetector.html#HotspotDetector.shapeAndCompactness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector.shapeAndCompactness" title="Link to this definition"></a></dt>
+<dd><p>Calculate shape metrics for a region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>componentMask</strong> (<em>Frame</em>) – Binary mask of a connected component.</p></li>
+<li><p><strong>area</strong> (<em>float</em>) – Pixel area of the component.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Normalized compactness.</p></li>
+<li><p>Aspect ratio.</p></li>
+<li><p>Eccentricity (or aspect ratio if ellipse fitting fails).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, float, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector.html" class="btn btn-neutral float-left" title="P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="P2DingoCV.Types.html" class="btn btn-neutral float-right" title="P2DingoCV.Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cormac Morrison.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
