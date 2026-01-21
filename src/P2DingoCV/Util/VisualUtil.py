@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 from ..Types.Types import *
+from logging import Logger
 
 
 class VisualUtils:
@@ -94,7 +95,8 @@ class VisualUtils:
         plt.savefig(filepath)
         plt.close()
 
-    def saveFrame(self, frame, tag: str, frameCount: int, folder: str = "frames") -> None:
+    
+    def saveFrame(self, frame, tag: str, frameCount: int, logger: Logger, folder: str = "frames",) -> None:
         """Save an image frame with a tag and frame count.
 
         Args:
@@ -112,9 +114,29 @@ class VisualUtils:
         # Save the frame
         success = cv.imwrite(filename, frame)
         if success:
-            print(f"Frame saved to {filename}")
+            logger.info(f"Frame saved to {filename}")
         else:
-            print(f"Error saving frame to {filename}")
+            logger.info(f"Error saving frame to {filename}")
+    
+    def savePanelArray(self, panels: list[Frame], frameCount: int, logger: Logger, folder: str = "cells") -> None:
+        """Save an array of panel images to disk.
+
+        Args:
+            panels (list[Frame]): List of panel image frames to save.
+            frameCount (int): Frame number to include in the filenames.
+            logger (Logger): Logger object for logging messages.
+            folder (str): Subfolder under the output path to save panels. Defaults to "frames".
+        """
+        folder_path = os.path.join(self.outputPath, folder)  # Create folder path
+        os.makedirs(folder_path, exist_ok=True)  # Ensure folder exists
+
+        for idx, panel in enumerate(panels):
+            filename = os.path.join(folder_path, f"frame_{frameCount}_panel_{idx}.png")
+            success = cv.imwrite(filename, panel)
+            if success:
+                logger.info(f"Panel {idx} saved to {filename}")
+            else:
+                logger.info(f"Error saving panel {idx} to {filename}")
 
     def drawFrameCountours(self, frame: Frame, componentMask: Frame, cx: int, cy: int, lbl: int) -> None:
         """
@@ -157,7 +179,35 @@ class VisualUtils:
             1,
             cv.LINE_AA,
         )
+    
+    @staticmethod
+    def drawLines(
+        frame: np.ndarray, lines: np.ndarray | None, colour: str
+    ) -> np.ndarray:
+        if lines is not None and lines.shape[1] == 5:
+            # remove count column for drawing
+            lines = np.hstack((lines[:, :4], lines[:, 5:]))
+        if lines is None:
+            return frame
+            # Prepare BGR output from binary input
+        b = 0
+        g = 0
+        r = 0
+        if colour == "g":
+            g = 255
+        elif colour == "r":
+            r = 255
+        elif colour == "b":
+            b = 255
+        if len(frame.shape) == 2:
+            output = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
+        else:
+            output = frame.copy()
+        # Draw detected lines in green
+        for x1, y1, x2, y2 in lines.reshape(-1, 4):
+            cv.line(output, (x1, y1), (x2, y2), (b, g, r), 2)
 
+        return output
     @staticmethod
     def printTable(data, headers=None, precision=2) -> None:
         """Pretty-print a list of lists (or tuples) as a table with borders.
@@ -213,3 +263,112 @@ class VisualUtils:
             print_row(row)
             if headers:
                 print(sep)
+    @staticmethod            
+    def drawSpacingLines(frame: np.ndarray, rows: int, cols: int, height: int, width: int) -> np.ndarray:
+        """
+        Draws a rows x cols grid over the image with thick blue lines
+        and a blue outer outline.
+        """
+        if len(frame.shape) == 2:
+            output = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
+        else:
+            output = frame.copy()
+
+        h, w = height, width
+
+        row_spacing = h / rows
+        col_spacing = w / cols
+
+        line_color = (255, 0, 0)  # Blue (BGR)
+        line_thickness = 3
+
+        # ---- Internal horizontal grid lines ----
+        for i in range(1, rows):
+            y = int(i * row_spacing)
+            cv.line(output, (0, y), (w - 1, y), line_color, line_thickness, cv.LINE_AA)
+
+        # ---- Internal vertical grid lines ----
+        for i in range(1, cols):
+            x = int(i * col_spacing)
+            cv.line(output, (x, 0), (x, h - 1), line_color, line_thickness, cv.LINE_AA)
+
+        # ---- Outer outline ----
+        cv.rectangle(
+            output, (0, 0), (w - 1, h - 1), line_color, line_thickness + 3, cv.LINE_AA
+        )
+
+        return output
+
+    @staticmethod
+    def splitImageToGrid(image: Frame, h_cells: int, v_cells: int):
+        """
+        Split an image into a grid of equally sized cells.
+
+        The image is divided into `h_cells` rows and `v_cells` columns.
+        Any remainder pixels (if the image is not perfectly divisible)
+        are included in the last row/column cells.
+
+        Args:
+            image (Frame): Input image as a NumPy array of shape (H, W, C).
+            h_cells (int): Number of horizontal grid cells (rows).
+            v_cells (int): Number of vertical grid cells (columns).
+
+        Returns:
+            list[Frame]: A list of image cells in row-major order
+                        (top-left to bottom-right), each as a Frame.
+        """
+        # height: int; width: int; cell_height: int; cell_width: int
+        # height, width, _ = image.shape
+        # cell_height = height // h_cells
+        # cell_width = width // v_cells
+        # cells: list[Frame] = []
+
+        # for i in range(h_cells):
+        #     for j in range(v_cells):
+        #         y_start: int = i * cell_height
+        #         y_end: int = (i + 1) * cell_height if i < h_cells - 1 else height
+        #         x_start: int = j * cell_width
+        #         x_end: int = (j + 1) * cell_width if j < v_cells - 1 else width
+
+        #         cell_img: Frame = image[y_start:y_end, x_start:x_end, :]
+        #         cells.append(cell_img)
+
+        # return cells
+        
+        height, width, _ = image.shape
+        cell_height = height // h_cells
+        cell_width = width // v_cells
+        cells = []
+
+        for i in range(h_cells):
+            for j in range(v_cells):
+                y_start = i * cell_height
+                y_end = (i + 1) * cell_height if i < h_cells - 1 else height
+                x_start = j * cell_width
+                x_end = (j + 1) * cell_width if j < v_cells - 1 else width
+
+                cell_img = image[y_start:y_end, x_start:x_end, :]
+                cells.append(cell_img)
+
+        return cells
+
+    @staticmethod
+    def stretchToAspectRatio(image: Frame, targetHeight: int, targetRatio: float):
+        """
+        Resize (stretch) an image to a target aspect ratio and height.
+
+        This function changes the pixel dimensions of the image to match
+        the desired aspect ratio by stretching (not cropping). New pixels
+        are interpolated.
+
+        Args:
+            image (Frame): Input image as a NumPy array of shape (H, W, C).
+            targetHeight (int): Desired output height in pixels.
+            targetRatio (float): Desired width/height ratio.
+
+        Returns:
+            Frame: Resized image with shape (targetHeight, targetWidth, C).
+        """
+        targetWidth = int(targetHeight* targetRatio)
+        stretched = cv.resize(image, (targetWidth, targetHeight), interpolation=cv.INTER_LINEAR)
+        return stretched

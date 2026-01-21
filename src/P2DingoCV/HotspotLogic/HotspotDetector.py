@@ -14,14 +14,16 @@ import json
 from P2DingoCV.Camera.Camera import Camera
 from .Exceptions.TempDetectionFail import TempDetectionFailed
 from ..Types.Types import *
-from .DiagonsticsUtil import VisualUtils
+from ..Util.VisualUtil import VisualUtils
+from ..Util.MiscUtil import MiscUtil
+from logging import Logger
 
 
 # DEV
 matplotlib.use("Agg")
 
 
-class HotspotDetector:
+class HotspotDetector():
     """Abstract base class for hotspot detection in thermal or visual frames.
 
     This class provides core utilities for detecting hotspots using clustering,
@@ -43,7 +45,7 @@ class HotspotDetector:
         sigmoidSteepnessZ (float): Steepness parameter for Z-score sigmoid scaling.
         compactnessCutoff (float): Normalization cutoff for compactness.
         dilationSize (int): Kernel dilation factor for contrast calculation.
-        wDeltaP (   float): Weight for ΔP score in final hotspot scoring.
+        wDeltaP (float): Weight for ΔP score in final hotspot scoring.
         wZscore (float): Weight for Z-score in final hotspot scoring.
         wCompactness (float): Weight for compactness in final hotspot scoring.
         wAspectRatio (float): Weight for aspect ratio in final hotspot scoring.
@@ -53,12 +55,10 @@ class HotspotDetector:
     """
 
     def __init__(
-        self, cam: Camera, exitPath: str, config: str | None = None
+        self, outputPath: str, config: str | None = None
     ) -> None:
-        self.cam: Camera = cam
-        self.outputPath = exitPath + f'/{datetime.now().strftime("%y|%m|%d|%H:%M:%S")}'
+        self.outputPath: str = outputPath
         self.utility = VisualUtils(self.outputPath)
-
         self.labFrame: Frame
         self.frame: Frame
         self.frameArea: int
@@ -81,7 +81,7 @@ class HotspotDetector:
         self.wEccentricity: float = 0
 
         # Diagnostics
-        self.pixelCounts: np.ndarray = np.zeros(self.k)
+        self.pixelCounts: NDArray[np.integer] = np.zeros(self.k).astype(np.int32)
 
         self.colours = [
             (255, 0, 0),  # Blue
@@ -108,18 +108,6 @@ class HotspotDetector:
         # self.gradient: float | None
         # self.intercept: float | None
         # ------------------------------------------------------------
-        
-    @abstractmethod
-    def execute(self):
-        """Run the main hotspot detection process.
-
-        This method must be implemented in subclasses to define
-        the specific detection strategy.
-
-        Raises:
-            NotImplementedError: If called on the base class directly.
-        """
-        pass
     
     def loadConfig(self, configPath: str ) -> None:
         """Load hotspot detector parameters from a JSON configuration file.
@@ -140,9 +128,12 @@ class HotspotDetector:
         for key, value in config.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+    
+    def updateOutputPath(self, newPath: str) -> None:
+        self.outputPath = newPath
                 
     def perFrameProcessing(
-        self, frame: Frame, saveFrames: bool, diagonstics: bool
+        self, frame: Frame, saveFrames: bool, diagonstics: bool, frameCount: int
     ) -> tuple[list, bool]:
         """Process a single frame through the hotspot detection pipeline.
 
@@ -157,6 +148,7 @@ class HotspotDetector:
                 - Boolean indicating whether a hotspot was detected.
         """
         self.frame: Frame = frame
+        self.logger: Logger = MiscUtil.setupLogger(f"hotspotLogger{frameCount}", self.outputPath + "/logs")
         self.labFrame: Frame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
         frame = self.perFrameSetup(frame)
         mask: Frame = self.kMeansThermalGrouping(frame, diagonstics)
@@ -261,10 +253,10 @@ class HotspotDetector:
         # Outlines of top 2 k regions and BGR Segments
         if saveDiagonstics == True:
             self.utility.saveFrame(
-                outlined, "kMeansOutlines", self.frameCount, "diagonstics"
+                outlined, "kMeansOutlines", self.frameCount, self.logger, "diagonstics"
             )
             self.utility.saveFrame(
-                segmentedBGR, "kMeansSegments", self.frameCount, "diagonstics"
+                segmentedBGR, "kMeansSegments", self.frameCount, self.logger, "diagonstics"
             )
 
         return mask
@@ -379,8 +371,8 @@ class HotspotDetector:
                 )
             )
         if saveVisuals:
-            self.utility.saveFrame(frame, "hotspots", self.frameCount, "hotspots")
-            self.utility.saveFrame(diagonsticFrame, "localDilations", self.frameCount, "localDilations")
+            self.utility.saveFrame(frame, "hotspots", self.frameCount, self.logger, self.outputPath + "/hotspots")
+            self.utility.saveFrame(diagonsticFrame, "localDilations", self.frameCount, self.logger, self.outputPath + "/localDilations")
 
         sortedResults = sorted(results, key=lambda row: row[1], reverse=True)
         return sortedResults, hotspotDetection
@@ -593,8 +585,8 @@ class HotspotDetector:
         self.frame = np.zeros(0)
         self.frameArea = 0
         # Data Points based on k
-        self.clusterTemps: np.ndarray = np.zeros(self.k)
-        self.pixelCounts: np.ndarray = np.zeros(self.k)
+        self.clusterTemps = np.zeros(self.k)
+        self.pixelCounts = np.zeros(self.k).astype(np.int32)
 
     # ----------------------------------------------------------------
     # ----------------------------------------------------------------

@@ -1,9 +1,10 @@
 import click
 from P2DingoCV.HotspotLogic.HotspotDetector import HotspotDetector
-from P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MaximumDetector import *
-from P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.MinimalDetector import *
-from P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VerboseDetector import *
-from P2DingoCV.HotspotLogic.HotSpotDetectorSubclasses.VisualDetector import *
+from P2DingoCV.App.App import App
+from P2DingoCV.App.Maximal import Maximal
+from P2DingoCV.App.Minimal import Minimal
+from P2DingoCV.App.Verbose import Verbose
+from P2DingoCV.App.Visual import Visual
 from P2DingoCV.Camera.Camera import Camera
 from P2DingoCV.Camera.CameraFactory import CameraFactory
 
@@ -16,8 +17,8 @@ def cli():
     pass
 
 # --- Sub-function implementations ---
-def runMinimal(camera: Camera, outputPath: str, config: str | None):
-    """Run hotspot detection in minimal mode.
+def runMinimal(camera: Camera, outputPath: str, config: str | None) -> None:
+    """Run hotspot detection and panel segmentaion in minimal mode.
 
     Only outputs JSON results to the specified output path.
 
@@ -27,11 +28,11 @@ def runMinimal(camera: Camera, outputPath: str, config: str | None):
         config (str | None): Optional path to JSON configuration file with detection parameters.
     """
     click.echo("Running in minimal mode")
-    hotspotDetector: HotspotDetector = MinimalDetector(camera, outputPath, config)
-    hotspotDetector.execute()
+    app: App = Minimal(camera, outputPath, config)
+    app.execute()
 
-def runVerbose(camera: Camera, outputPath: str, config: str | None):
-    """Run hotspot detection in verbose mode.
+def runVerbose(camera: Camera, outputPath: str, config: str | None) -> None:
+    """Run hotspot detection and panel segmentaion in verbose mode.
 
     Outputs all component data, including intermediate metrics, in addition to JSON results.
 
@@ -41,11 +42,12 @@ def runVerbose(camera: Camera, outputPath: str, config: str | None):
         config (str | None): Optional path to JSON configuration file with detection parameters.
     """
     click.echo("Running in verbose mode")
-    hotspotDetector: HotspotDetector = VerboseDetector(camera, outputPath, config)
-    hotspotDetector.execute()
+    app: App = Verbose(camera, outputPath, config)
+    app.execute()
+
     
-def showVisual(camera: Camera, outputPath: str, config: str | None):
-    """Run hotspot detection and display visual outputs.
+def runVisual(camera: Camera, outputPath: str, config: str | None) -> None:
+    """Run hotspot detection and panel segmentaion and display visual outputs.
 
     Shows the processed frames with detected hotspots highlighted.
 
@@ -54,12 +56,12 @@ def showVisual(camera: Camera, outputPath: str, config: str | None):
         outputPath (str): Directory where any results will be saved.
         config (str | None): Optional path to JSON configuration file with detection parameters.
     """
-    click.echo("Showing visuals")
-    hotspotDetector: HotspotDetector = VisualDetector(camera, outputPath, config)
-    hotspotDetector.execute()
+    click.echo("Rinning with visuals")
+    app: App = Visual(camera, outputPath, config)
+    app.execute()
  
-def runAll(camera: Camera, outputPath: str, config: str | None):
-    """Run hotspot detection in maximum mode.
+def runMaximal(camera: Camera, outputPath: str, config: str | None) -> None:
+    """Run hotspot detection and panel segmentaion in maximum mode.
 
     Outputs verbose data and displays visuals simultaneously.
 
@@ -69,11 +71,12 @@ def runAll(camera: Camera, outputPath: str, config: str | None):
         config (str | None): Optional path to JSON configuration file with detection parameters.
     """
     click.echo("Running with verbose output and visuals")
-    hotspotDetector: HotspotDetector = MaximumDetector(camera, outputPath, config)
-    hotspotDetector.execute()
+    app: App = Maximal(camera, outputPath, config)
+    app.execute()
  
+
 # --- Dispatcher command with flags ---
-HELP_TEXT = """Run hotspot detection in different modes.
+HELP_TEXT = """Run hotspot detection and panel segmentaion in different modes.
 
 \b
 Arguments:
@@ -126,9 +129,9 @@ def run(minimal, verbose, visual, all_modes, config: str, inputpath: str, output
     if verbose:
         runVerbose(camera, outputpath, config)
     if visual:
-        showVisual(camera, outputpath, config)
+        runVisual(camera, outputpath, config)
     if all_modes:
-        runAll(camera, outputpath, config)
+        runMaximal(camera, outputpath, config)
         
 def main() -> None:
     cli()
