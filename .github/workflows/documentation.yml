@@ -30,8 +30,15 @@ jobs:
       - name: Install project dependencies
         run: poetry install  # installs your package and dependencies
 
-      - name: Build docs
-        run: poetry run make -C docs html
+      # - name: Build docs
+      #   run: poetry run make -C docs html
+
+      - name: Clean + build docs (fresh autosummary)
+        run: |
+          cd docs
+          rm -rf _build _autosummary
+          mkdir -p _static
+          poetry run sphinx-build -E -a . _build/html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
