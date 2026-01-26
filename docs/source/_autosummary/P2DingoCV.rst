@@ -12,5 +12,7 @@
 
    Camera
    HotspotLogic
+   PanelSegmentation
    Types
+   Util
    cli

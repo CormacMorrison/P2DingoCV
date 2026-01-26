@@ -184,6 +184,7 @@ class PanelSegmentor:
         Notes:
             - Requires OpenCV's ximgproc module for guided filtering.
             - Kernel sizes should be positive odd integers for best results.
+            
         """
         lambda_weight = lambdaWeight  # Edge enhancement strength (λ)
         mean_kernel_size = meanKernelSizeL  # Mean filter size for guidance image
@@ -290,7 +291,7 @@ class PanelSegmentor:
             1. Apply adaptive Canny edge detection.
             2. Detect line segments using probabilistic Hough transform.
             3. Adjust edge sensitivity until the number of detected lines
-            falls within the acceptable buffer range.
+               falls within the acceptable buffer range.
 
         Args:
             frame (Frame):
@@ -304,7 +305,7 @@ class PanelSegmentor:
             tuple[np.ndarray, Frame] | None:
                 A tuple containing:
                     - lines: NumPy array of shape (N, 4), where each row is
-                    (x1, y1, x2, y2) for a detected line segment.
+                      (x1, y1, x2, y2) for a detected line segment.
                     - edges: The binary edge image used for Hough detection.
 
                 Returns None only if no valid detection occurs (normally a
@@ -319,6 +320,7 @@ class PanelSegmentor:
             - Uses OpenCV's cv.HoughLinesP for line detection.
             - The parameter `edgeSlideFactor` is automatically tuned per frame.
             - `lineBuffer` defines the acceptable deviation from `expectedLines`.
+            
         """
         detectionSuccess: bool = False
         self.edgeSlideFactor = 5.0  # reset for each frame
@@ -414,13 +416,16 @@ class PanelSegmentor:
         Notes
         -----
         - The algorithm:
+        
         1. Iterates over all input lines.
         2. Groups lines with similar angle and nearby perpendicular offset.
         3. Collects all endpoints from each group.
         4. Fits a line using PCA to find the dominant direction.
         5. Projects points onto that direction and uses min/max projections
             as the merged segment endpoints.
+            
         - Output endpoints are rounded to integer pixel coordinates.
+        
         """
 
         if lines is None or len(lines) == 0:
@@ -518,10 +523,11 @@ class PanelSegmentor:
 
         Notes
         -----
-        - Line angles are computed using atan2(|dy|, |dx|) and wrapped to [0, 180)
-        to treat lines as undirected.
+        - Line angles are computed using atan2() and wrapped to [0, 180)
+            to treat lines as undirected.
         - Clustering is performed by `self.KmeansCluster`, which handles the
-        circular nature of angular data.
+            circular nature of angular data.
+        
         """
         # Reshape if needed (HoughLinesP returns with double wrapped arrays)
         if lines is None or len(lines) == 0:
@@ -678,6 +684,7 @@ class PanelSegmentor:
           bins (horizontal-like and vertical-like).
         - Length thresholds are computed separately for horizontal and vertical
           groups using the median of the top longest lines in each group.
+          
         """
         if lines is None or len(lines) < 3:
             raise ValueError("Not enough lines to perform noise discard.")
@@ -798,9 +805,10 @@ class PanelSegmentor:
 
         Notes:
             • The smallest cluster is considered "noise" only if its center angle
-            differs from all other cluster centers by more than `degreeThreshold`.
+                differs from all other cluster centers by more than `degreeThreshold`.
             • Clusters larger than a hardcoded size threshold are never discarded.
             • Uses `self.angle_diff`, `self.angleClusters`, and `VisualUtils.drawLines`.
+            
         """
         if lines is None:
             raise ValueError("No lines to discard noise from.")
@@ -915,7 +923,7 @@ class PanelSegmentor:
         Notes:
             • Parallel line pairs are skipped.
             • The output is structured so each sub-array corresponds to one
-            horizontal line’s intersections.
+                horizontal line’s intersections.
             • Coordinates are cast to int before returning.
 
         """
@@ -977,7 +985,7 @@ class PanelSegmentor:
         Notes:
             • Angles are computed in degrees and wrapped into [0, 180).
             • If all angles are considered outliers, the defaults are:
-            startline = 0 and endline = len(lines) - 1.
+                startline = 0 and endline = len(lines) - 1.
             • Relies on `self.iqrOutliers` to return indices of outliers.
 
         """
@@ -1127,6 +1135,7 @@ class PanelSegmentor:
             - Width is determined by the maximum of the top and bottom edge lengths.
             - Height is determined by the maximum of the left and right edge lengths.
             - The method logs corner information for debugging purposes.
+            
         """
 
         self.logger.info("Corner points:")
@@ -1278,7 +1287,7 @@ class PanelSegmentor:
         np.ndarray | None
             An array of shape (N, 2), where N is the number of grid lines analyzed.
             Each row contains:
-                [spacingDetected: bool, estimatedCount: int]
+            [spacingDetected: bool, estimatedCount: int]
             - `spacingDetected` indicates whether a regular spacing pattern was found.
             - `estimatedCount` is the estimated number of evenly spaced segments along the axis.
             Returns None if no intersections are found.
@@ -1292,9 +1301,10 @@ class PanelSegmentor:
         -----
         - The method sorts intersections along the axis to ensure proper spacing calculation.
         - It iteratively guesses the number of columns/rows (`colsGeuss`) and checks distances
-        between intersections against the guessed spacing with a specified tolerance.
+          between intersections against the guessed spacing with a specified tolerance.
         - The detection algorithm attempts to handle multiple panels by doubling and halving
-        the guessed count when necessary.
+          the guessed count when necessary.
+        
         """
 
         axisLength: int = self.width if isHorizontal else self.height
@@ -1421,15 +1431,16 @@ class PanelSegmentor:
               - If no grid spacings are detected on either axis.
               - If no valid spacings remain after filtering.
               - If the median and mode of the detected spacings do not match, indicating
-              inconsistent or unreliable detections.
+                inconsistent or unreliable detections.
 
           Notes
           -----
           - Filtering ensures only grid lines with a detected regular spacing pattern are considered.
           - The median of the filtered spacings is used as the primary estimate, with the mode
-          used as a consistency check.
+            used as a consistency check.
           - This method assumes that `calculateGridSpacings` returns an array where each row
-        contains `[spacingDetected: bool, estimatedCount: int]`.
+            contains `[spacingDetected: bool, estimatedCount: int]`.
+          
         """
         horizontalDetections: NDArray | None = self.calculateGridSpacings(
             horizontalLines, verticalLines, True
@@ -1479,6 +1490,52 @@ class PanelSegmentor:
         visualPath: str = "",
         diagonstics: bool = True,
     ) -> List[Frame]:
+        """
+        Execute the full visual segmentation and rectification pipeline on a frame.
+
+        This method performs grid line detection, homography rectification, spacing
+        estimation, and cell extraction on the input image. Each detected cell is
+        then resized to a target aspect ratio and optionally saved along with
+        diagnostic and visualization outputs.
+
+        Parameters
+        ----------
+        image : Frame
+            Input image/frame to process.
+        frameCount : int
+            Index of the frame being processed (used for logging and output naming).
+        logPath : str, optional
+            Directory where log files should be written.
+        visuals : bool, optional
+            If True, saves intermediate and final visualization images to disk.
+        visualPath : str, optional
+            Base directory for saving visualization outputs.
+        diagonstics : bool, optional
+            If True, enables per-frame diagnostic logging.
+
+        Returns
+        -------
+        List[Frame]
+            List of rectified and aspect-ratio-adjusted cell images extracted from
+            the input frame.
+
+        Raises
+        ------
+        ValueError
+            If no cells are extracted from the image.
+
+        Notes
+        -----
+        Pipeline steps:
+            1. Detect grid lines in the original image.
+            2. Apply homography to rectify the grid.
+            3. Re-run line detection on the rectified image.
+            4. Estimate horizontal and vertical spacing.
+            5. Split the rectified image into grid cells.
+            6. Stretch each cell to the target aspect ratio.
+            7. Optionally save visualizations and diagnostics.
+            
+        """
         self.resetParameters(image.shape[0], image.shape[1], logPath)
         if (diagonstics):
             self.logger = MiscUtil.setupLogger(f"segmentLogger{frameCount}", logPath)
@@ -1579,7 +1636,49 @@ class PanelSegmentor:
         list[Frame] | None,
     ]:
         """
-        Full pipeline to process an image and return the original grid.
+        Run the full rectified-image grid detection pipeline.
+
+        This method preprocesses a rectified image, detects line segments, augments
+        them with image-border lines, and then groups and filters the lines into
+        horizontal and vertical sets suitable for grid reconstruction.
+
+        Parameters
+        ----------
+        image : Frame
+            Rectified input image to process.
+        expectedLines : int
+            Approximate number of line segments expected in the image, used to tune
+            the line detection stage.
+        logPath : str
+            Directory path used for resetting parameters and logging context.
+
+        Returns
+        -------
+        lines : NDArray[np.integer]
+            Array of all detected and augmented line segments in (x1, y1, x2, y2)
+            format.
+        horizontalLines : NDArray[np.integer]
+            Subset of `lines` corresponding to horizontal grid lines.
+        verticalLines : NDArray[np.integer]
+            Subset of `lines` corresponding to vertical grid lines.
+        kMeansVisuals : list[Frame] or None
+            Optional list of diagnostic visualization frames from the clustering
+            and filtering stages.
+
+        Raises
+        ------
+        ValueError
+            If no lines are detected at any stage of the rectified pipeline.
+
+        Notes
+        -----
+        Pipeline steps:
+            1. Reset internal parameters based on image shape.
+            2. Preprocess the image (denoising, blurring, downsampling).
+            3. Detect line segments.
+            4. Add border lines corresponding to the image edges.
+            5. Group and filter lines into horizontal and vertical sets.
+            
         """
         self.logger.info(f"Processing image of shape: {image.shape}")
         self.resetParameters(image.shape[0], image.shape[1], logPath)
@@ -1609,7 +1708,7 @@ class PanelSegmentor:
         return lines, horizontalLines, verticalLines, kMeansVisuals
 
     def gridPipeline(
-        self, image: np.ndarray, expectedLines: int, logPath: str = ""
+        self, image: Frame, expectedLines: int, logPath: str = ""
     ) -> tuple[
         NDArray[np.integer],
         NDArray[np.integer],
@@ -1617,7 +1716,47 @@ class PanelSegmentor:
         list[Frame] | None,
     ]:
         """
-        Full pipeline to process an image and return the rectified grid.
+        Run the full grid line detection pipeline on an image.
+
+        This method preprocesses the input image, detects line segments, and groups
+        and filters them into horizontal and vertical line sets suitable for grid
+        estimation and rectification.
+
+        Parameters
+        ----------
+        image : Frame
+            Input image/frame to process.
+        expectedLines : int
+            Approximate number of line segments expected in the image, used to tune
+            the line detection stage.
+        logPath : str, optional
+            Directory path used for resetting parameters and logging context.
+
+        Returns
+        -------
+        lines : NDArray[np.integer]
+            Array of all detected line segments in (x1, y1, x2, y2) format.
+        horizontalLines : NDArray[np.integer]
+            Subset of `lines` corresponding to horizontal grid lines.
+        verticalLines : NDArray[np.integer]
+            Subset of `lines` corresponding to vertical grid lines.
+        kMeansVisuals : list[Frame] or None
+            Optional list of diagnostic visualization frames from the clustering
+            and filtering stages.
+
+        Raises
+        ------
+        ValueError
+            If no lines are detected at any stage of the grid pipeline.
+
+        Notes
+        -----
+        Pipeline steps:
+            1. Reset internal parameters based on image shape.
+            2. Preprocess the image (denoising, blurring, downsampling).
+            3. Detect line segments.
+            4. Group and filter lines into horizontal and vertical sets.
+            
         """
         self.logger.info(f"Processing image of shape: {image.shape}")
         self.resetParameters(image.shape[0], image.shape[1], logPath)
@@ -1648,8 +1787,35 @@ class PanelSegmentor:
         verticalLines: NDArray[np.integer],
     ) -> tuple[int, int, Frame]:
         """
-        Full pipeline to process an image and return the grid spacings.
-        """
+        Estimate grid spacing from detected line sets and render a grid overlay.
+
+        This method determines the horizontal and vertical grid spacings from
+        previously detected horizontal and vertical line segments, logs the
+        results, and draws the inferred grid onto the rectified image.
+
+        Parameters
+        ----------
+        image : Frame
+            Rectified image on which the grid spacing is estimated and visualized.
+        horizontalLines : NDArray[np.integer]
+            Array of horizontal line segments in (x1, y1, x2, y2) format.
+        verticalLines : NDArray[np.integer]
+            Array of vertical line segments in (x1, y1, x2, y2) format.
+
+        Returns
+        -------
+        horizontalSpacing : int
+            Estimated spacing between horizontal grid lines (in pixels).
+        verticalSpacing : int
+            Estimated spacing between vertical grid lines (in pixels).
+        gridOnRectified : Frame
+            Copy of the input image with the estimated grid spacing overlaid.
+
+        Notes
+        -----
+        This step assumes the input image has already been rectified such that
+        grid lines are approximately axis-aligned.
+    """
         horizontalSpacing, verticalSpacing = self.determineGridLines(
             horizontalLines, verticalLines
         )
@@ -1659,7 +1825,7 @@ class PanelSegmentor:
             verticalSpacing,
         )
         gridOnRectified = VisualUtils.drawSpacingLines(
-            image, verticalSpacing, horizontalSpacing, self.height, self.width
+            image, verticalSpacing, verticalSpacing, self.height, self.width
         )
    
         return horizontalSpacing, verticalSpacing, gridOnRectified

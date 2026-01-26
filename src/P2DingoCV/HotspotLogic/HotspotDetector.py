@@ -1,7 +1,7 @@
 import re
 import cv2 as cv
 import numpy as np
-from typing import Final, Tuple, Dict
+from typing import Any, Final, Tuple, Dict
 import matplotlib.pyplot as plt
 import matplotlib
 
@@ -17,6 +17,9 @@ from ..Types.Types import *
 from ..Util.VisualUtil import VisualUtils
 from ..Util.MiscUtil import MiscUtil
 from logging import Logger
+
+from numpy.typing import NDArray
+from typing import List
 
 
 # DEV
@@ -151,8 +154,8 @@ class HotspotDetector():
         self.logger: Logger = MiscUtil.setupLogger(f"hotspotLogger{frameCount}", self.outputPath + "/logs")
         self.labFrame: Frame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
         frame = self.perFrameSetup(frame)
-        mask: Frame = self.kMeansThermalGrouping(frame, diagonstics)
-        return self.classifyHotspot(frame, mask, saveFrames)
+        maskArray: List[Frame] = self.kMeansThermalGrouping(frame, diagonstics)
+        return self.determineHotspots(frame, maskArray, saveFrames)
 
     def perFrameSetup(self, frame: Frame) -> Frame:
         """Initialize state for a new frame.
@@ -184,7 +187,7 @@ class HotspotDetector():
         # ------------------------------------------------------------
         return frame
 
-    def kMeansThermalGrouping(self, frame: Frame, saveDiagonstics: bool) -> Frame:
+    def kMeansThermalGrouping(self, frame: Frame, saveDiagonstics: bool) -> List[Frame]:
         """Cluster pixels into thermal groups using k-means.
 
         Args:
@@ -192,7 +195,7 @@ class HotspotDetector():
             saveDiagonstics (bool): Whether to save segmented outputs.
 
         Returns:
-            Frame: Binary mask for the most intense cluster.
+            List[Frame]: List of binary masks for each k-means cluster.
         """
         original = frame.copy()
         frame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
@@ -239,19 +242,28 @@ class HotspotDetector():
             np.uint8
         ) * 255
         # self.saveFrame(mask)
-
-        for i in range(2):
-            mask2: Frame = (labels.reshape(frame.shape[:2]) == sortedIndices[i]).astype(
+        
+        # Mask Arraying
+        
+        maskArray: List[Frame] = []
+        for i in range(self.k):
+            mask_i: Frame = (labels.reshape(frame.shape[:2]) == sortedIndices[i]).astype(
                 np.uint8
             ) * 255
-            contours, _ = cv.findContours(
-                mask2, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
-            )
-            cv.drawContours(
-                outlined, contours, -1, self.colours[i % len(self.colours)], 2
-            )
+            maskArray.append(mask_i)
+        
         # Outlines of top 2 k regions and BGR Segments
-        if saveDiagonstics == True:
+        if saveDiagonstics == True:   
+            for i in range(2):
+                mask2: Frame = (labels.reshape(frame.shape[:2]) == sortedIndices[i]).astype(
+                    np.uint8
+                ) * 255
+                contours, _ = cv.findContours(
+                    mask2, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
+                )
+                cv.drawContours(
+                    outlined, contours, -1, self.colours[i % len(self.colours)], 2
+                )
             self.utility.saveFrame(
                 outlined, "kMeansOutlines", self.frameCount, self.logger, "diagonstics"
             )
@@ -259,16 +271,16 @@ class HotspotDetector():
                 segmentedBGR, "kMeansSegments", self.frameCount, self.logger, "diagonstics"
             )
 
-        return mask
+        return maskArray
 
     def classifyHotspot(
-        self, frame: np.ndarray, mask: np.ndarray, saveVisuals: bool
+        self, frame: Frame, mask: Frame, saveVisuals: bool
     ) -> tuple[list, bool]:
         """Classify and score hotspots from a clustered mask.
 
         Args:
-            frame (np.ndarray): Original BGR frame.
-            mask (np.ndarray): Binary mask of hotspot candidate regions.
+            frame (Frame): Original BGR frame.
+            mask (Frame): Binary mask of hotspot candidate regions.
             saveVisuals (bool): Whether to save annotated hotspot frames.
 
         Returns:
@@ -315,7 +327,7 @@ class HotspotDetector():
             compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(
                 componentMask, componentArea
             )
-            hotspotScore = self.hotSpotScore(
+            hotspotScore: float = self.hotSpotScore(
                 deltaPScore=deltaPScore,
                 zScoreNorm=zScoreNorm,
                 compactness=compactness,
@@ -324,34 +336,12 @@ class HotspotDetector():
             )
             if hotspotScore >= self.hotSpotThreshold:
                 hotspotDetection = True
-
+            cx: int; cy: int
             cx, cy = map(int, centroids[lbl])
             self.utility.drawFrameCountours(frame=diagonsticFrame, componentMask=localMask, cx=cx, cy=cy, lbl=lbl)
             if hotspotScore > self.hotSpotThreshold and saveVisuals:
                 self.utility.drawFrameCountours(frame=frame, componentMask=componentMask, cx=cx, cy=cy, lbl=lbl)
                 
-                # cv.drawContours(
-                #     frame,
-                #     [
-                #         cv.findContours(
-                #             componentMask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE
-                #         )[0][0]
-                #     ],
-                #     -1,
-                #     self.colours[0],
-                #     1,
-                # )
-
-                # cv.putText(
-                #     frame,
-                #     f"{lbl:.2f}",
-                #     (cx, cy),
-                #     cv.FONT_HERSHEY_SIMPLEX,
-                #     0.5,
-                #     self.colours[1],
-                #     1,
-                #     cv.LINE_AA,
-                # )
             # component temp set to None for now
             centroidTuple = tuple(float(x) for x in centroids[lbl])
             results.append(
@@ -376,6 +366,302 @@ class HotspotDetector():
 
         sortedResults = sorted(results, key=lambda row: row[1], reverse=True)
         return sortedResults, hotspotDetection
+    
+
+    def connectedComponentsFromMask(self, masks: List[Frame]) -> List[List[Dict[str, Any]]]:
+        """
+        Given a list of binary masks, compute connected components for each mask.
+
+        Parameters
+        ----------
+        masks : list of np.ndarray
+            Each mask should be a 2D binary image (0/255 or False/True).
+
+        Returns
+        -------
+        list[list[dict]]
+            Outer list = per mask
+            Inner list = components in that mask
+            Each component dict contains:
+                - 'mask': binary mask of the component
+                - 'bbox': (x1, y1, x2, y2)
+                - 'area': pixel area
+                - 'centroid': (cx, cy)
+        """
+        all_components = []
+
+        for mask in masks:
+            # Ensure binary uint8
+            bin_mask = (mask > 0).astype(np.uint8)
+
+            num_labels, labels, stats, centroids = cv.connectedComponentsWithStats(
+                bin_mask, connectivity=8
+            )
+
+            components = []
+            for i in range(1, num_labels):  # Skip background
+                x, y, w, h, area = stats[i]
+                if area == 0:
+                    continue
+
+                comp_mask = (labels == i).astype(np.uint8) * 255
+
+                components.append({
+                    "mask": comp_mask,
+                    "bbox": (x, y, x + w, y + h),
+                    "area": int(area),
+                    "centroid": (float(centroids[i][0]), float(centroids[i][1])),
+                })
+
+            all_components.append(components)
+
+        return all_components
+
+    def higherOrderOverlap(self, componentsFirstLayer: List[Dict[str, Any]], componentsSecondLayer: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        # Placeholder for overlap logic
+        returnComponents: List[Dict[str, Any]] = []
+        for comp1 in componentsFirstLayer:
+            for comp2 in componentsSecondLayer:
+                if self.boxesOverlap(comp1['bbox'], comp2['bbox']):
+                    # Handle overlap logic here
+                    if np.any(comp1['mask'] & comp2['mask']):
+                        newMask = cv.bitwise_or(comp1['mask'], comp2['mask'])
+                        newBox = (
+                            min(comp1['bbox'][0], comp2['bbox'][0]),
+                            min(comp1['bbox'][1], comp2['bbox'][1]),    
+                            max(comp1['bbox'][2], comp2['bbox'][2]),
+                            max(comp1['bbox'][3], comp2['bbox'][3])
+                        )
+                        newArea = cv.contourArea(cv.findContours(newMask.astype(np.uint8), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[0][0])
+                        newCentroid = (float(newBox[0] + (newBox[2] - newBox[0]) / 2), float(newBox[1] + (newBox[3] - newBox[1]) / 2))
+                        returnComponents.append({
+                            "mask": newMask,
+                            "bbox": newBox,
+                            "area": int(newArea),
+                            "centroid": newCentroid
+                        })
+        return returnComponents
+
+    def layeredCandidates(self, componentsArray: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
+        # Placeholder for overlap logic
+        canididates: List[Dict[str, Any]] = []
+        canididates.extend(componentsArray[0])
+        
+        for i in range(len(componentsArray) - 1):
+            layerComponents = self.higherOrderOverlap(canididates, componentsArray[i + 1])
+            canididates.extend(layerComponents)
+            
+        return canididates
+
+    def hotspotMetricPass(self, frame: Frame, canididates: List[Dict[str, Any]], otherHotspotsMask: Frame) -> List[Dict[str, Any]]:
+        # Placeholder for overlap logic
+        LABFrame: Frame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
+        LChannel: Frame = LABFrame[:, :, 0]
+        
+        
+        hotspotsDetection: List[Dict[str, Any]] = []
+        for candidate in canididates:
+            otherHotspotsMaskTemp = cv.bitwise_xor(otherHotspotsMask, candidate['mask'])
+            deltaPRobust, zScore, deltaPScore, zScoreNorm, localMask = self.pixelContrast(
+                LChannel, candidate['mask'], otherHotspotsMaskTemp, candidate['area']
+            )
+            compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(
+                candidate['mask'], candidate['area']
+            )
+            hotspotScore: float = self.hotSpotScore(
+                deltaPScore=deltaPScore,
+                zScoreNorm=zScoreNorm,
+                compactness=compactness,
+                aspectRatio=aspectRatioNorm,
+                eccentricity=eccentricity,
+            )
+            
+            if hotspotScore >= self.hotSpotThreshold:
+                hotspotsDetection.append(candidate)    
+            
+        return hotspotsDetection
+    
+    
+    def mergeOverlappingHotspots(self, hotspots: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        merged = True
+
+        # Ensure all masks are binary once
+        for h in hotspots:
+            h['mask'] = (h['mask'] > 0).astype(np.uint8) * 255
+
+        while merged:
+            merged = False
+            result = []
+            used = [False] * len(hotspots)
+
+            for i in range(len(hotspots)):
+                if used[i]:
+                    continue
+
+                hi = hotspots[i]
+                cur_mask = hi['mask']
+                cur_box = hi['bbox']
+
+                for j in range(i + 1, len(hotspots)):
+                    if used[j]:
+                        continue
+
+                    hj = hotspots[j]
+
+                    if self.boxesOverlap(cur_box, hj['bbox']):
+                        overlap = cv.bitwise_and(cur_mask, hj['mask'])
+                        if np.any(overlap):
+                            # Merge
+                            cur_mask = cv.bitwise_or(cur_mask, hj['mask'])
+                            cur_box = (
+                                min(cur_box[0], hj['bbox'][0]),
+                                min(cur_box[1], hj['bbox'][1]),
+                                max(cur_box[2], hj['bbox'][2]),
+                                max(cur_box[3], hj['bbox'][3]),
+                            )
+                            used[j] = True
+                            merged = True
+
+                # Compute area from all contours
+                contours, _ = cv.findContours(cur_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+                area = sum(cv.contourArea(c) for c in contours)
+
+                # True centroid from mask
+                M = cv.moments(cur_mask)
+                if M["m00"] != 0:
+                    cx = M["m10"] / M["m00"]
+                    cy = M["m01"] / M["m00"]
+                else:
+                    cx = (cur_box[0] + cur_box[2]) / 2
+                    cy = (cur_box[1] + cur_box[3]) / 2
+
+                result.append({
+                    "mask": cur_mask,
+                    "bbox": cur_box,
+                    "area": int(area),
+                    "centroid": (float(cx), float(cy)),
+                })
+
+            hotspots = result
+
+        return hotspots
+
+    def finalMetricPass(self, frame: Frame, hotspots: List[Dict[str, Any]], otherHotspotMaskFinal: Frame) -> List[Tuple]:
+        # Placeholder for overlap logic
+        LABFrame: Frame = cv.cvtColor(frame, cv.COLOR_BGR2Lab)
+        LChannel: Frame = LABFrame[:, :, 0]
+        
+        
+        results: List = []
+        for i, hotspot in enumerate(hotspots):
+            deltaPRobust, zScore, deltaPScore, zScoreNorm, localMask = self.pixelContrast(
+                LChannel, hotspot['mask'], np.zeros_like(hotspot['mask']), hotspot['area']
+            )
+            compactness, aspectRatioNorm, eccentricity = self.shapeAndCompactness(
+                hotspot['mask'], hotspot['area']
+            )
+            hotspotScore: float = self.hotSpotScore(
+                deltaPScore=deltaPScore,
+                zScoreNorm=zScoreNorm,
+                compactness=compactness,
+                aspectRatio=aspectRatioNorm,
+                eccentricity=eccentricity,
+            )
+            
+            results.append(
+                (
+                    i,
+                    hotspotScore,
+                    None,
+                    hotspot['centroid'],
+                    deltaPScore,
+                    deltaPRobust,
+                    zScore,
+                    zScoreNorm,
+                    compactness,
+                    aspectRatioNorm,
+                    eccentricity,
+                    hotspot['area'],
+                )
+            )
+                  
+            
+        return results
+
+    def determineHotspots(self, frame: Frame, maskArray: List[Frame], saveVisuals: bool) -> tuple[list, bool]:
+        """Determine hotspots across multiple frames.
+
+        Args:
+            frame (Frame): Input image frame in BGR format.
+            maskArray (List[Frame]): List of input binary masks.
+            saveVisuals (bool): Whether to save annotated hotspot frames.
+
+        Returns:
+            tuple[list, bool]:
+                - List of hotspot detection results for all frames.
+                - Boolean indicating whether any hotspot was detected.
+        """
+
+        diagonsticFrame = frame.copy()
+        hotSpotFrame = frame.copy()
+        filterMaskArray = [self.filterMask(mask) for mask in maskArray]
+        hotspotDetection: bool = False
+        
+        kernel = cv.getStructuringElement(
+            cv.MORPH_RECT, (self.clusterJoinKernel, self.clusterJoinKernel)
+        )
+        closedMaskArray: List[Frame] = [cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel) for mask in filterMaskArray]
+        # Erode again to seperate joined regions
+        closedMaskArray = [cv.erode(mask, kernel, iterations=1) for mask in closedMaskArray]
+
+        componentsArray = self.connectedComponentsFromMask(closedMaskArray)
+
+        candiadateHotspots = self.layeredCandidates(componentsArray) 
+        
+        otherHotspotsMaskPrelim = filterMaskArray[0].copy()
+        
+        hotspots = self.hotspotMetricPass(frame, candiadateHotspots, otherHotspotsMaskPrelim)
+        
+        hotspots = self.mergeOverlappingHotspots(hotspots)
+        
+        otherHotspotMaskFinal = np.zeros_like(maskArray[0])
+        for hotspot in hotspots:
+            otherHotspotMaskFinal = cv.bitwise_or(otherHotspotMaskFinal, hotspot['mask'])
+            
+        
+            
+        finalResults = self.finalMetricPass(frame, hotspots, otherHotspotMaskFinal)
+        
+        sortedResults = sorted(finalResults, key=lambda row: row[1], reverse=True)
+        
+        if (len(sortedResults) > 0):
+            hotspotDetection = True
+            
+        if saveVisuals:
+            for hotspot in hotspots:
+                cx: int; cy: int
+                cx, cy = map(int, hotspot['centroid'])
+                self.utility.drawFrameCountours(frame=frame, componentMask=hotspot['mask'], cx=cx, cy=cy, lbl=0)
+                
+            self.utility.saveFrame(frame, "hotspots", self.frameCount, self.logger, self.outputPath + "/hotspots")
+            self.utility.saveFrame(diagonsticFrame, "localDilations", self.frameCount, self.logger, self.outputPath + "/localDilations")
+           
+        return sortedResults, hotspotDetection
+
+
+
+
+    def boxesOverlap(self, b1, b2):
+        x1, y1, w1, h1 = b1
+        x2, y2, w2, h2 = b2
+
+        xa = max(x1, x2)
+        ya = max(y1, y2)
+        xb = min(x1 + w1, x2 + w2)
+        yb = min(y1 + h1, y2 + h2)
+
+        return (xb > xa) and (yb > ya)
+
 
     # Filters out Noise
     def filterMask(self, mask: np.ndarray) -> Frame:
@@ -494,10 +780,12 @@ class HotspotDetector():
         # Robust Contrast
         deltaPRobust: float = (muHot - medianLocal) / (iqrLocal + 1e-6)
 
+        deltaPRobustClipped: float = np.clip(deltaPRobust, -50, 50)
+
         # Robust Constrast Probability
 
         deltaPProbabilityScore: float = np.clip(
-            np.exp(self.sigmoidSteepnessDeltaP * deltaPRobust) - 1, 0, 1
+            np.exp(self.sigmoidSteepnessDeltaP * deltaPRobustClipped) - 1, 0, 1
         )
 
         # Global Z score

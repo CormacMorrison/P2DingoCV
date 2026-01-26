@@ -9,8 +9,8 @@ P2DingoCV.cli
    .. autosummary::
    
       main
-      runAll
+      runMaximal
       runMinimal
       runVerbose
-      showVisual
+      runVisual
    

@@ -10,7 +10,5 @@ P2DingoCV.HotspotLogic
    :toctree:
    :recursive:
 
-   DiagonsticsUtil
    Exceptions
-   HotSpotDetectorSubclasses
    HotspotDetector

@@ -22,7 +22,6 @@ the specifc conditions of P2Dingo which I have not yet been able to see.
    :maxdepth: 2
    :caption: Contents:
 
-   modules
 
 Overview
 --------
@@ -87,7 +86,7 @@ If you prefer to set up manually:
    poetry run hotspot-cli
 
 Compile to Binary using Nuitka (Optional After poetry install)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you would prefer to have a binary install a compile script using 
 Nuitka has been provided.
@@ -104,6 +103,7 @@ can relocate to a different location.
 If you wish to make it globally avaliable run 
 
 .. code-block:: bash
+   
    # Run if you want the executable to be globally avaliable
    sudo mv build/hotspot-cli /usr/local/bin/
 
@@ -142,7 +142,7 @@ Basic Usage
 -----------
 
 Command Structure
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -223,7 +223,7 @@ Configuration Files
 -------------------
 
 Detection Parameters Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create a JSON configuration file to customize detection parameters:
 
@@ -245,7 +245,7 @@ Create a JSON configuration file to customize detection parameters:
    }
 
 Parameter Descriptions
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 - ``k``: Number of clusters for K-means clustering
 - ``clusterJoinKernel``: Kernel size for joining nearby clusters
@@ -263,7 +263,7 @@ Parameter Descriptions
 Input Source Types
 ------------------
 Directory of Images
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -282,7 +282,7 @@ Output Structure
 ----------------
 
 Minimal Mode Output
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Only if a hotspot is detected:
 
@@ -292,7 +292,7 @@ Only if a hotspot is detected:
    ├── hotspotOutput.json
 
 Maximum Mode Output
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Everything outputted:
 
@@ -310,7 +310,7 @@ Everything outputted:
        └── plot1.png
 
 Verbose Mode Output
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 Intermediate text diagnostic data:
 
@@ -320,7 +320,7 @@ Intermediate text diagnostic data:
    ├── hotspotOutput.json
 
 Visual Mode Output
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 All visual data + basic text data:
 
@@ -353,7 +353,7 @@ Troubleshooting
 ---------------
 
 Common Issues
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 1. **Import Errors**
 
@@ -406,7 +406,7 @@ CLI Help
    poetry run hotspot-cli run --help
 
 Version Information
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -422,30 +422,13 @@ API Documentation
 
    P2DingoCV
 
-Modules
-=======
-
-Camera Module
--------------
-
-.. automodule:: P2DingoCV.Camera
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-HotspotLogic Module
--------------------
-
-.. automodule:: P2DingoCV.HotspotLogic
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
+
 =======================
 
 .. toctree::
