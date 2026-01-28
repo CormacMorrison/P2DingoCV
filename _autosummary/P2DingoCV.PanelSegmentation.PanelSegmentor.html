@@ -1,0 +1,1352 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P2DingoCV.PanelSegmentation.PanelSegmentor &mdash; P2DingoCV 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="P2DingoCV.Types" href="P2DingoCV.Types.html" />
+    <link rel="prev" title="P2DingoCV.PanelSegmentation" href="P2DingoCV.PanelSegmentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            P2DingoCV
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="P2DingoCV.html">P2DingoCV</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.Camera.html">P2DingoCV.Camera</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.Camera.html">P2DingoCV.Camera.Camera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.Camera.html#P2DingoCV.Camera.Camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.CameraFactory.html">P2DingoCV.Camera.CameraFactory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.CameraFactory.html#P2DingoCV.Camera.CameraFactory.CameraFactory"><code class="docutils literal notranslate"><span class="pre">CameraFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.ImageCamera.html">P2DingoCV.Camera.ImageCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.ImageCamera.html#P2DingoCV.Camera.ImageCamera.ImageCamera"><code class="docutils literal notranslate"><span class="pre">ImageCamera</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Camera.VideoCamera.html">P2DingoCV.Camera.VideoCamera</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Camera.VideoCamera.html#P2DingoCV.Camera.VideoCamera.VideoCamera"><code class="docutils literal notranslate"><span class="pre">VideoCamera</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.HotspotLogic.html">P2DingoCV.HotspotLogic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.HotspotLogic.Exceptions.html">P2DingoCV.HotspotLogic.Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail.html">P2DingoCV.HotspotLogic.Exceptions.TempDetectionFail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotspotDetector.html">P2DingoCV.HotspotLogic.HotspotDetector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.HotspotLogic.HotspotDetector.html#P2DingoCV.HotspotLogic.HotspotDetector.HotspotDetector"><code class="docutils literal notranslate"><span class="pre">HotspotDetector</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="P2DingoCV.PanelSegmentation.html">P2DingoCV.PanelSegmentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">P2DingoCV.PanelSegmentation.PanelSegmentor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor"><code class="docutils literal notranslate"><span class="pre">PanelSegmentor</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.Types.html">P2DingoCV.Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Types.Types.html">P2DingoCV.Types.Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.Util.html">P2DingoCV.Util</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Util.MiscUtil.html">P2DingoCV.Util.MiscUtil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Util.MiscUtil.html#P2DingoCV.Util.MiscUtil.MiscUtil"><code class="docutils literal notranslate"><span class="pre">MiscUtil</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.Util.VisualUtil.html">P2DingoCV.Util.VisualUtil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="P2DingoCV.Util.VisualUtil.html#P2DingoCV.Util.VisualUtil.VisualUtils"><code class="docutils literal notranslate"><span class="pre">VisualUtils</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="P2DingoCV.cli.html">P2DingoCV.cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runMaximal"><code class="docutils literal notranslate"><span class="pre">runMaximal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runMinimal"><code class="docutils literal notranslate"><span class="pre">runMinimal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runVerbose"><code class="docutils literal notranslate"><span class="pre">runVerbose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="P2DingoCV.cli.html#P2DingoCV.cli.runVisual"><code class="docutils literal notranslate"><span class="pre">runVisual()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">P2DingoCV</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="P2DingoCV.html">P2DingoCV</a></li>
+          <li class="breadcrumb-item"><a href="P2DingoCV.PanelSegmentation.html">P2DingoCV.PanelSegmentation</a></li>
+      <li class="breadcrumb-item active">P2DingoCV.PanelSegmentation.PanelSegmentor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/P2DingoCV.PanelSegmentation.PanelSegmentor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-P2DingoCV.PanelSegmentation.PanelSegmentor">
+<span id="p2dingocv-panelsegmentation-panelsegmentor"></span><h1>P2DingoCV.PanelSegmentation.PanelSegmentor<a class="headerlink" href="#module-P2DingoCV.PanelSegmentation.PanelSegmentor" title="Link to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor" title="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PanelSegmentor</span></code></a>(height, width, outputPath[, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">P2DingoCV.PanelSegmentation.PanelSegmentor.</span></span><span class="sig-name descname"><span class="pre">PanelSegmentor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<em>int</em>)</p></li>
+<li><p><strong>width</strong> (<em>int</em>)</p></li>
+<li><p><strong>outputPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.KmeansCluster">
+<span class="sig-name descname"><span class="pre">KmeansCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxIter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomState</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.KmeansCluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.KmeansCluster" title="Link to this definition"></a></dt>
+<dd><p>Cluster line orientations (in degrees) using circular k-means on the unit circle.</p>
+<p>This function takes angles in degrees in the range [0, 180], maps them onto
+the unit circle to handle circularity (so 0° and 180° are close), performs
+k-means clustering, and converts the resulting cluster centers back to angles.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>angles<span class="classifier">np.ndarray</span></dt><dd><p>Array of angles in degrees, expected in the range [0, 180].</p>
+</dd>
+<dt>k<span class="classifier">int, optional</span></dt><dd><p>Number of clusters. Default is 2.</p>
+</dd>
+<dt>maxIter<span class="classifier">int, optional</span></dt><dd><p>Maximum number of k-means iterations. Default is 300.</p>
+</dd>
+<dt>randomState<span class="classifier">Optional[int], optional</span></dt><dd><p>Random seed for reproducibility. Default is None.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>pts<span class="classifier">NDArray[np.float64]</span></dt><dd><p>Points on the unit circle corresponding to the input angles, shape (N, 2).</p>
+</dd>
+<dt>labels<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Cluster labels for each input angle, shape (N,).</p>
+</dd>
+<dt>centersXY<span class="classifier">NDArray[np.float64]</span></dt><dd><p>Cluster centers in unit-circle (x, y) coordinates, shape (k, 2).</p>
+</dd>
+<dt>centersDeg<span class="classifier">NDArray[np.float64]</span></dt><dd><p>Cluster centers converted back to angles in degrees in the range [0, 180).</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h2>Raises<a class="headerlink" href="#raises" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If any input angle is outside the range [0, 180].</p>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angles</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>k</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.__init__" title="Link to this definition"></a></dt>
+<dd><p>PanelSegmentor class for detecting and segmenting panel-like regions in an image.</p>
+<p>This segmentor uses a combination of denoising, edge detection, and Hough line
+transform techniques to identify candidate panels based on expected line counts,
+aspect ratios, and image characteristics.</p>
+<section id="id1">
+<h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lineCount<span class="classifier">int</span></dt><dd><p>Expected number of lines in the image for line detection. This is an approximate
+value and does not need to be precise.</p>
+</dd>
+<dt>lineBuffer<span class="classifier">int</span></dt><dd><p>Pixel buffer added around detected lines to extend candidate regions.</p>
+</dd>
+<dt>denoiseLambdaWeight<span class="classifier">float</span></dt><dd><p>Weight factor for the denoising algorithm. Higher values prioritize smoothness
+over detail preservation.</p>
+</dd>
+<dt>denoiseMeanKernelSize<span class="classifier">int</span></dt><dd><p>Kernel size for the mean/average filter applied during denoising.</p>
+</dd>
+<dt>denoiseGaussianSigma<span class="classifier">float</span></dt><dd><p>Standard deviation for Gaussian smoothing during denoising.</p>
+</dd>
+<dt>denoiseDownsampleFactor<span class="classifier">float</span></dt><dd><p>Factor to downsample input frames before applying denoising, reducing computation.</p>
+</dd>
+<dt>edgeSlideFactor<span class="classifier">float</span></dt><dd><p>Initial sliding window size for edge detection. The algorithm adjusts this dynamically.</p>
+</dd>
+<dt>clipLimit<span class="classifier">float</span></dt><dd><p>Clip limit for CLAHE (Contrast Limited Adaptive Histogram Equalization) to enhance
+local contrast.</p>
+</dd>
+<dt>rho<span class="classifier">float</span></dt><dd><p>Distance resolution in pixels for the Hough line transform.</p>
+</dd>
+<dt>theta<span class="classifier">float</span></dt><dd><p>Angle resolution in radians for the Hough line transform.</p>
+</dd>
+<dt>aspectRatio<span class="classifier">float</span></dt><dd><p>Expected width-to-height ratio for candidate panel regions.</p>
+</dd>
+<dt>sigmaMultipler<span class="classifier">float</span></dt><dd><p>Multiplier for Gaussian sigma used in edge detection or smoothing, relative to image diagonal.</p>
+</dd>
+<dt>edgeThresholdMultiplier<span class="classifier">float</span></dt><dd><p>Multiplier applied to edge detection thresholds, scaled by image diagonal.</p>
+</dd>
+<dt>minLineLengthMultipler<span class="classifier">float</span></dt><dd><p>Multiplier to determine the minimum line length for line detection, relative to image diagonal.</p>
+</dd>
+<dt>maxLineGapMultipler<span class="classifier">float</span></dt><dd><p>Multiplier to determine the maximum allowed gap between line segments, relative to image diagonal.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<p>The parameters involving “multipliers” (sigmaMultipler, edgeThresholdMultiplier,
+minLineLengthMultipler, maxLineGapMultipler) are scaled relative to the image diagonal
+to make the algorithm more robust across different image resolutions.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>segmentor = PanelSegmentor(</dt><dd><p>lineCount=5,
+lineBuffer=10,
+denoiseLambdaWeight=0.8,
+denoiseMeanKernelSize=5,
+denoiseGaussianSigma=1.5,
+denoiseDownsampleFactor=2.0,
+edgeSlideFactor=5.0,
+clipLimit=2.0,
+rho=1,
+theta=0.0174533,
+aspectRatio=1.5,
+sigmaMultipler=0.02,
+edgeThresholdMultiplier=0.05,
+minLineLengthMultipler=0.1,
+maxLineGapMultipler=0.02</p>
+</dd>
+</dl>
+<p>)</p>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<em>int</em>)</p></li>
+<li><p><strong>width</strong> (<em>int</em>)</p></li>
+<li><p><strong>outputPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>config</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.angleClusters">
+<span class="sig-name descname"><span class="pre">angleClusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.angleClusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.angleClusters" title="Link to this definition"></a></dt>
+<dd><p>Cluster line segments by orientation using circular k-means.</p>
+<p>This function takes 2D line segments, computes their orientation angles
+(in degrees), maps them into a circular-safe representation, and clusters
+them into <cite>k</cite> groups using k-means. It is robust to wrap-around effects
+(e.g., near 0°/180°) by using absolute deltas and modulo arithmetic.</p>
+<section id="id2">
+<h2>Parameters<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lines<span class="classifier">NDArray[np.integer] | None</span></dt><dd><p>Array of line segments with shape (N, 4), where each row is
+[x1, y1, x2, y2]. Typically from HoughLinesP. If None or empty,
+the function returns None.</p>
+</dd>
+<dt>k<span class="classifier">int, optional</span></dt><dd><p>Number of orientation clusters to form. Default is 2.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h2>Returns<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<dl>
+<dt>Tuple[NDArray[np.float64], NDArray[np.integer], NDArray[np.float64], NDArray[np.float64]] | None</dt><dd><p>If input is valid, returns a 4-tuple:
+- pts : (N, 2) array of unit-circle coordinates used for clustering
+- labels : (N,) array of cluster indices for each line
+- centersXY : (k, 2) array of cluster centers in unit-circle space
+- centersDeg : (k,) array of cluster center angles in degrees [0, 180)</p>
+<p>Returns None if <cite>lines</cite> is None or empty.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h2>Notes<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Line angles are computed using atan2() and wrapped to [0, 180)</dt><dd><p>to treat lines as undirected.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Clustering is performed by <cite>self.KmeansCluster</cite>, which handles the</dt><dd><p>circular nature of angular data.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>k</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateCornerPoints">
+<span class="sig-name descname"><span class="pre">calculateCornerPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottomline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leftline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rightline</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.calculateCornerPoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateCornerPoints" title="Link to this definition"></a></dt>
+<dd><p>Calculate the four corner intersection points of a grid or rectangle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>horizontalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – List or array of horizontal lines, each as (x1, y1, x2, y2) integers.</p></li>
+<li><p><strong>verticalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – List or array of vertical lines, each as (x1, y1, x2, y2) integers.</p></li>
+<li><p><strong>topline</strong> (<em>int</em>) – Index of the top horizontal line.</p></li>
+<li><p><strong>bottomline</strong> (<em>int</em>) – Index of the bottom horizontal line.</p></li>
+<li><p><strong>leftline</strong> (<em>int</em>) – Index of the left vertical line.</p></li>
+<li><p><strong>rightline</strong> (<em>int</em>) – Index of the right vertical line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with keys ‘top_left’, ‘top_right’, ‘bottom_left’, ‘bottom_right’.
+Each value is an np.ndarray of shape (2,) with [x, y] as floats, or None if lines are parallel.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Dict</em>[str, numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]] | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateGridSpacings">
+<span class="sig-name descname"><span class="pre">calculateGridSpacings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isHorizontal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerancePercent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.calculateGridSpacings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateGridSpacings" title="Link to this definition"></a></dt>
+<dd><p>Estimate the spacing between grid lines in an image based on detected intersections.</p>
+<p>This method analyzes intersections between horizontal and vertical lines to determine
+the most likely number of evenly spaced columns or rows along a specified axis
+(horizontal or vertical). It iteratively adjusts a guess for the spacing, considering
+a tolerance, and returns whether a regular spacing pattern was detected along with
+the estimated count.</p>
+<section id="id5">
+<h2>Parameters<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>horizontalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of horizontal lines in the format (x1, y1, x2, y2).</p>
+</dd>
+<dt>verticalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of vertical lines in the format (x1, y1, x2, y2).</p>
+</dd>
+<dt>isHorizontal<span class="classifier">bool</span></dt><dd><p>If True, compute spacings along the horizontal axis (columns),
+otherwise along the vertical axis (rows).</p>
+</dd>
+<dt>tolerancePercent<span class="classifier">float, optional</span></dt><dd><p>Percentage of the axis length allowed as deviation from the expected spacing
+to still be considered a valid interval. Default is 5.0.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h2>Returns<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>np.ndarray | None</dt><dd><p>An array of shape (N, 2), where N is the number of grid lines analyzed.
+Each row contains:
+[spacingDetected: bool, estimatedCount: int]
+- <cite>spacingDetected</cite> indicates whether a regular spacing pattern was found.
+- <cite>estimatedCount</cite> is the estimated number of evenly spaced segments along the axis.
+Returns None if no intersections are found.</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h2>Raises<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If no intersections between horizontal and vertical lines are found.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h2>Notes<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The method sorts intersections along the axis to ensure proper spacing calculation.</p></li>
+<li><p>It iteratively guesses the number of columns/rows (<cite>colsGeuss</cite>) and checks distances
+between intersections against the guessed spacing with a specified tolerance.</p></li>
+<li><p>The detection algorithm attempts to handle multiple panels by doubling and halving
+the guessed count when necessary.</p></li>
+</ul>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>horizontalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>verticalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>isHorizontal</strong> (<em>bool</em>)</p></li>
+<li><p><strong>tolerancePercent</strong> (<em>float</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray[tuple[int, …], numpy.dtype[numpy._typing._array_like._ScalarType_co]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateIntersections">
+<span class="sig-name descname"><span class="pre">calculateIntersections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.calculateIntersections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.calculateIntersections" title="Link to this definition"></a></dt>
+<dd><p>Compute all intersection points between sets of horizontal and vertical lines.</p>
+<p>Each horizontal line is intersected with each vertical line using the
+standard line–line intersection formula. The result is grouped by
+horizontal line: each row in the output corresponds to one horizontal
+input line and contains the (x, y) intersection points with all vertical
+lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>horizontalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – Array of shape (H, 4) containing horizontal line
+segments as (x1, y1, x2, y2).</p></li>
+<li><p><strong>verticalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – Array of shape (V, 4) containing vertical line
+segments as (x1, y1, x2, y2).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An array of shape (H, V, 2) with integer (x, y) intersection points,
+grouped per horizontal line, or None if no valid intersections are found
+or if either input is None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]] | None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Parallel line pairs are skipped.</p></li>
+<li><dl class="simple">
+<dt>The output is structured so each sub-array corresponds to one</dt><dd><p>horizontal line’s intersections.</p>
+</dd>
+</dl>
+</li>
+<li><p>Coordinates are cast to int before returning.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.determineGridLines">
+<span class="sig-name descname"><span class="pre">determineGridLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.determineGridLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.determineGridLines" title="Link to this definition"></a></dt>
+<dd><p>Determine the most likely regular grid spacings for horizontal and vertical lines.</p>
+<p>This method analyzes detected horizontal and vertical lines to estimate the number of
+evenly spaced rows and columns in a grid. It uses <cite>calculateGridSpacings</cite> to detect
+candidate spacings along each axis, filters out invalid detections, and returns
+the median spacing for each axis, ensuring consistency with the mode.</p>
+<section id="id9">
+<h2>Parameters<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>horizontalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of detected horizontal lines, shape (N, 4), where each row is (x1, y1, x2, y2).</p>
+</dd>
+<dt>verticalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of detected vertical lines, shape (M, 4), where each row is (x1, y1, x2, y2).</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h2>Returns<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple[int, int]</dt><dd><p>A tuple <cite>(horizontalSpacing, verticalSpacing)</cite> representing the estimated
+number of evenly spaced segments along the horizontal and vertical axes.</p>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h2>Raises<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><ul class="simple">
+<li><p>If no grid spacings are detected on either axis.</p></li>
+<li><p>If no valid spacings remain after filtering.</p></li>
+<li><p>If the median and mode of the detected spacings do not match, indicating
+inconsistent or unreliable detections.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h2>Notes<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Filtering ensures only grid lines with a detected regular spacing pattern are considered.</p></li>
+<li><p>The median of the filtered spacings is used as the primary estimate, with the mode
+used as a consistency check.</p></li>
+<li><p>This method assumes that <cite>calculateGridSpacings</cite> returns an array where each row
+contains <cite>[spacingDetected: bool, estimatedCount: int]</cite>.</p></li>
+</ul>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>horizontalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>verticalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.discardShortLines">
+<span class="sig-name descname"><span class="pre">discardShortLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengthThreshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.discardShortLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.discardShortLines" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>lengthThreshold</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.edgeDetection">
+<span class="sig-name descname"><span class="pre">edgeDetection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.edgeDetection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.edgeDetection" title="Link to this definition"></a></dt>
+<dd><p>Perform adaptive Canny edge detection based on the median intensity
+of the input frame.</p>
+<p>The lower and upper Canny thresholds are computed through a loop that converges on
+a number of detected lines close to the expected line count.</p>
+<dl class="simple">
+<dt>Thresholds are computed as:</dt><dd><p>v = edgeSlideFactor * median(frame)
+lower = max(0, (1 - σ) * v)
+upper = min(255, (1 + σ) * v)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<em>Frame</em>) – Input image frame, expected to be a single-channel (grayscale)
+or 3-channel image in uint8 format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single-channel binary edge map produced by the Canny detector.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Uses OpenCV’s Canny edge detector.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.endLines">
+<span class="sig-name descname"><span class="pre">endLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.endLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.endLines" title="Link to this definition"></a></dt>
+<dd><p>Determine the first and last non-outlier line indices based on line angles.</p>
+<p>This method computes the orientation angle of each line segment using
+<cite>atan2(dy, dx)</cite>, normalizes angles to the range [0, 180), and identifies
+angular outliers via the interquartile range (IQR) method using
+<cite>self.iqrOutliers</cite>. The earliest and latest indices whose angles are not
+classified as outliers are returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>) – Array of line segments with shape (N, 4), where each row is
+(x1, y1, x2, y2).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>startline is the index of the first non-outlier line.</p></li>
+<li><p>endline is the index of the last non-outlier line.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple (startline, endline) where</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Angles are computed in degrees and wrapped into [0, 180).</p></li>
+<li><dl class="simple">
+<dt>If all angles are considered outliers, the defaults are:</dt><dd><p>startline = 0 and endline = len(lines) - 1.</p>
+</dd>
+</dl>
+</li>
+<li><p>Relies on <cite>self.iqrOutliers</cite> to return indices of outliers.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frameCount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visuals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visualPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonstics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.execute" title="Link to this definition"></a></dt>
+<dd><p>Execute the full visual segmentation and rectification pipeline on a frame.</p>
+<p>This method performs grid line detection, homography rectification, spacing
+estimation, and cell extraction on the input image. Each detected cell is
+then resized to a target aspect ratio and optionally saved along with
+diagnostic and visualization outputs.</p>
+<section id="id13">
+<h2>Parameters<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>image<span class="classifier">Frame</span></dt><dd><p>Input image/frame to process.</p>
+</dd>
+<dt>frameCount<span class="classifier">int</span></dt><dd><p>Index of the frame being processed (used for logging and output naming).</p>
+</dd>
+<dt>logPath<span class="classifier">str, optional</span></dt><dd><p>Directory where log files should be written.</p>
+</dd>
+<dt>visuals<span class="classifier">bool, optional</span></dt><dd><p>If True, saves intermediate and final visualization images to disk.</p>
+</dd>
+<dt>visualPath<span class="classifier">str, optional</span></dt><dd><p>Base directory for saving visualization outputs.</p>
+</dd>
+<dt>diagonstics<span class="classifier">bool, optional</span></dt><dd><p>If True, enables per-frame diagnostic logging.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h2>Returns<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>List[Frame]</dt><dd><p>List of rectified and aspect-ratio-adjusted cell images extracted from
+the input frame.</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h2>Raises<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If no cells are extracted from the image.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h2>Notes<a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>Pipeline steps:</dt><dd><ol class="arabic simple">
+<li><p>Detect grid lines in the original image.</p></li>
+<li><p>Apply homography to rectify the grid.</p></li>
+<li><p>Re-run line detection on the rectified image.</p></li>
+<li><p>Estimate horizontal and vertical spacing.</p></li>
+<li><p>Split the rectified image into grid cells.</p></li>
+<li><p>Stretch each cell to the target aspect ratio.</p></li>
+<li><p>Optionally save visualizations and diagnostics.</p></li>
+</ol>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frameCount</strong> (<em>int</em>)</p></li>
+<li><p><strong>logPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>visuals</strong> (<em>bool</em>)</p></li>
+<li><p><strong>visualPath</strong> (<em>str</em>)</p></li>
+<li><p><strong>diagonstics</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>List</em>[numpy.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.gridPipeline">
+<span class="sig-name descname"><span class="pre">gridPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectedLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.gridPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.gridPipeline" title="Link to this definition"></a></dt>
+<dd><p>Run the full grid line detection pipeline on an image.</p>
+<p>This method preprocesses the input image, detects line segments, and groups
+and filters them into horizontal and vertical line sets suitable for grid
+estimation and rectification.</p>
+<section id="id17">
+<h2>Parameters<a class="headerlink" href="#id17" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>image<span class="classifier">Frame</span></dt><dd><p>Input image/frame to process.</p>
+</dd>
+<dt>expectedLines<span class="classifier">int</span></dt><dd><p>Approximate number of line segments expected in the image, used to tune
+the line detection stage.</p>
+</dd>
+<dt>logPath<span class="classifier">str, optional</span></dt><dd><p>Directory path used for resetting parameters and logging context.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h2>Returns<a class="headerlink" href="#id18" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of all detected line segments in (x1, y1, x2, y2) format.</p>
+</dd>
+<dt>horizontalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Subset of <cite>lines</cite> corresponding to horizontal grid lines.</p>
+</dd>
+<dt>verticalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Subset of <cite>lines</cite> corresponding to vertical grid lines.</p>
+</dd>
+<dt>kMeansVisuals<span class="classifier">list[Frame] or None</span></dt><dd><p>Optional list of diagnostic visualization frames from the clustering
+and filtering stages.</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h2>Raises<a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If no lines are detected at any stage of the grid pipeline.</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h2>Notes<a class="headerlink" href="#id20" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>Pipeline steps:</dt><dd><ol class="arabic simple">
+<li><p>Reset internal parameters based on image shape.</p></li>
+<li><p>Preprocess the image (denoising, blurring, downsampling).</p></li>
+<li><p>Detect line segments.</p></li>
+<li><p>Group and filter lines into horizontal and vertical sets.</p></li>
+</ol>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>)</p></li>
+<li><p><strong>expectedLines</strong> (<em>int</em>)</p></li>
+<li><p><strong>logPath</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], list[numpy.ndarray] | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.groupAndFilter">
+<span class="sig-name descname"><span class="pre">groupAndFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discardPercentageofMedian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.groupAndFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.groupAndFilter" title="Link to this definition"></a></dt>
+<dd><p>Remove noisy/short Hough lines and separate them into horizontal and vertical sets.</p>
+<p>This function performs a full cleanup pipeline on detected line segments:
+1. Discards obvious outliers using k-means clustering.
+2. Iteratively merges nearly parallel and spatially close lines.
+3. Clusters lines by angle into two groups (horizontal vs vertical).
+4. Estimates representative line lengths in each group.
+5. Removes lines shorter than a fraction of the median length.
+6. Returns the filtered horizontal, vertical, and combined line sets.</p>
+<section id="id21">
+<h2>Parameters<a class="headerlink" href="#id21" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>frame<span class="classifier">Any</span></dt><dd><p>Input image/frame associated with the detected lines (used by
+the k-means noise discard step).</p>
+</dd>
+<dt>lines<span class="classifier">NDArray[np.integer] | None</span></dt><dd><p>Array of line segments of shape (N, 4) in the form
+[x1, y1, x2, y2]. Must contain at least 3 lines.</p>
+</dd>
+<dt>discardPercentageofMedian<span class="classifier">float, default=0.8</span></dt><dd><p>Fraction of the median line length used as a cutoff. Lines shorter
+than (median_length * discardPercentageofMedian) are discarded
+within each orientation group.</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h2>Returns<a class="headerlink" href="#id22" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>combinedLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of filtered lines containing both horizontal and vertical
+segments, shape (M, 4).</p>
+</dd>
+<dt>npHorizontal<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Filtered horizontal lines, shape (H, 4).</p>
+</dd>
+<dt>npVertical<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Filtered vertical lines, shape (V, 4).</p>
+</dd>
+<dt>kmeansVisuals<span class="classifier">List[Frame]</span></dt><dd><p>Visualizations of the k-means clustering step, showing lines
+colored by cluster.</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h2>Raises<a class="headerlink" href="#id23" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If there are not enough input lines, if k-means discarding fails,
+if angle clustering fails, or if no horizontal/vertical lines remain
+after filtering.</p>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h2>Notes<a class="headerlink" href="#id24" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Line orientation is determined via angle clustering into exactly two
+bins (horizontal-like and vertical-like).</p></li>
+<li><p>Length thresholds are computed separately for horizontal and vertical
+groups using the median of the top longest lines in each group.</p></li>
+</ul>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>discardPercentageofMedian</strong> (<em>float</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], <em>List</em>[numpy.ndarray] | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.homographyTransform">
+<span class="sig-name descname"><span class="pre">homographyTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.homographyTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.homographyTransform" title="Link to this definition"></a></dt>
+<dd><p>Apply a homography-based perspective correction to an image using detected grid lines.</p>
+<p>This method selects the outermost horizontal and vertical lines from the detected grid,
+computes the four corner points of the grid via line intersections, and then rectifies
+the image so that the grid appears fronto-parallel.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Sort horizontal lines by their average y-coordinate and vertical lines by their average x-coordinate.</p></li>
+<li><p>Identify the topmost, bottommost, leftmost, and rightmost lines using <cite>endLines</cite>.</p></li>
+<li><p>Compute the corner points where these lines intersect using <cite>calculateCornerPoints</cite>.</p></li>
+<li><p>Rectify the image using the computed corners via <cite>rectifyGrid</cite>.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Frame</em>) – The input image to be transformed.</p></li>
+<li><p><strong>horizontalLines</strong> (<em>NDArray</em><em>[</em><em>np.integer</em><em>]</em>) – Array of shape (N, 4) containing detected horizontal lines
+in the format (x1, y1, x2, y2).</p></li>
+<li><p><strong>verticalLines</strong> (<em>NDArray</em><em>[</em><em>np.integer</em><em>]</em>) – Array of shape (M, 4) containing detected vertical lines
+in the format (x1, y1, x2, y2).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rectified image after perspective correction.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>horizontalLines</cite> or <cite>verticalLines</cite> is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.kMeansNoiseDiscard">
+<span class="sig-name descname"><span class="pre">kMeansNoiseDiscard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.kMeansNoiseDiscard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.kMeansNoiseDiscard" title="Link to this definition"></a></dt>
+<dd><p>Cluster Hough lines by orientation using k-means and discard the smallest
+cluster as angular noise if it is sufficiently distinct.</p>
+<p>This function groups detected lines into <cite>k</cite> angle-based clusters (via
+<cite>self.angleClusters</cite>). The cluster with the fewest members is treated as
+noise and removed, unless:
+• Its center angle is too close to another cluster center, or
+• Its size exceeds a fixed threshold (i.e., it is not truly noise).</p>
+<p>Optionally, visual debug frames are produced showing each cluster drawn
+in a different color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>numpy.ndarray</em>) – Input image frame used only for generating visualization images.</p></li>
+<li><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Array of line segments of shape (N, 4), where each row is
+(x1, y1, x2, y2). Must not be None.</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – Number of angle clusters to compute (default is 3).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><dl class="simple">
+<dt>combined_lines: NDArray[np.integer]</dt><dd><p>Array of lines with the noise cluster removed. If no valid
+noise cluster is detected, all input lines are returned.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>visuals: list[Frame] | None</dt><dd><p>List of frames visualizing each cluster in a different color,
+or None if clustering could not be performed.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple of</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>lines</cite> is None.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The smallest cluster is considered “noise” only if its center angle</dt><dd><p>differs from all other cluster centers by more than <cite>degreeThreshold</cite>.</p>
+</dd>
+</dl>
+</li>
+<li><p>Clusters larger than a hardcoded size threshold are never discarded.</p></li>
+<li><p>Uses <cite>self.angle_diff</cite>, <cite>self.angleClusters</cite>, and <cite>VisualUtils.drawLines</cite>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.lineDetection">
+<span class="sig-name descname"><span class="pre">lineDetection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectedLines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.lineDetection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.lineDetection" title="Link to this definition"></a></dt>
+<dd><p>Detect line segments in an image using adaptive Canny + Hough Transform.</p>
+<p>This method iteratively adjusts the edge detection sensitivity
+(<cite>edgeSlideFactor</cite>) to converge on an expected number of detected
+line segments. It is designed to be robust across varying contrast
+and noise conditions.</p>
+<dl class="simple">
+<dt>The process is:</dt><dd><ol class="arabic simple">
+<li><p>Apply adaptive Canny edge detection.</p></li>
+<li><p>Detect line segments using probabilistic Hough transform.</p></li>
+<li><p>Adjust edge sensitivity until the number of detected lines
+falls within the acceptable buffer range.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>Frame</em>) – Input image frame (typically grayscale) used for line detection.</p></li>
+<li><p><strong>expectedLines</strong> (<em>int</em><em>, </em><em>optional</em>) – Target number of line segments to detect. The algorithm
+adapts thresholds to approach this value. Defaults to 100.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing:</dt><dd><ul class="simple">
+<li><p>lines: NumPy array of shape (N, 4), where each row is
+(x1, y1, x2, y2) for a detected line segment.</p></li>
+<li><p>edges: The binary edge image used for Hough detection.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns None only if no valid detection occurs (normally a
+ValueError is raised instead).</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[np.ndarray, Frame] | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no lines are detected after exhausting all threshold adjustments,
+    or if the detection logic enters an invalid state.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Uses OpenCV’s cv.HoughLinesP for line detection.</p></li>
+<li><p>The parameter <cite>edgeSlideFactor</cite> is automatically tuned per frame.</p></li>
+<li><p><cite>lineBuffer</cite> defines the acceptable deviation from <cite>expectedLines</cite>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.lineIntersection">
+<span class="sig-name descname"><span class="pre">lineIntersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.lineIntersection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.lineIntersection" title="Link to this definition"></a></dt>
+<dd><p>Compute the intersection point of two 2D lines.</p>
+<p>Each line is defined by four integer coordinates: (x1, y1, x2, y2).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line1</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Line in the form (x1, y1, x2, y2) as integers.</p></li>
+<li><p><strong>line2</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Line in the form (x3, y3, x4, y4) as integers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A NumPy array of shape (2,) with the intersection point [x, y] as floats,
+or None if the lines are parallel.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[tuple[int, …], numpy.dtype[numpy.float64]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.mergeLines">
+<span class="sig-name descname"><span class="pre">mergeLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">np.float64(0.08726646259971647)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.mergeLines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.mergeLines" title="Link to this definition"></a></dt>
+<dd><p>Merge approximately collinear and nearby line segments into longer “superlines”.</p>
+<p>This function groups 2D line segments that have similar orientation (within
+<cite>angle_thresh</cite>) and are spatially close (within <cite>dist_thresh</cite> measured along
+the normal direction). For each group, it fits a single representative line
+using PCA and returns the endpoints of the merged segment.</p>
+<section id="id25">
+<h2>Parameters<a class="headerlink" href="#id25" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of line segments with shape (N, 4), where each row is
+[x1, y1, x2, y2].</p>
+</dd>
+<dt>angle_thresh<span class="classifier">float, optional</span></dt><dd><p>Maximum angular difference (in radians) between two lines for them
+to be considered collinear. Default is 5 degrees in radians.</p>
+</dd>
+<dt>dist_thresh<span class="classifier">int, optional</span></dt><dd><p>Maximum perpendicular distance (in pixels) between two lines for them
+to be considered part of the same group. Default is 50.</p>
+</dd>
+</dl>
+</section>
+<section id="id26">
+<h2>Returns<a class="headerlink" href="#id26" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>NDArray[np.integer]</dt><dd><p>Array of merged line segments with shape (M, 4), where each row is
+[x1, y1, x2, y2] representing the endpoints of a fitted “superline”.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h2>Notes<a class="headerlink" href="#id27" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The algorithm:</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Iterates over all input lines.</p></li>
+<li><p>Groups lines with similar angle and nearby perpendicular offset.</p></li>
+<li><p>Collects all endpoints from each group.</p></li>
+<li><p>Fits a line using PCA to find the dominant direction.</p></li>
+<li><dl class="simple">
+<dt>Projects points onto that direction and uses min/max projections</dt><dd><p>as the merged segment endpoints.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<ul class="simple">
+<li><p>Output endpoints are rounded to integer pixel coordinates.</p></li>
+</ul>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>angle_thresh</strong> (<em>float</em>)</p></li>
+<li><p><strong>dist_thresh</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.normalize_params">
+<span class="sig-name descname"><span class="pre">normalize_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.normalize_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.normalize_params" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>height</strong> (<em>int</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.preProcess">
+<span class="sig-name descname"><span class="pre">preProcess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaWeight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meanKernelSizeL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussianSigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downsampleFactor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.preProcess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.preProcess" title="Link to this definition"></a></dt>
+<dd><p>Preprocess an input image frame using guided filtering and edge enhancement,
+followed by grayscale conversion and Gaussian denoising.</p>
+<p>This pipeline enhances structural edges while suppressing noise, making the
+output suitable for downstream tasks such as line detection, grid extraction,
+or feature analysis.</p>
+<dl class="simple">
+<dt>The processing steps are:</dt><dd><ol class="arabic simple">
+<li><p>Normalize the input frame to float32 in the range [0, 1].</p></li>
+<li><p>Split into color channels.</p></li>
+<li><p>Downsample each channel.</p></li>
+<li><p>Generate a guidance image using mean filtering.</p></li>
+<li><p>Upsample the guidance image and apply guided filtering.</p></li>
+<li><p>Perform edge enhancement using: Ai = Qi + λ (Ii − Qi).</p></li>
+<li><p>Merge enhanced channels.</p></li>
+<li><p>Convert to grayscale.</p></li>
+<li><p>Apply Gaussian blur for final denoising.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> (<em>Frame</em>) – Input image frame in BGR format. Expected as a NumPy array
+of dtype uint8 or float32 with shape (H, W, 3).</p></li>
+<li><p><strong>lambdaWeight</strong> (<em>float</em>) – Edge enhancement strength λ. Higher values increase edge contrast.</p></li>
+<li><p><strong>meanKernelSizeL</strong> (<em>int</em>) – Kernel size for the mean filter used to generate the guidance image.</p></li>
+<li><p><strong>gaussianSigma</strong> (<em>float</em>) – Standard deviation for the final Gaussian denoising filter.</p></li>
+<li><p><strong>downsampleFactor</strong> (<em>int</em>) – Downsampling factor applied before guidance image computation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single-channel (grayscale) denoised image frame suitable for
+further processing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input frame has an unexpected shape or dtype.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Requires OpenCV’s ximgproc module for guided filtering.</p></li>
+<li><p>Kernel sizes should be positive odd integers for best results.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.rectifiedPipeline">
+<span class="sig-name descname"><span class="pre">rectifiedPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expectedLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logPath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.rectifiedPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.rectifiedPipeline" title="Link to this definition"></a></dt>
+<dd><p>Run the full rectified-image grid detection pipeline.</p>
+<p>This method preprocesses a rectified image, detects line segments, augments
+them with image-border lines, and then groups and filters the lines into
+horizontal and vertical sets suitable for grid reconstruction.</p>
+<section id="id28">
+<h2>Parameters<a class="headerlink" href="#id28" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>image<span class="classifier">Frame</span></dt><dd><p>Rectified input image to process.</p>
+</dd>
+<dt>expectedLines<span class="classifier">int</span></dt><dd><p>Approximate number of line segments expected in the image, used to tune
+the line detection stage.</p>
+</dd>
+<dt>logPath<span class="classifier">str</span></dt><dd><p>Directory path used for resetting parameters and logging context.</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h2>Returns<a class="headerlink" href="#id29" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>lines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of all detected and augmented line segments in (x1, y1, x2, y2)
+format.</p>
+</dd>
+<dt>horizontalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Subset of <cite>lines</cite> corresponding to horizontal grid lines.</p>
+</dd>
+<dt>verticalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Subset of <cite>lines</cite> corresponding to vertical grid lines.</p>
+</dd>
+<dt>kMeansVisuals<span class="classifier">list[Frame] or None</span></dt><dd><p>Optional list of diagnostic visualization frames from the clustering
+and filtering stages.</p>
+</dd>
+</dl>
+</section>
+<section id="id30">
+<h2>Raises<a class="headerlink" href="#id30" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>If no lines are detected at any stage of the rectified pipeline.</p>
+</dd>
+</dl>
+</section>
+<section id="id31">
+<h2>Notes<a class="headerlink" href="#id31" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>Pipeline steps:</dt><dd><ol class="arabic simple">
+<li><p>Reset internal parameters based on image shape.</p></li>
+<li><p>Preprocess the image (denoising, blurring, downsampling).</p></li>
+<li><p>Detect line segments.</p></li>
+<li><p>Add border lines corresponding to the image edges.</p></li>
+<li><p>Group and filter lines into horizontal and vertical sets.</p></li>
+</ol>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>)</p></li>
+<li><p><strong>expectedLines</strong> (<em>int</em>)</p></li>
+<li><p><strong>logPath</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], numpy.ndarray[tuple[int, …], numpy.dtype[numpy.integer]], list[numpy.ndarray] | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.rectifyGrid">
+<span class="sig-name descname"><span class="pre">rectifyGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corners</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.rectifyGrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.rectifyGrid" title="Link to this definition"></a></dt>
+<dd><p>Rectify a quadrilateral region of an image to a top-down rectangular view.</p>
+<p>This function takes the four corner points of a grid (or any quadrilateral)
+in an image and computes a perspective transform (homography) to produce
+a rectified, axis-aligned rectangle containing the region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Input image as a NumPy array (H x W x C or H x W).</p></li>
+<li><p><strong>corners</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>np.ndarray</em><em>]</em>) – Dictionary of corner points with keys:
+- “top_left”
+- “top_right”
+- “bottom_right”
+- “bottom_left”
+Each value should be a NumPy array of shape (2,) representing [x, y] coordinates.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rectified image cropped and warped to a rectangle defined
+by the maximum width and height of the quadrilateral.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any corner is None or if the homography cannot be computed.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The output rectangle will have its top-left corner at (0, 0).</p></li>
+<li><p>Width is determined by the maximum of the top and bottom edge lengths.</p></li>
+<li><p>Height is determined by the maximum of the left and right edge lengths.</p></li>
+<li><p>The method logs corner information for debugging purposes.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.resetParameters">
+<span class="sig-name descname"><span class="pre">resetParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logPath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.resetParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.resetParameters" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<em>int</em>)</p></li>
+<li><p><strong>width</strong> (<em>int</em>)</p></li>
+<li><p><strong>logPath</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.spacingPipeline">
+<span class="sig-name descname"><span class="pre">spacingPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontalLines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verticalLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P2DingoCV/PanelSegmentation/PanelSegmentor.html#PanelSegmentor.spacingPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P2DingoCV.PanelSegmentation.PanelSegmentor.PanelSegmentor.spacingPipeline" title="Link to this definition"></a></dt>
+<dd><p>Estimate grid spacing from detected line sets and render a grid overlay.</p>
+<p>This method determines the horizontal and vertical grid spacings from
+previously detected horizontal and vertical line segments, logs the
+results, and draws the inferred grid onto the rectified image.</p>
+<section id="id32">
+<h2>Parameters<a class="headerlink" href="#id32" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>image<span class="classifier">Frame</span></dt><dd><p>Rectified image on which the grid spacing is estimated and visualized.</p>
+</dd>
+<dt>horizontalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of horizontal line segments in (x1, y1, x2, y2) format.</p>
+</dd>
+<dt>verticalLines<span class="classifier">NDArray[np.integer]</span></dt><dd><p>Array of vertical line segments in (x1, y1, x2, y2) format.</p>
+</dd>
+</dl>
+</section>
+<section id="id33">
+<h2>Returns<a class="headerlink" href="#id33" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>horizontalSpacing<span class="classifier">int</span></dt><dd><p>Estimated spacing between horizontal grid lines (in pixels).</p>
+</dd>
+<dt>verticalSpacing<span class="classifier">int</span></dt><dd><p>Estimated spacing between vertical grid lines (in pixels).</p>
+</dd>
+<dt>gridOnRectified<span class="classifier">Frame</span></dt><dd><p>Copy of the input image with the estimated grid spacing overlaid.</p>
+</dd>
+</dl>
+</section>
+<section id="id34">
+<h2>Notes<a class="headerlink" href="#id34" title="Link to this heading"></a></h2>
+<p>This step assumes the input image has already been rectified such that
+grid lines are approximately axis-aligned.</p>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>)</p></li>
+<li><p><strong>horizontalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>verticalLines</strong> (<em>numpy.ndarray</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em><em>, </em><em>numpy.dtype</em><em>[</em><em>numpy.integer</em><em>]</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int, numpy.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="P2DingoCV.PanelSegmentation.html" class="btn btn-neutral float-left" title="P2DingoCV.PanelSegmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="P2DingoCV.Types.html" class="btn btn-neutral float-right" title="P2DingoCV.Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cormac Morrison.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
