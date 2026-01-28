@@ -41,24 +41,52 @@ class Maximal(App):
             ├── hotspotOutput.json
             ├── frames/
             │   ├── frame_0/
-            │   │   ├── panel_0/
-            │   │   │   └── panel_0_hotspot.png
-            │   │   ├── panel_1/
-            │   │   │   └── panel_1_hotspot.png
-            │   │   └── frame_0_hotspot.png
+            │   │   ├── panels/
+            │   │   │   ├── panel_0/
+            │   │   │   │   └── hotspots/
+            │   │   │   │       └── panel_0_hotspot.png
+            │   │   │   └── panel_1/
+            │   │   │       └── hotspots/
+            │   │   │           └── panel_1_hotspot.png
+            │   │   ├── diagnostics/
+            │   │   │   └── frame_0_diagnostic_hotspot.png
+            │   │   ├── hotspots/
+            │   │   │   └── frame_0_hotspot.png
+            │   │   ├── logs/
+            │   │   │   └── frame_0.log
+            │   │   └── segmentation/
+            │   │       ├── frame_0_segmentation.png
+            │   │       └── cells/
+            │   │           ├── cell_0.png
+            │   │           ├── cell_1.png
+            │   │           └── ...
+            │   │
             │   └── frame_1/
-            │       └── frame_1_hotspot.png
-            ├── diagnostics/
-            │   ├── frame_diagnostic1_hotspot.png
-            │   └── frame_diagnostic2_hotspot.png
-            └── plots/
-                └── plot1.png
+            │       ├── panels/
+            │       │   └── panel_0/
+            │       │       └── hotspots/
+            │       │           └── panel_0_hotspot.png
+            │       ├── diagnostics/
+            │       ├── hotspots/
+            │       ├── logs/
+            │       └── segmentation/
+            │           ├── frame_1_segmentation.png
+            │           └── cells/
+            │               ├── cell_0.png
+            │               └── ...
+            │
+            ├── plots/
+            │   └── plot1.png
+            └── global_diagnostics/
+                ├── frame_diagnostic1_hotspot.png
+                └── frame_diagnostic2_hotspot.png
 
         Notes:
         - Uses `self.PanelSegmentor` for panel segmentation.
         - Uses `self.HotspotDetector` for per-frame and per-panel hotspot detection.
         - Logs errors during panel segmentation and continues processing subsequent frames.
         - Stops processing when no frames are returned by the camera or the user presses 'q'.
+        
         """
 
         results: List = []

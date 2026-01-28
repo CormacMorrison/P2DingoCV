@@ -225,23 +225,38 @@ Configuration Files
 Detection Parameters Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Create a JSON configuration file to customize detection parameters:
+Create a JSON configuration file to customize detection parameters the default parameters are as follows:
 
 .. code-block:: json
 
    {
        "k": 10,
        "clusterJoinKernel": 3,
-       "hotSpotThreshold": 0.7,
+       "hotSpotThreshold": 0.6,
        "sigmoidSteepnessDeltaP": 0.25,
        "sigmoidSteepnessZ": 0.23,
        "compactnessCutoff": 0.6,
        "dilationSize": 5,
-       "wDeltaP": 0.3,
-       "wZscore": 0.3,
-       "wCompactness": 0.4,
+       "wDeltaP": 0.35,
+       "wZscore": 0.35,
+       "wCompactness": 0.3,
        "wAspectRatio": 0.0,
        "wEccentricity": 0.0
+       "lineCount": 100,
+       "lineBuffer": 5,
+       "denoiseLambdaWeight": 2.0,
+       "denoiseMeanKernelSize": 5,
+       "denoiuseGaussianSigma": 1.0,
+       "denoiseDownsampleFactor": 2,
+       "edgeSlideFactor": 5,
+       "clipLimit": 2.0,
+       "rho": 1,
+       "theta": 0.0174533,  // approx pi/180
+       "aspectRatio": 0.588, // 1.0 / 1.7
+       "sigmaMultipler": 0.010,
+       "edgeThresholdMultiplier": 0.05,
+       "minLineLengthMutiplier": 0.03,
+       "maxLineGapMultipler": 0.04
    }
 
 Parameter Descriptions
@@ -259,6 +274,23 @@ Parameter Descriptions
 - ``wCompactness``: Weight for compactness in composite scoring
 - ``wAspectRatio``: Weight for aspect ratio in composite scoring
 - ``wEccentricity``: Weight for eccentricity in composite scoring
+- ``lineCount``: Expected number of lines in the image for line detection (does not need to be precise)
+- ``lineBuffer``: Pixel buffer around detected linesCount
+- ``denoiseLambdaWeight``: Weight factor for denoising algorithm; higher values prioritize smoothness
+- ``denoiseMeanKernelSize``: Kernel size for mean/average filter during denoising
+- ``denoiuseGaussianSigma``: Standard deviation for Gaussian smoothing in denoising
+- ``denoiseDownsampleFactor``: Factor to downsample input frames before denoising
+- ``edgeSlideFactor``: Starting paramater for edge detection sliding window size (will be adjusted by algoritm)
+- ``clipLimit``: Clip limit for CLAHE (Contrast Limited Adaptive Histogram Equalization)
+- ``rho``: Distance resolution in pixels for Hough line transform
+- ``theta``: Angle resolution in radians for Hough line transform
+- ``aspectRatio``: Expected width-to-height ratio for candidate regions
+- ``sigmaMultipler``: Multiplier for Gaussian sigma in edge detection or smoothing (multiplied by diagonal)
+- ``edgeThresholdMultiplier``: Multiplier for edge detection thresholds  (multiplied by diagonal)
+- ``minLineLengthMutiplier``: Multiplier to determine minimum line length for line detection (mulitplied by diagonal)
+- ``maxLineGapMultipler``: Multiplier to determine maximum allowed gap between line segments (mulitplied by diagonal)
+
+
 
 Input Source Types
 ------------------
@@ -301,13 +333,46 @@ Everything outputted:
    output/resultsFolder/
    ├── hotspotOutput.json
    ├── frames/
-   │   ├── frame_0_hotspot.png
-   │   ├── frame_1_hotspot.png
-   │   └── frame_3_hotspot.png
-   ├── diagnostics/
-   │   └── diagnostic1_hotspot.png
-   └── plots/
-       └── plot1.png
+   │   ├── frame_0/
+   │   │   ├── panels/
+   │   │   │   ├── panel_0/
+   │   │   │   │   └── hotspots/
+   │   │   │   │       └── panel_0_hotspot.png
+   │   │   │   └── panel_1/
+   │   │   │       └── hotspots/
+   │   │   │           └── panel_1_hotspot.png
+   │   │   ├── diagnostics/
+   │   │   │   └── frame_0_diagnostic_hotspot.png
+   │   │   ├── hotspots/
+   │   │   │   └── frame_0_hotspot.png
+   │   │   ├── logs/
+   │   │   │   └── frame_0.log
+   │   │   └── segmentation/
+   │   │       ├── frame_0_segmentation.png
+   │   │       └── cells/
+   │   │           ├── cell_0.png
+   │   │           ├── cell_1.png
+   │   │           └── ...
+   │   │
+   │   └── frame_1/
+   │       ├── panels/
+   │       │   └── panel_0/
+   │       │       └── hotspots/
+   │       │           └── panel_0_hotspot.png
+   │       ├── diagnostics/
+   │       ├── hotspots/
+   │       ├── logs/
+   │       └── segmentation/
+   │           ├── frame_1_segmentation.png
+   │           └── cells/
+   │               ├── cell_0.png
+   │               └── ...
+   │
+   ├── plots/
+   │   └── plot1.png
+   └── global_diagnostics/
+      ├── frame_diagnostic1_hotspot.png
+      └── frame_diagnostic2_hotspot.png
 
 Verbose Mode Output
 ~~~~~~~~~~~~~~~~~~~
@@ -329,13 +394,46 @@ All visual data + basic text data:
    output/resultsFolder/
    ├── hotspotOutput.json
    ├── frames/
-   │   ├── frame_0_hotspot.png
-   │   ├── frame_1_hotspot.png
-   │   └── frame_3_hotspot.png
-   ├── diagnostics/
-   │   └── diagnostic1_hotspot.png
-   └── plots/
-       └── plot1.png
+   │   ├── frame_0/
+   │   │   ├── panels/
+   │   │   │   ├── panel_0/
+   │   │   │   │   └── hotspots/
+   │   │   │   │       └── panel_0_hotspot.png
+   │   │   │   └── panel_1/
+   │   │   │       └── hotspots/
+   │   │   │           └── panel_1_hotspot.png
+   │   │   ├── diagnostics/
+   │   │   │   └── frame_0_diagnostic_hotspot.png
+   │   │   ├── hotspots/
+   │   │   │   └── frame_0_hotspot.png
+   │   │   ├── logs/
+   │   │   │   └── frame_0.log
+   │   │   └── segmentation/
+   │   │       ├── frame_0_segmentation.png
+   │   │       └── cells/
+   │   │           ├── cell_0.png
+   │   │           ├── cell_1.png
+   │   │           └── ...
+   │   │
+   │   └── frame_1/
+   │       ├── panels/
+   │       │   └── panel_0/
+   │       │       └── hotspots/
+   │       │           └── panel_0_hotspot.png
+   │       ├── diagnostics/
+   │       ├── hotspots/
+   │       ├── logs/
+   │       └── segmentation/
+   │           ├── frame_1_segmentation.png
+   │           └── cells/
+   │               ├── cell_0.png
+   │               └── ...
+   │
+   ├── plots/
+   │   └── plot1.png
+   └── global_diagnostics/
+      ├── frame_diagnostic1_hotspot.png
+      └── frame_diagnostic2_hotspot.png
 
 Advanced Usage
 --------------

@@ -15,13 +15,82 @@ from ..Util.MiscUtil import MiscUtil
 from ..Util.VisualUtil import VisualUtils
 import json
 
-_NO_PANEL_DETECTED = -1
 
 
 class PanelSegmentor:
     def __init__(
         self, height: int, width: int, outputPath: str, config: str | None = None
     ) -> None:
+        """
+        PanelSegmentor class for detecting and segmenting panel-like regions in an image.
+
+        This segmentor uses a combination of denoising, edge detection, and Hough line
+        transform techniques to identify candidate panels based on expected line counts,
+        aspect ratios, and image characteristics.
+
+        Parameters
+        ----------
+        lineCount : int
+            Expected number of lines in the image for line detection. This is an approximate
+            value and does not need to be precise.
+        lineBuffer : int
+            Pixel buffer added around detected lines to extend candidate regions.
+        denoiseLambdaWeight : float
+            Weight factor for the denoising algorithm. Higher values prioritize smoothness
+            over detail preservation.
+        denoiseMeanKernelSize : int
+            Kernel size for the mean/average filter applied during denoising.
+        denoiseGaussianSigma : float
+            Standard deviation for Gaussian smoothing during denoising.
+        denoiseDownsampleFactor : float
+            Factor to downsample input frames before applying denoising, reducing computation.
+        edgeSlideFactor : float
+            Initial sliding window size for edge detection. The algorithm adjusts this dynamically.
+        clipLimit : float
+            Clip limit for CLAHE (Contrast Limited Adaptive Histogram Equalization) to enhance
+            local contrast.
+        rho : float
+            Distance resolution in pixels for the Hough line transform.
+        theta : float
+            Angle resolution in radians for the Hough line transform.
+        aspectRatio : float
+            Expected width-to-height ratio for candidate panel regions.
+        sigmaMultipler : float
+            Multiplier for Gaussian sigma used in edge detection or smoothing, relative to image diagonal.
+        edgeThresholdMultiplier : float
+            Multiplier applied to edge detection thresholds, scaled by image diagonal.
+        minLineLengthMultipler : float
+            Multiplier to determine the minimum line length for line detection, relative to image diagonal.
+        maxLineGapMultipler : float
+            Multiplier to determine the maximum allowed gap between line segments, relative to image diagonal.
+
+        Notes
+        -----
+        The parameters involving "multipliers" (sigmaMultipler, edgeThresholdMultiplier, 
+        minLineLengthMultipler, maxLineGapMultipler) are scaled relative to the image diagonal
+        to make the algorithm more robust across different image resolutions.
+
+        Example
+        -------
+        segmentor = PanelSegmentor(
+            lineCount=5,
+            lineBuffer=10,
+            denoiseLambdaWeight=0.8,
+            denoiseMeanKernelSize=5,
+            denoiseGaussianSigma=1.5,
+            denoiseDownsampleFactor=2.0,
+            edgeSlideFactor=5.0,
+            clipLimit=2.0,
+            rho=1,
+            theta=0.0174533,
+            aspectRatio=1.5,
+            sigmaMultipler=0.02,
+            edgeThresholdMultiplier=0.05,
+            minLineLengthMultipler=0.1,
+            maxLineGapMultipler=0.02
+            
+        )
+        """
 
         self.height: int = height
         self.width: int = width
@@ -1574,6 +1643,10 @@ class PanelSegmentor:
 
         if (reaspectedFrames is None) or (len(reaspectedFrames) == 0):
             raise ValueError("No cells extracted from image.")
+        
+        # crop the rectified image in 5 pixel borders to remove edge artifacts
+        rectified = rectified[5:-5, 5:-5]
+        gridRectified = gridRectified[5:-5, 5:-5]   
 
         original_with_lines = VisualUtils.drawLines(image, lines, "r")
         rectified_with_lines = VisualUtils.drawLines(rectified, rectifiedLines, "r")
